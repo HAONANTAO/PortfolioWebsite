@@ -6,7 +6,8 @@ import Image from "next/image";
 
 const EmailSection = () => {
   return (
-    <section className="grid gap-4 py-24 my-12 md:grid-cols-2 md:my-12">
+    <section className="relative grid gap-4 py-24 my-12 md:grid-cols-2 md:my-12">
+      <div className="bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900 to-transparent rounded-full h-80 w-80 z-0 blur-lg absolute top-3/4 -left-4 transform -translate-x-1/2 -translate-y-1/2"></div>
       <div>
         <h5 className="text-xl font-bold text-white">Let's Connect</h5>
         <p className="text-[#ADB7BE] mb-4 max-w-md">
