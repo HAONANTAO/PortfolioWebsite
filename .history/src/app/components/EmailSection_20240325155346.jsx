@@ -1,0 +1,19 @@
+import React from "react";
+import GithubIcon from "../../../public/images/icons/github-icon.svg";
+
+const EmailSection = () => {
+  return (
+    <section className="grid gap-4 py-24 my-12 md:grid-cols-2 md:my-12">
+      <div>
+        <h5 className="text-xl font-bold text-white">Let's Connect</h5>
+        <p className="text-[#ADB7BE] mb-4 max-w-md">
+          I am currently looking for a job I am currently looking for a job I am
+          currently looking for a job
+        </p>
+        <div className="flex flex-row gap-2 socials"></div>
+      </div>
+    </section>
+  );
+};
+
+export default EmailSection;
