@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import GithubIcon from "../../../public/images/icons/github-icon.svg";
 import LinkedinIcon from "../../../public/images/icons/linkedin-icon.svg";
@@ -23,14 +22,9 @@ const EmailSection = () => {
       },
       body: JSONdata,
     };
-    //请求发送
-    const response = await fetch(endpoint, options);
-    const resData = await response.json();
-    if (resData.status === "success") {
-      console.log("message sent!");
-    }
   };
 
+  const response = await fetch(endpoint,options)
   return (
     <section className="relative grid gap-4 py-24 my-12 md:grid-cols-2 md:my-12">
       <div className="bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900 to-transparent rounded-full h-80 w-80 z-0 blur-lg absolute top-3/4 -left-4 transform -translate-x-1/2 -translate-y-1/2"></div>
@@ -60,7 +54,6 @@ const EmailSection = () => {
               Your Email
             </label>
             <input
-              name="email"
               type="email"
               id="email"
               required
@@ -76,7 +69,6 @@ const EmailSection = () => {
               Subject
             </label>
             <input
-              name="subject"
               type="text"
               id="subject"
               required

@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-// 读取内容从环境变量
 const resend = new Resend(process.env.RESEND_API_KEY);
 const fromEmail = process.env.FROM_EMAIL;
 
@@ -16,8 +15,8 @@ export async function POST(req, res) {
       react: (
         <>
           <h1>{subject}</h1>
-          <p>Thank you for contacting me!</p>
-          <p>New message submitted Below:</p>
+          <p>Thank you for contacting us!</p>
+          <p>New message submitted:</p>
           <p>{message}</p>
         </>
       ),

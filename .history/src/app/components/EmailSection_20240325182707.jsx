@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import GithubIcon from "../../../public/images/icons/github-icon.svg";
 import LinkedinIcon from "../../../public/images/icons/linkedin-icon.svg";
@@ -6,31 +5,14 @@ import Link from "next/link";
 import Image from "next/image";
 
 const EmailSection = () => {
-  const handleSubmit = async (e) => {
+  const handleSubmit = async(e)=>{
     e.preventDefault();
     const data = {
-      email: e.target.email.value,
-      subject: e.target.subject.value,
-      message: e.target.message.value,
-    };
-    const JSONdata = JSON.stringify(data);
-    const endpoint = "/api/send";
-
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSONdata,
-    };
-    //请求发送
-    const response = await fetch(endpoint, options);
-    const resData = await response.json();
-    if (resData.status === "success") {
-      console.log("message sent!");
+      
     }
-  };
+  }
 
+  
   return (
     <section className="relative grid gap-4 py-24 my-12 md:grid-cols-2 md:my-12">
       <div className="bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900 to-transparent rounded-full h-80 w-80 z-0 blur-lg absolute top-3/4 -left-4 transform -translate-x-1/2 -translate-y-1/2"></div>
@@ -51,7 +33,7 @@ const EmailSection = () => {
       </div>
 
       <div>
-        <form className="flex flex-col" onSubmit={handleSubmit}>
+        <form className="flex flex-col ">
           <div className="mb-6">
             <label
               type="email"
@@ -60,7 +42,6 @@ const EmailSection = () => {
               Your Email
             </label>
             <input
-              name="email"
               type="email"
               id="email"
               required
@@ -76,7 +57,6 @@ const EmailSection = () => {
               Subject
             </label>
             <input
-              name="subject"
               type="text"
               id="subject"
               required

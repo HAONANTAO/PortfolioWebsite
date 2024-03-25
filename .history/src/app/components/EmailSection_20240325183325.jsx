@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import GithubIcon from "../../../public/images/icons/github-icon.svg";
 import LinkedinIcon from "../../../public/images/icons/linkedin-icon.svg";
@@ -60,7 +59,6 @@ const EmailSection = () => {
               Your Email
             </label>
             <input
-              name="email"
               type="email"
               id="email"
               required
@@ -76,7 +74,6 @@ const EmailSection = () => {
               Subject
             </label>
             <input
-              name="subject"
               type="text"
               id="subject"
               required

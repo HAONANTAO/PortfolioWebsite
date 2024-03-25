@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import GithubIcon from "../../../public/images/icons/github-icon.svg";
 import LinkedinIcon from "../../../public/images/icons/linkedin-icon.svg";
@@ -25,10 +24,7 @@ const EmailSection = () => {
     };
     //请求发送
     const response = await fetch(endpoint, options);
-    const resData = await response.json();
-    if (resData.status === "success") {
-      console.log("message sent!");
-    }
+    const resData = await response.
   };
 
   return (
@@ -60,7 +56,6 @@ const EmailSection = () => {
               Your Email
             </label>
             <input
-              name="email"
               type="email"
               id="email"
               required
@@ -76,7 +71,6 @@ const EmailSection = () => {
               Subject
             </label>
             <input
-              name="subject"
               type="text"
               id="subject"
               required

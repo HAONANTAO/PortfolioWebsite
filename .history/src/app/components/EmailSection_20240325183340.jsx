@@ -60,7 +60,6 @@ const EmailSection = () => {
               Your Email
             </label>
             <input
-              name="email"
               type="email"
               id="email"
               required
@@ -76,7 +75,6 @@ const EmailSection = () => {
               Subject
             </label>
             <input
-              name="subject"
               type="text"
               id="subject"
               required
