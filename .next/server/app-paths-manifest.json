@@ -1,4 +1,4 @@
 {
-  "/page": "app/page.js",
-  "/api/send/route": "app/api/send/route.js"
+  "/not-found": "app/not-found.js",
+  "/page": "app/page.js"
 }
