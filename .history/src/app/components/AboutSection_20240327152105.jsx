@@ -25,14 +25,7 @@ const AboutSection = () => {
         />
         <div className="flex flex-col h-full mt-4 text-left md:mt-0">
           <h2 className="mb-4 text-4xl font-bold text-white">About Me</h2>
-          <p className="text-base lg:text-lg">
-            Highly skilled software developer with a solid foundation in
-            frontend and backend development. Proficient in building web
-            application using HTML5, CSS3, JavaScript, Typescript, React,
-            Node.js. Demonstrated expertise in working within an agile
-            development environment and delivering projects on time. Permanent
-            resident with full work right in Australia
-          </p>
+          <p className="text-base lg:text-lg">finish design</p>
           <div className="flex flex-row mt-8">
             <TabButton
               selectTab={() => handleTabChange("Skills")}
