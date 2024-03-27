@@ -1,6 +1,11 @@
-# Portfolio
+# Personal-Portfolio
 
-Portfolio
+Responsive personal portfolio
 
-react-type-animation
-hero-icon
+with all my informations includes:
+
+Visa status,Personal informations,
+
+Skills,Educations,Certifications,
+
+Project details,Github,Linkedin
