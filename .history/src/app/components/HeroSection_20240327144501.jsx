@@ -10,8 +10,8 @@ const HeroSection = () => {
       {/* 不同尺寸不同字体大小 */}
       <div className="grid grid-cols-1 sm:grid-cols-12">
         <motion.div
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0,scale: }}
+          animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
           className="col-span-7 text-center place-self-center sm:text-left ">
           {/* 大屏幕下占据12列分7/5 */}
@@ -53,11 +53,7 @@ const HeroSection = () => {
             </button>
           </div>
         </motion.div>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-          className="col-span-5 mt-4 place-self-center lg:mt-0">
+        <div className="col-span-5 mt-4 place-self-center lg:mt-0">
           {/* public可以直接从/导入 */}
           <div className="rounded-full bg-[#181818] w-[250px] h-[250px] relative lg:w-[400px] lg:h-[400px]">
             <Image
@@ -67,7 +63,7 @@ const HeroSection = () => {
               width={300}
               height={300}></Image>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

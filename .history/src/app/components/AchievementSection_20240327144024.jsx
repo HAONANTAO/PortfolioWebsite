@@ -19,7 +19,6 @@ const AchievementSection = () => {
               key={index}
               className="flex flex-col items-center justify-center mx-4">
               <h2 className="flex flex-row text-4xl font-bold text-white">
-                {ach.prefix}
                 <AnimatedNumbers
                   includeComma
                   animateToNumber={parseInt(ach.value)}
