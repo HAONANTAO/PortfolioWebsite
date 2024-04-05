@@ -6,7 +6,7 @@ const ProjectsData = [
     tag: ["All", "Web", "Mobile"],
     imgUrl: "/images/Projects/Portfolio.png",
     gitUrl: "https://github.com/HAONANTAO/Portfolio",
-    preview: "/",
+    preview: "httwww.aarontao.com",
   },
   {
     id: 1,
@@ -26,7 +26,7 @@ const ProjectsData = [
     imgUrl: "/images/Projects/GameHub.png",
     tag: ["All", "Web"],
     gitUrl: "https://github.com/HAONANTAO/GameHub",
-    preview: "https://game-hub-iota-three.vercel.app/",
+    preview: "game-ech4vj4vx-haonantaos-projects.vercel.app",
   },
 
   {
