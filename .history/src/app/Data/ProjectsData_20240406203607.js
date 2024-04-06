@@ -84,8 +84,7 @@ const ProjectsData = [
     imgUrl: "/images/Projects/PersonalWeb.png",
     tag: ["All", "Web"],
     gitUrl: "https://github.com/HAONANTAO/PersonalResume",
-    preview: "http://aaron-resume-web.s3-website-us-east-1.amazonaws.com/",
-    // personal-resume-ccib4yq7y-haonantaos-projects.vercel.app
+    preview: "",
   },
 ];
 
