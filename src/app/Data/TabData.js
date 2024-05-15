@@ -3,12 +3,13 @@ const TAB_DATA = [
     title: "Skills",
     id: "Skills",
     content: (
-      <ul className="list-disc pl-2">
+      <ul className="pl-2 list-disc">
         <li>HTML,CSS,JavaScript,TypeScript</li>
         <li>React,NextJS,TailWindCSS</li>
         <li>Express,NodeJS</li>
         <li>Prisma,MongoDB,MySQL</li>
-        <li>Agile</li>
+        <li>Agile AWS</li>
+        <li>Shadcn Clerk stripe</li>
       </ul>
     ),
   },
@@ -16,7 +17,7 @@ const TAB_DATA = [
     title: "Educations",
     id: "Educations",
     content: (
-      <ul className="list-disc pl-2">
+      <ul className="pl-2 list-disc">
         <li>
           <a
             href="/PDFs/UniMel.pdf"
@@ -40,7 +41,7 @@ const TAB_DATA = [
     title: "Certifications",
     id: "Certifications",
     content: (
-      <ul className="list-disc pl-2">
+      <ul className="pl-2 list-disc">
         <li>
           <a
             href="/PDFs/ITIL.pdf"
@@ -70,7 +71,7 @@ const TAB_DATA = [
             href="/PDFs/Microsoft.pdf"
             rel="University Melbourne "
             className="transition-colors duration-300 hover:text-blue-500">
-            Microsoft 2019
+            Microsoft 2019 Expert
           </a>
         </li>
       </ul>

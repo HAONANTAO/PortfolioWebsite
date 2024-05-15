@@ -33,14 +33,20 @@ const ProjectsSection = () => {
         />
         <ProjectTag
           onClick={handleTagChange}
-          tag="Web"
-          isSelected={tag === "Web"}
+          tag="React"
+          isSelected={tag === "React"}
         />
         <ProjectTag
           onClick={handleTagChange}
-          tag="Mobile"
-          isSelected={tag === "Mobile"}
+          tag="NextJS"
+          isSelected={tag === "NextJS"}
         />
+         <ProjectTag
+          onClick={handleTagChange}
+          tag="TypeScript"
+          isSelected={tag === "TypeScript"}
+        />
+      
       </div>
       <ul className="grid gap-8 md:grid-cols-3 md:gap-14">
         {filteredProjects.map((project, index) => {
