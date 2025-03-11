@@ -44,13 +44,8 @@ const HeroSection = () => {
             Web Developer&nbsp;Software Developer&nbsp;FrontEnd Developer
           </p>
           <div>
-            <button className="w-full px-6 py-3 mr-4 text-white rounded-full bg-gradient-to-br from-blue-500 via-primary-500 to-secondary-500 sm:w-fit hover:bg-slate-200">
-              Hire Me
-            </button>
-            <button className="w-full px-1 py-1 mt-3 text-white rounded-full sm:w-fit bg-gradient-to-br from-blue-500 via-primary-500 to-secondary-500 hover:bg-slate-800 ">
-              <span className="block bg-[#121212] hover:bg-slate-800 rounded-full px-5 py-2">
-                <a href="/PDFs/Aaron_Resume.pdf"> Download CV</a>
-              </span>
+            <button className="w-full px-6 py-3 mr-4 text-white rounded-full  bg-gradient-to-br from-blue-500 via-primary-500 to-secondary-500 sm:w-fit hover:bg-slate-200">
+              <a href="/PDFs/Resume2025.pdf"> Download Resume</a>
             </button>
           </div>
         </motion.div>

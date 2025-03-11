@@ -3,7 +3,7 @@ const ProjectsData = [
     id: 0,
     title: "Mock AI ChatBot",
     description: "Personal Responsive Mock AI ChatBot",
-    tag: ["All", "React", "MongoDB"],
+    tag: ["All", "React", "TypeScript"],
     imgUrl: "/images/Projects/MockAIChatBot.png",
     gitUrl: "https://github.com/HAONANTAO/Mock_AI_ChatBot",
     preview: "https://www.wanyancanrui.com/",
@@ -15,7 +15,7 @@ const ProjectsData = [
     tag: ["All", "NextJS", "MongoDB"],
     imgUrl: "/images/Projects/MockThreads.png",
     gitUrl: "https://github.com/HAONANTAO/threads_app",
-    preview: "https://threads-app-eight-nu.vercel.app/",
+    preview: "http://www.taohaonan.com/",
   },
   {
     id: 2,
