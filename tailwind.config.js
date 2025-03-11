@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 const colors = require("tailwindcss/colors");
+
 module.exports = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -16,12 +17,13 @@ module.exports = {
     },
     colors: {
       ...colors,
-      primary: colors.lightBlue,
+      primary: colors.sky, // ✅ 替换 lightBlue 为 sky
       secondary: colors.pink,
+      stone: colors.stone, // ✅ 替换 warmGray 为 stone
+      neutral: colors.neutral, // ✅ 替换 trueGray 为 neutral
+      gray: colors.gray, // ✅ 替换 coolGray 为 gray
+      slate: colors.slate, // ✅ 替换 blueGray 为 slate
     },
   },
   plugins: [],
 };
-/* 
-    },
-*/
