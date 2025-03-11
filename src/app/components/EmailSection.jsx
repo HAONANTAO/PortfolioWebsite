@@ -43,8 +43,7 @@ const EmailSection = () => {
       <div>
         <h5 className="text-xl font-bold text-white">Let's Connect</h5>
         <p className="text-[#ADB7BE] mb-4 max-w-md">
-          I am currently looking for a job I am currently looking for a job I am
-          currently looking for a job
+          I am currently looking for a FullStack job
         </p>
         <div className="flex flex-row gap-2 socials">
           <Link href="https://github.com/HAONANTAO">
