@@ -1,13 +1,4 @@
 const ProjectsData = [
-  // {
-  //   id: 0,
-  //   title: "Personal Blog",
-  //   description: "Personal Responsive Portfolio Web",
-  //   tag: ["All", "React", "MongoDB"],
-  //   imgUrl: "/images/Projects/Blog.png",
-  //   gitUrl: "https://github.com/HAONANTAO/BlogWeb",
-  //   preview: "https://www.aaronblog.top/",
-  // },
   {
     id: 0,
     title: "Mock AI ChatBot",
@@ -106,14 +97,23 @@ const ProjectsData = [
   },
   {
     id: 8,
-    title: "Personal Static Resume",
-    description: "Simple Personal Resume",
-    imgUrl: "/images/Projects/PersonalWeb.png",
-    tag: ["All"],
-    gitUrl: "https://github.com/HAONANTAO/PersonalResume",
-    preview: "http://aaron-resume-web.s3-website-us-east-1.amazonaws.com/",
-    // personal-resume-ccib4yq7y-haonantaos-projects.vercel.app
+    title: "Personal Blog",
+    description: "Personal Responsive Portfolio Web",
+    tag: ["All", "React", "MongoDB"],
+    imgUrl: "/images/Projects/Blog.png",
+    gitUrl: "https://github.com/HAONANTAO/BlogWeb",
+    preview: "https://www.aaronblog.top/",
   },
+  // {
+  //   id: 8,
+  //   title: "Personal Static Resume",
+  //   description: "Simple Personal Resume",
+  //   imgUrl: "/images/Projects/PersonalWeb.png",
+  //   tag: ["All"],
+  //   gitUrl: "https://github.com/HAONANTAO/PersonalResume",
+  //   preview: "http://aaron-resume-web.s3-website-us-east-1.amazonaws.com/",
+
+  // },
 ];
 
 export default ProjectsData;
