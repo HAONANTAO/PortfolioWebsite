@@ -1,7 +1,13 @@
+/*
+ * @Date: 2025-01-18 16:18:52
+ * @LastEditors: 陶浩南 taoaaron5@gmail.com
+ * @LastEditTime: 2025-04-15 21:24:37
+ * @FilePath: /PortfolioWebsite/src/app/Data/AchievementData.js
+ */
 const achievementsList = [
-  { metric: "Projects", value: "5", postfix: "+" },
-  { metric: "Certifications", value: "3", postfix: "+" },
-  { metric: "Awards", value: "1", postfix: "~" },
-  { metric: "Years", value: "1", postfix: "+" },
+  { metric: "Projects", value: "9", postfix: "+" },
+  { metric: "Certifications", value: "4", postfix: "+" },
+  { metric: "Awards", value: "1", postfix: "" },
+  { metric: "Years", value: "2", postfix: "" },
 ];
 export default achievementsList;
