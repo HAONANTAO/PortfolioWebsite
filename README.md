@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 
 <!--
  * @Date: 2025-04-15 21:26:49
@@ -9,7 +9,6 @@
 
 # Personal Portfolio Website
 
-=======
 
 [![Next.js](https://img.shields.io/badge/Next.js-14.1.4-black)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-18-blue)](https://reactjs.org/)
