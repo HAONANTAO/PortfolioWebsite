@@ -45,19 +45,19 @@ Perfect for developers, designers, and anyone looking to present their work onli
   - [🌟 Overview](#-overview)
   - [🌐 Live Demo](#-live-demo)
   - [Table of Contents](#table-of-contents)
-  - [Features](#features)
-  - [Tech Stack](#tech-stack)
-  - [Key Sections](#key-sections)
-  - [Screenshots](#screenshots)
-  - [FAQ](#faq)
-  - [Contributing](#contributing)
-  - [License](#license)
-  - [Contact](#contact)
-  - [Acknowledgements](#acknowledgements)
+  - [🚀 Features](#features)
+  - [🛠️ Tech Stack](#tech-stack)
+  - [🗂️ Key Sections](#key-sections)
+  - [🖼️ Screenshots](#screenshots)
+  - [❓ FAQ](#faq)
+  - [🤝 Contributing](#contributing)
+  - [⚖️ License](#license)
+  - [📬 Contact](#contact)
+  - [🙏 Acknowledgements](#acknowledgements)
 
 ---
 
-## Features
+## 🚀 Features
 
 - 📱 **Fully Responsive Design** – Looks great on all devices.
 - 🎨 **Modern UI with TailwindCSS** – Clean, customizable, and fast.
@@ -70,7 +70,7 @@ Perfect for developers, designers, and anyone looking to present their work onli
 
 ---
 
-## Tech Stack
+## 🛠️ Tech Stack
 
 - **Frontend Framework:** Next.js 14
 - **Styling:** TailwindCSS 3
@@ -81,7 +81,8 @@ Perfect for developers, designers, and anyone looking to present their work onli
 
 ---
 
-## Key Sections
+## 🗂️ Key Sections
+
 
 - 🏠 Hero Section
 - 📊 Achievement Section
@@ -92,7 +93,8 @@ Perfect for developers, designers, and anyone looking to present their work onli
 
 ---
 
-## Screenshots
+## 🖼️ Screenshots
+
 
 <p align="center">
   <img src="Web.png" width="900" alt="Home Page" />
@@ -101,14 +103,15 @@ Perfect for developers, designers, and anyone looking to present their work onli
 
 ---
 
-## FAQ
+## ❓ FAQ
+
 
 **Q: How do I add new projects to the portfolio?**  
 A: Modify the `data/projects.ts` file and add your projects following the existing format.
 
 ---
 
-## Contributing
+## 🤝 Contributing
 
 Contributions are welcome!  
 To contribute:
@@ -123,14 +126,16 @@ Please run `npm run lint` before submitting and follow the project’s coding st
 
 ---
 
-## License
+## ⚖️ License
+
 
 This project is licensed under the MIT License.  
 See the [LICENSE](LICENSE) file for details.
 
 ---
 
-## Contact
+## 📬 Contact
+
 
 - **Name:** Aaron TAO
 - **Email:** [taoaaron5@gmail.com](mailto:taoaaron5@gmail.com)
@@ -139,7 +144,8 @@ See the [LICENSE](LICENSE) file for details.
 
 ---
 
-## Acknowledgements
+## 🙏 Acknowledgements
+
 
 - [Next.js](https://nextjs.org/)
 - [TailwindCSS](https://tailwindcss.com/)
