@@ -7,7 +7,7 @@
 
 ---
 
-🌟##  Overview
+## 🌟 Overview
 
 **Personal Portfolio Website** is a modern, fully responsive portfolio built with Next.js, React, TailwindCSS, and TypeScript.  
 It showcases your skills, projects, achievements, and contact information in a clean, professional layout with smooth animations and email integration.  
@@ -15,7 +15,7 @@ Perfect for developers, designers, and anyone looking to present their work onli
 
 ---
 
-🌐 ## Live Demo
+## 🌐 Live Demo
 
 [www.aarontao.com](https://www.aarontao.com/)
 
@@ -41,7 +41,7 @@ Perfect for developers, designers, and anyone looking to present their work onli
 
 ---
 
-📑##  Features
+##  Features
 
 - 📱 **Fully Responsive Design** – Looks great on all devices.
 - 🎨 **Modern UI with TailwindCSS** – Clean, customizable, and fast.
