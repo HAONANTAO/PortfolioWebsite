@@ -7,7 +7,7 @@
 
 ---
 
-## 🌟 Overview
+🌟##  Overview
 
 **Personal Portfolio Website** is a modern, fully responsive portfolio built with Next.js, React, TailwindCSS, and TypeScript.  
 It showcases your skills, projects, achievements, and contact information in a clean, professional layout with smooth animations and email integration.  
@@ -15,7 +15,7 @@ Perfect for developers, designers, and anyone looking to present their work onli
 
 ---
 
-## 🌐 Live Demo
+🌐 ## Live Demo
 
 [www.aarontao.com](https://www.aarontao.com/)
 
@@ -25,7 +25,7 @@ Perfect for developers, designers, and anyone looking to present their work onli
 
 ---
 
-## 📑 Table of Contents
+##  Table of Contents
 
 - [Overview](#overview)
 - [Live Demo](#live-demo)
@@ -41,7 +41,7 @@ Perfect for developers, designers, and anyone looking to present their work onli
 
 ---
 
-## 🚀 Features
+📑##  Features
 
 - 📱 **Fully Responsive Design** – Looks great on all devices.
 - 🎨 **Modern UI with TailwindCSS** – Clean, customizable, and fast.
@@ -54,7 +54,7 @@ Perfect for developers, designers, and anyone looking to present their work onli
 
 ---
 
-## 💻 Tech Stack
+##  Tech Stack
 
 - **Frontend Framework:** Next.js 14
 - **Styling:** TailwindCSS 3
@@ -65,7 +65,7 @@ Perfect for developers, designers, and anyone looking to present their work onli
 
 ---
 
-## 📋 Key Sections
+##  Key Sections
 
 - 🏠 Hero Section
 - 📊 Achievement Section
@@ -76,7 +76,7 @@ Perfect for developers, designers, and anyone looking to present their work onli
 
 ---
 
-## 🖼️ Screenshots
+ ## Screenshots
 
 <p align="center">
   <img src="Web.png" width="900" alt="Home Page" />
@@ -85,23 +85,14 @@ Perfect for developers, designers, and anyone looking to present their work onli
 
 ---
 
-## ❓ FAQ
+##  FAQ
 
 **Q: How do I add new projects to the portfolio?**  
 A: Modify the `data/projects.ts` file and add your projects following the existing format.
 
-**Q: What if the email service fails to send messages?**  
-A: Verify your email service API keys and recipient email address are correct, or try switching to another provider.
-
-**Q: How can I customize the theme colors or styles?**  
-A: Edit the `tailwind.config.js` file or global CSS files to adjust styling.
-
-**Q: Does this project support multiple languages?**  
-A: Currently it defaults to English, but you can integrate i18n libraries like `next-i18next` to add multilingual support.
-
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome!  
 To contribute:
@@ -116,14 +107,14 @@ Please run `npm run lint` before submitting and follow the project’s coding st
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License.  
 See the [LICENSE](LICENSE) file for details.
 
 ---
 
-## 📬 Contact
+##  Contact
 
 - **Name:** Aaron TAO  
 - **Email:** [taoaaron5@gmail.com](mailto:taoaaron5@gmail.com)  
@@ -132,13 +123,13 @@ See the [LICENSE](LICENSE) file for details.
 
 ---
 
-## 🙏 Acknowledgements
+##  Acknowledgements
 
-- [Next.js](https://nextjs.org/)  
-- [TailwindCSS](https://tailwindcss.com/)  
-- [Framer Motion](https://www.framer.com/motion/)  
-- [Resend](https://resend.com/)  
-- [Vercel](https://vercel.com/)  
+- [Next.js](https://nextjs.org/)
+- [TailwindCSS](https://tailwindcss.com/)
+- [Framer Motion](https://www.framer.com/motion/)
+- [Resend](https://resend.com/)
+- [Vercel](https://vercel.com/)
 - All open source contributors and community
 
 ---
