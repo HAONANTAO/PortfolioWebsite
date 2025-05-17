@@ -1,3 +1,9 @@
+/*
+ * @Date: 2024-04-06 22:02:17
+ * @LastEditors: 陶浩南 taoaaron5@gmail.com
+ * @LastEditTime: 2025-05-11 20:33:41
+ * @FilePath: /PortfolioWebsite/src/app/Data/TabData.js
+ */
 const TAB_DATA = [
   {
     title: "Skills",
@@ -5,11 +11,11 @@ const TAB_DATA = [
     content: (
       <ul className="pl-2 list-disc">
         <li>HTML,CSS,JavaScript,TypeScript</li>
-        <li>React,NextJS,TailWindCSS</li>
+        <li>React,NextJS,ReactNative,TailWindCSS</li>
         <li>Express,NodeJS</li>
         <li>Prisma,MongoDB,MySQL</li>
-        <li>Agile AWS</li>
-        <li>Shadcn Clerk stripe</li>
+        <li>Agile,AWS</li>
+        <li>Vercel,Clerk,stripe</li>
       </ul>
     ),
   },

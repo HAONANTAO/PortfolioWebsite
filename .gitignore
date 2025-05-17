@@ -1,6 +1,54 @@
-node_modules
-.env
-.env.local
-.next
-.history
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.next/
+
+# Next.js
+.next/
+out/
+
+# 环境变量
+.env*
+!.env.example
+
+# 编辑器/IDE 配置
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# 操作系统文件
 .DS_Store
+Thumbs.db
+
+# 日志文件
+*.log
+
+# TypeScript 编译输出
+dist/
+build/
+*.tsbuildinfo
+
+# 本地历史记录插件（如 VSCode 的 Local History 插件）
+.history/
+
+# jest 测试覆盖率
+coverage/
+
+# Mac 系统文件
+.AppleDouble
+.LSOverride
+Icon?
+
+# Linux 系统文件
+*~
+
+# Windows 系统文件
+desktop.ini
+$RECYCLE.BIN/
+
+# Docker
+docker-compose.override.yml
