@@ -70,6 +70,8 @@ const ProjectsSection = () => {
                 description={project.description}
                 gitUrl={project.gitUrl}
                 preview={project.preview}
+                tag={project.tag}
+                tech={project.Tech}
               />
             </motion.li>
           );
