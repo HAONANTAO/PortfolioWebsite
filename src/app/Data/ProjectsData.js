@@ -103,8 +103,8 @@ const ProjectsData = [
     title: "Issue Tracker",
     description: `An issue tracker web application built with Next.js, which supports creating, editing, deleting and assigning issues, with statuses including Open, In Progress and Closed.
     Integrated with Google login (NextAuth), form management (React Hook Form), data validation (Zod) and real-time notifications (react-hot-toast).
-The backend uses Prisma + MySQL as the database, and the frontend uses Tailwind CSS and Radix UI to achieve a beautiful UI.
-Data visualization uses Recharts to present issue statistics charts, supporting efficient query and status tracking.`,
+    The backend uses Prisma + MySQL as the database, and the frontend uses Tailwind CSS and Radix UI to achieve a beautiful UI.
+    Data visualization uses Recharts to present issue statistics charts, supporting efficient query and status tracking.`,
     imgUrl: "/images/Projects/IssueTracker.png",
     tag: ["All", "NextJS", "MySQL"],
     gitUrl: "https://github.com/HAONANTAO/IssueTracker",
