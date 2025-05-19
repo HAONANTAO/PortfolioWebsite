@@ -26,7 +26,8 @@ const ProjectsData = [
     imgUrl: "/images/Projects/MockThreads.png",
     gitUrl: "https://github.com/HAONANTAO/threads_app",
     preview: "http://www.taohaonan.com/",
-  },  {
+  },
+  {
     id: 3,
     title: "Mock AI ChatBot",
     description: "The Responsive Mock GPT ChatBot",

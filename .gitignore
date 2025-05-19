@@ -1,54 +1,49 @@
-# Node.js
+# Dependencies
 node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-.next/
+.pnp/
+.yarn/
 
 # Next.js
 .next/
 out/
+build/
+dist/
 
-# 环境变量
+# Environment
 .env*
 !.env.example
 
-# 编辑器/IDE 配置
+# IDE
 .vscode/
 .idea/
 *.sublime-project
 *.sublime-workspace
-
-# 操作系统文件
-.DS_Store
-Thumbs.db
-
-# 日志文件
-*.log
-
-# TypeScript 编译输出
-dist/
-build/
-*.tsbuildinfo
-
-# 本地历史记录插件（如 VSCode 的 Local History 插件）
 .history/
 
-# jest 测试覆盖率
-coverage/
+# Debug & Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
 
-# Mac 系统文件
+# Testing
+coverage/
+.nyc_output/
+
+# TypeScript
+*.tsbuildinfo
+
+# OS Files
+.DS_Store
 .AppleDouble
 .LSOverride
 Icon?
+Thumbs.db
 
-# Linux 系统文件
-*~
+# Vercel
+.vercel
 
-# Windows 系统文件
-desktop.ini
-$RECYCLE.BIN/
-
-# Docker
-docker-compose.override.yml
+# PWA
+public/sw.js
+public/workbox-*.js
+public/worker-*.js

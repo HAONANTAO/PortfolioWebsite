@@ -1,7 +1,7 @@
 /*
  * @Date: 2025-05-17 20:27:00
  * @LastEditors: 陶浩南 taoaaron5@gmail.com
- * @LastEditTime: 2025-05-19 21:17:26
+ * @LastEditTime: 2025-05-19 21:24:29
  * @FilePath: /PortfolioWebsite/src/app/components/HeroSection.jsx
  */
 "use client";
@@ -36,8 +36,6 @@ const HeroSection = () => {
                 1000,
                 "Fullstack Developer",
                 1000,
-                "Software Engineer",
-                1000,
               ]}
               wrapper="span"
               speed={50}
@@ -45,9 +43,7 @@ const HeroSection = () => {
             />
           </h1>
           <p className="text-[#ADB7DBE]  text-base mb-6 sm:text-lg lg:text-xl">
-            I am currently looking for a job as
-            <br />
-            Web Developer&nbsp;Software Developer&nbsp;FrontEnd Developer
+            I am currently looking for a job as FullStack Developer
           </p>
           <div>
             <button className="px-6 py-3 mr-4 w-full text-white bg-gradient-to-br from-blue-500 rounded-full via-primary-500 to-secondary-500 sm:w-fit hover:bg-slate-200">

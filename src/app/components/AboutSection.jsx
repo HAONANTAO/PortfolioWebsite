@@ -1,3 +1,9 @@
+/*
+ * @Date: 2025-01-18 16:18:52
+ * @LastEditors: 陶浩南 taoaaron5@gmail.com
+ * @LastEditTime: 2025-05-19 21:22:41
+ * @FilePath: /PortfolioWebsite/src/app/components/AboutSection.jsx
+ */
 "use client";
 import React, { startTransition, useState, useTransition } from "react";
 import Image from "next/image";
@@ -15,23 +21,29 @@ const AboutSection = () => {
     });
   };
   return (
-    <section className="text-white ">
-      <div className="items-center gap-8 px-4 py-8 md:grid md:grid-cols-2 xl:gap-16 sm:py-16">
+    <section className="text-white">
+      <div className="gap-8 items-center px-4 py-8 md:grid md:grid-cols-2 xl:gap-16 sm:py-16">
         <Image
           src="/images/image2.png"
           alt="about me"
           width={500}
           height={500}
         />
-        <div className="flex flex-col h-full mt-4 text-left md:mt-0">
+        <div className="flex flex-col mt-4 h-full text-left md:mt-0">
           <h2 className="mb-4 text-4xl font-bold text-white">About Me</h2>
           <p className="text-base lg:text-lg">
-            Highly skilled software developer with a solid foundation in
-            frontend and backend development. Proficient in building web
-            application using HTML5, CSS3, JavaScript, Typescript, React,
-            Node.js. Demonstrated expertise in working within an agile
-            development environment and delivering projects on time. Permanent
-            resident with full work right in Australia
+            Full Stack Developer with experience in React, TypeScript, Node.js,
+            MongoDB, and React Native. 
+            <br/>
+            1+ year of hands-on development building
+            responsive and scalable web & mobile applications. 
+            <br/>
+            Completed 5+ full-stack projects, including live-deployed products with modern UI/UX design.
+            <br/>
+            Fast learner with a proactive mindset, Agile
+            experience, and certifications including AWS Cloud Practitioner and
+            PMP® 
+            <br/>Australian Permanent Resident with full work rights.
           </p>
           <div className="flex flex-row mt-8">
             <TabButton
