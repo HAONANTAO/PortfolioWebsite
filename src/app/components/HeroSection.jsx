@@ -1,7 +1,7 @@
 /*
- * @Date: 2024-04-06 22:02:17
+ * @Date: 2025-05-17 20:27:00
  * @LastEditors: 陶浩南 taoaaron5@gmail.com
- * @LastEditTime: 2025-05-11 20:34:47
+ * @LastEditTime: 2025-05-19 21:17:26
  * @FilePath: /PortfolioWebsite/src/app/components/HeroSection.jsx
  */
 "use client";
@@ -47,21 +47,11 @@ const HeroSection = () => {
           <p className="text-[#ADB7DBE]  text-base mb-6 sm:text-lg lg:text-xl">
             I am currently looking for a job as
             <br />
-            FullStack Developer&nbsp;Software Developer&nbsp;FrontEnd Developer
+            Web Developer&nbsp;Software Developer&nbsp;FrontEnd Developer
           </p>
           <div>
-<<<<<<< HEAD
-            <button className="w-full px-6 py-3 mr-4 text-white rounded-full  bg-gradient-to-br from-blue-500 via-primary-500 to-secondary-500 sm:w-fit hover:bg-slate-200">
-              <a href="/PDFs/Resume2025.pdf"> Download Resume</a>
-=======
             <button className="px-6 py-3 mr-4 w-full text-white bg-gradient-to-br from-blue-500 rounded-full via-primary-500 to-secondary-500 sm:w-fit hover:bg-slate-200">
-              Hire Me
-            </button>
-            <button className="px-1 py-1 mt-3 w-full text-white bg-gradient-to-br from-blue-500 rounded-full sm:w-fit via-primary-500 to-secondary-500 hover:bg-slate-800">
-              <span className="block bg-[#121212] hover:bg-slate-800 rounded-full px-5 py-2">
-                <a href="/PDFs/Aaron_Resume.pdf"> Download CV</a>
-              </span>
->>>>>>> 185ca0c (update)
+              <a href="/PDFs/Resume2025.pdf"> Download Resume</a>
             </button>
           </div>
         </motion.div>
