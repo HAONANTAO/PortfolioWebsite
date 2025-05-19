@@ -1,7 +1,7 @@
 /*
  * @Date: 2025-05-17 20:27:00
  * @LastEditors: 陶浩南 taoaaron5@gmail.com
- * @LastEditTime: 2025-05-19 21:24:29
+ * @LastEditTime: 2025-05-19 21:29:53
  * @FilePath: /PortfolioWebsite/src/app/components/HeroSection.jsx
  */
 "use client";
@@ -47,7 +47,7 @@ const HeroSection = () => {
           </p>
           <div>
             <button className="px-6 py-3 mr-4 w-full text-white bg-gradient-to-br from-blue-500 rounded-full via-primary-500 to-secondary-500 sm:w-fit hover:bg-slate-200">
-              <a href="/PDFs/Resume2025.pdf"> Download Resume</a>
+              <a href="/PDFs/Resume0517.pdf"> Download Resume</a>
             </button>
           </div>
         </motion.div>

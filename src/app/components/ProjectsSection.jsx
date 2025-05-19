@@ -12,6 +12,7 @@ const ProjectsSection = () => {
 
   const handleTagChange = (newTag) => {
     setTag(newTag);
+    console.log("Selected tag:", newTag);
   };
 
   const filteredProjects = ProjectsData.filter((project) =>
@@ -25,7 +26,7 @@ const ProjectsSection = () => {
   return (
     <section id="projects" ref={ref}>
       <h2 className="text-4xl font-bold">My Projects</h2>
-      <div className="flex flex-row items-center justify-center gap-2 py-6 text-white">
+      <div className="flex flex-row gap-2 justify-center items-center py-6 text-white">
         <ProjectTag
           onClick={handleTagChange}
           tag="All"
@@ -41,12 +42,16 @@ const ProjectsSection = () => {
           tag="NextJS"
           isSelected={tag === "NextJS"}
         />
-         <ProjectTag
+        <ProjectTag
           onClick={handleTagChange}
           tag="TypeScript"
           isSelected={tag === "TypeScript"}
         />
-      
+        <ProjectTag
+          onClick={handleTagChange}
+          tag="ReactNative"
+          isSelected={tag === "ReactNative"}
+        />
       </div>
       <ul className="grid gap-8 md:grid-cols-3 md:gap-14">
         {filteredProjects.map((project, index) => {

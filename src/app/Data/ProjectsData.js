@@ -3,7 +3,7 @@ const ProjectsData = [
     id: 0,
     title: "Money Recorder",
     description: "The personal accounting app for recording money",
-    tag: ["All", "React", "React Natived"],
+    tag: ["All", "React", "ReactNative"],
     imgUrl: "/images/Projects/Money.png",
     gitUrl: "https://github.com/HAONANTAO/Money_Recorder",
     preview: "https://apps.apple.com/us/app/moneyrecorder/id6744058988",
@@ -11,7 +11,7 @@ const ProjectsData = [
   {
     id: 1,
     title: "The E-Commerce Website",
-    description: "Gneral e-commerce website show",
+    description: "general e-commerce website show",
     tag: ["All", "React", "MongoDB"],
     imgUrl: "/images/Projects/ECommerce.png",
     gitUrl: "https://github.com/HAONANTAO/E-Commerce-Rabbit",
