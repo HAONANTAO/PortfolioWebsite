@@ -6,9 +6,9 @@
  * @FilePath: /PortfolioWebsite/src/app/Data/AchievementData.js
  */
 const achievementsList = [
-  { metric: 'Projects', value: '9', postfix: '+' },
+  { metric: 'Projects', value: '10', postfix: '+' },
   { metric: 'Certifications', value: '4', postfix: '+' },
   { metric: 'Awards', value: '1', postfix: '' },
-  { metric: 'Years', value: '2', postfix: '' },
+  { metric: 'Years', value: '1', postfix: '+' },
 ];
 export default achievementsList;
