@@ -13,9 +13,9 @@ const TAB_DATA = [
         <li>HTML,CSS,JavaScript,TypeScript</li>
         <li>React,NextJS,ReactNative,TailWindCSS</li>
         <li>Express,NodeJS</li>
-        <li>Prisma,MongoDB,MySQL</li>
+        <li>Prisma,MongoDB,Shadcn</li>
         <li>Agile,AWS</li>
-        <li>Vercel,Clerk,stripe</li>
+        <li>Vercel,Clerk,Stripe</li>
       </ul>
     ),
   },
