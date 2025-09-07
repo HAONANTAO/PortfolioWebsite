@@ -4,11 +4,11 @@
  * @LastEditTime: 2025-05-19 21:29:53
  * @FilePath: /PortfolioWebsite/src/app/components/HeroSection.jsx
  */
-"use client";
-import React from "react";
-import Image from "next/image";
-import { TypeAnimation } from "react-type-animation";
-import { motion } from "framer-motion";
+'use client';
+import React from 'react';
+import Image from 'next/image';
+import { TypeAnimation } from 'react-type-animation';
+import { motion } from 'framer-motion';
 
 const HeroSection = () => {
   return (
@@ -19,7 +19,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="col-span-7 place-self-center text-center sm:text-left">
+          className="col-span-7 text-center place-self-center sm:text-left">
           {/* 大屏幕下占据12列分7/5 */}
           <h1 className="mb-4 text-4xl font-extrabold text-white sm:text-45xl lg:text-8xl lg:leading-normal">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-secondary-600">
@@ -28,13 +28,13 @@ const HeroSection = () => {
             <br />
             <TypeAnimation
               sequence={[
-                "Aaron TAO",
+                'Aaron TAO',
                 1000,
-                "Web Developer",
+                'Web Developer',
                 1000,
-                "Frontend Developer",
+                'Frontend Developer',
                 1000,
-                "Fullstack Developer",
+                'Fullstack Developer',
                 1000,
               ]}
               wrapper="span"
@@ -46,8 +46,8 @@ const HeroSection = () => {
             I am currently looking for a job as FullStack Developer
           </p>
           <div>
-            <button className="px-6 py-3 mr-4 w-full text-white bg-gradient-to-br from-blue-500 rounded-full via-primary-500 to-secondary-500 sm:w-fit hover:bg-slate-200">
-              <a href="/PDFs/Resume0517.pdf"> Download Resume</a>
+            <button className="w-full px-6 py-3 mr-4 text-white rounded-full bg-gradient-to-br from-blue-500 via-primary-500 to-secondary-500 sm:w-fit hover:bg-slate-200">
+              <a href="/PDFs/2025.09.07Resume.pdf"> Download Resume</a>
             </button>
           </div>
         </motion.div>
@@ -55,13 +55,13 @@ const HeroSection = () => {
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="col-span-5 place-self-center mt-4 lg:mt-0">
+          className="col-span-5 mt-4 place-self-center lg:mt-0">
           {/* public可以直接从/导入 */}
           <div className="rounded-full bg-[#181818] w-[250px] h-[250px] relative lg:w-[400px] lg:h-[400px]">
             <Image
               src="/images/image1.jpg"
               alt="hero image"
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+              className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
               width={300}
               height={300}></Image>
           </div>
