@@ -47,7 +47,7 @@ const HeroSection = () => {
           </p>
           <div>
             <button className="w-full px-6 py-3 mr-4 text-white rounded-full bg-gradient-to-br from-blue-500 via-primary-500 to-secondary-500 sm:w-fit hover:bg-slate-200">
-              <a href="/PDFs/2025.09.07Resume.pdf"> Download Resume</a>
+              <a href="/PDFs/Resume0906.pdf"> Download Resume</a>
             </button>
           </div>
         </motion.div>
