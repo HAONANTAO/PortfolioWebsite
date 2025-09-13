@@ -4,11 +4,11 @@
  * @LastEditTime: 2025-05-19 21:29:53
  * @FilePath: /PortfolioWebsite/src/app/components/HeroSection.jsx
  */
-'use client';
-import React from 'react';
-import Image from 'next/image';
-import { TypeAnimation } from 'react-type-animation';
-import { motion } from 'framer-motion';
+'use client'
+import React from 'react'
+import Image from 'next/image'
+import { TypeAnimation } from 'react-type-animation'
+import { motion } from 'framer-motion'
 
 const HeroSection = () => {
   return (
@@ -47,7 +47,7 @@ const HeroSection = () => {
           </p>
           <div>
             <button className="w-full px-6 py-3 mr-4 text-white rounded-full bg-gradient-to-br from-blue-500 via-primary-500 to-secondary-500 sm:w-fit hover:bg-slate-200">
-              <a href="/PDFs/Resume0906.pdf"> Download Resume</a>
+              <a href="/PDFs/Resume0913.pdf"> Download Resume</a>
             </button>
           </div>
         </motion.div>
@@ -68,7 +68,7 @@ const HeroSection = () => {
         </motion.div>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default HeroSection;
+export default HeroSection
