@@ -14,15 +14,52 @@ module.exports = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      animation: {
+        "glow-pulse": "glow-pulse 3s ease-in-out infinite",
+        "gradient-shift": "gradient-shift 5s ease infinite",
+        float: "float 7s ease-in-out infinite",
+        "border-spin": "border-spin 4s linear infinite",
+        "scan-line": "scan-line 3s linear infinite",
+      },
+      keyframes: {
+        "glow-pulse": {
+          "0%, 100%": {
+            boxShadow:
+              "0 0 20px rgba(6, 182, 212, 0.3), 0 0 40px rgba(139, 92, 246, 0.1)",
+          },
+          "50%": {
+            boxShadow:
+              "0 0 40px rgba(6, 182, 212, 0.6), 0 0 80px rgba(139, 92, 246, 0.3)",
+          },
+        },
+        "gradient-shift": {
+          "0%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+          "100%": { backgroundPosition: "0% 50%" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0px) rotate(0deg)" },
+          "33%": { transform: "translateY(-12px) rotate(1deg)" },
+          "66%": { transform: "translateY(6px) rotate(-1deg)" },
+        },
+        "border-spin": {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
+        "scan-line": {
+          "0%": { top: "0%" },
+          "100%": { top: "100%" },
+        },
+      },
     },
     colors: {
       ...colors,
-      primary: colors.sky, // ✅ 替换 lightBlue 为 sky
-      secondary: colors.pink,
-      stone: colors.stone, // ✅ 替换 warmGray 为 stone
-      neutral: colors.neutral, // ✅ 替换 trueGray 为 neutral
-      gray: colors.gray, // ✅ 替换 coolGray 为 gray
-      slate: colors.slate, // ✅ 替换 blueGray 为 slate
+      primary: colors.cyan,
+      secondary: colors.violet,
+      stone: colors.stone,
+      neutral: colors.neutral,
+      gray: colors.gray,
+      slate: colors.slate,
     },
   },
   plugins: [],

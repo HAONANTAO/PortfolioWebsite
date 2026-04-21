@@ -3,39 +3,166 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-  /* Your default theme */
-  --background: white;
-  --foreground: black;
+  --foreground-rgb: 255, 255, 255;
+  --glow-cyan: rgba(6, 182, 212, 0.5);
+  --glow-violet: rgba(139, 92, 246, 0.4);
 }
 
-[data-theme="dark"] {
-  --background: black;
-  --foreground: white;
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #080810; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #06b6d4, #8b5cf6);
+  border-radius: 10px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+/* ─── Subtle static grid (behind canvas) ─── */
+.cyber-grid {
+  background-image:
+    linear-gradient(rgba(6, 182, 212, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(6, 182, 212, 0.025) 1px, transparent 1px);
+  background-size: 64px 64px;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+/* ─── Dot grid ─── */
+.dot-grid {
+  background-image: radial-gradient(circle, rgba(6, 182, 212, 0.1) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* ─── Glitch ─── */
+@keyframes glitch {
+  0%, 88%, 100% { clip-path: none; transform: none; }
+  90% { clip-path: inset(20% 0 60% 0); transform: translateX(-3px); color: #06b6d4; }
+  92% { clip-path: inset(60% 0 10% 0); transform: translateX(3px); color: #8b5cf6; }
+  94% { clip-path: none; transform: none; }
+  96% { clip-path: inset(40% 0 30% 0); transform: translateX(-2px); color: #22d3ee; }
+  98% { clip-path: none; transform: none; }
+}
+.glitch { animation: glitch 6s ease-in-out infinite; }
+
+/* ─── Float ─── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33%       { transform: translateY(-10px) rotate(1deg); }
+  66%       { transform: translateY(5px) rotate(-1deg); }
+}
+.animate-float { animation: float 7s ease-in-out infinite; }
+
+/* ─── Gradient animated text ─── */
+.gradient-text-animated {
+  background: linear-gradient(135deg, #06b6d4, #8b5cf6, #22d3ee, #a78bfa);
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 5s ease infinite;
+}
+@keyframes gradient-shift {
+  0%   { background-position: 0% center; }
+  50%  { background-position: 100% center; }
+  100% { background-position: 0% center; }
+}
+
+/* ─── Glow ─── */
+.glow-cyan   { box-shadow: 0 0 30px rgba(6,182,212,0.25), 0 0 60px rgba(6,182,212,0.1); }
+.glow-violet { box-shadow: 0 0 30px rgba(139,92,246,0.25), 0 0 60px rgba(139,92,246,0.1); }
+.glow-text-cyan { text-shadow: 0 0 20px rgba(6,182,212,0.7); }
+
+/* ─── Animated gradient border card ─── */
+.gradient-border {
+  background: linear-gradient(#0a0a0f, #0a0a0f) padding-box,
+    linear-gradient(135deg, #06b6d4, #8b5cf6, #06b6d4) border-box;
+  border: 1px solid transparent;
+  background-size: 100%, 200% 200%;
+  animation: gradient-border-spin 5s ease infinite;
+}
+@keyframes gradient-border-spin {
+  0%   { background-position: 0 0, 0% 50%; }
+  50%  { background-position: 0 0, 100% 50%; }
+  100% { background-position: 0 0, 0% 50%; }
+}
+
+/* ─── Glass ─── */
+.glass {
+  background: rgba(10, 10, 20, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(6, 182, 212, 0.1);
+}
+
+/* ─── Hover lift + glow ─── */
+.hover-glow {
+  transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+}
+.hover-glow:hover {
+  box-shadow: 0 0 30px rgba(6,182,212,0.2), 0 0 60px rgba(139,92,246,0.1);
+  transform: translateY(-4px);
+}
+
+/* ─── Input glow on focus ─── */
+.input-glow:focus {
+  outline: none;
+  border-color: #06b6d4 !important;
+  box-shadow: 0 0 0 2px rgba(6,182,212,0.2), 0 0 20px rgba(6,182,212,0.15);
+}
+
+/* ─── Scan line overlay ─── */
+.scan-overlay { position: relative; overflow: hidden; }
+.scan-overlay::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, transparent, rgba(6,182,212,0.7), transparent);
+  animation: scan-line 4s linear infinite;
+}
+@keyframes scan-line {
+  0%   { top: -2px; }
+  100% { top: 100%; }
+}
+
+/* ─── Corner bracket decoration ─── */
+.corner-bracket { position: relative; }
+.corner-bracket::before,
+.corner-bracket::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: rgba(6,182,212,0.5);
+  border-style: solid;
+  transition: border-color 0.3s ease, width 0.3s ease, height 0.3s ease;
+}
+.corner-bracket::before { top: -4px; left: -4px; border-width: 2px 0 0 2px; }
+.corner-bracket::after  { bottom: -4px; right: -4px; border-width: 0 2px 2px 0; }
+.corner-bracket:hover::before,
+.corner-bracket:hover::after {
+  border-color: rgba(6,182,212,0.9);
+  width: 22px;
+  height: 22px;
+}
+
+/* ─── Pulse dot ─── */
+@keyframes ping-slow {
+  0%    { transform: scale(1); opacity: 1; }
+  75%, 100% { transform: scale(2.2); opacity: 0; }
+}
+.ping-slow { animation: ping-slow 2s cubic-bezier(0,0,0.2,1) infinite; }
+
+/* ─── Stat card glow on hover ─── */
+.stat-card {
+  transition: all 0.3s ease;
+  background: rgba(10,10,20,0.8);
+}
+.stat-card:hover {
+  background: rgba(6,182,212,0.04);
+  box-shadow: 0 0 40px rgba(6,182,212,0.15), inset 0 0 20px rgba(6,182,212,0.03);
+  transform: translateY(-6px) scale(1.02);
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+  .text-balance { text-wrap: balance; }
 }

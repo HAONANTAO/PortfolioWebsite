@@ -6,10 +6,9 @@
  */
 const achievementsList = [
 
-  { metric: 'Projects', value: '10', postfix: '+' },
+  { metric: 'AI Projects', value: '10', postfix: '+' },
   { metric: 'Certifications', value: '4', postfix: '+' },
-  { metric: 'Awards', value: '1', postfix: '' },
-  { metric: 'Years', value: '1', postfix: '+' },
+  { metric: 'Yrs Experience', value: '2', postfix: '+' },
 
 ];
 export default achievementsList;
