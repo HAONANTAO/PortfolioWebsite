@@ -1,18 +1,22 @@
 'use client'
 import React from 'react'
-import Image from 'next/image'
 import { TypeAnimation } from 'react-type-animation'
 import { motion } from 'framer-motion'
+import AiCore from './AiCore'
 
+// Badges sit just outside AiCore (container=460, center=230, r=210)
 const orbitBadges = [
-  { label: 'LangChain',     angle: 15,  r: 215 },
-  { label: 'OpenAI API',    angle: 65,  r: 200 },
-  { label: 'TypeScript',    angle: 120, r: 210 },
-  { label: 'React',         angle: 170, r: 205 },
-  { label: 'Node.js',       angle: 220, r: 212 },
-  { label: 'AWS',           angle: 270, r: 200 },
-  { label: 'Next.js',       angle: 325, r: 208 },
+  { label: 'LangChain',    angle: 10  },
+  { label: 'OpenAI API',   angle: 60  },
+  { label: 'TypeScript',   angle: 115 },
+  { label: 'React',        angle: 165 },
+  { label: 'Node.js',      angle: 215 },
+  { label: 'AWS',          angle: 268 },
+  { label: 'Next.js',      angle: 320 },
 ]
+const BADGE_R  = 210
+const BADGE_CX = 230
+const BADGE_CY = 230
 
 const HeroSection = () => {
   return (
@@ -30,7 +34,6 @@ const HeroSection = () => {
           transition={{ duration: 0.7, ease: 'easeOut' }}
           className="col-span-7 text-center place-self-center sm:text-left">
 
-          {/* System status pill */}
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -43,7 +46,6 @@ const HeroSection = () => {
             SYS_STATUS: OPEN_TO_OPPORTUNITIES
           </motion.div>
 
-          {/* Main heading */}
           <h1 className="mb-4 text-4xl font-extrabold sm:text-5xl lg:text-7xl lg:leading-tight">
             <span className="gradient-text-animated">Hello, I'm</span>
             <br />
@@ -62,7 +64,6 @@ const HeroSection = () => {
             </span>
           </h1>
 
-          {/* Sub tagline */}
           <p className="text-[#ADB7BE] text-base mb-2 sm:text-lg max-w-lg">
             Building intelligent, production-grade applications that leverage
             <span className="text-cyan-400"> LLMs</span>,
@@ -70,7 +71,6 @@ const HeroSection = () => {
             <span className="text-emerald-400"> modern full-stack architecture</span>.
           </p>
 
-          {/* Decorative divider */}
           <div className="flex items-center gap-3 mb-7 mt-5">
             <div className="h-px flex-1 max-w-[100px] bg-gradient-to-r from-cyan-500/70 to-transparent" />
             <span className="text-[10px] font-mono text-cyan-500/50 tracking-[0.2em] uppercase">
@@ -79,15 +79,13 @@ const HeroSection = () => {
             <div className="h-px w-8 bg-violet-500/40" />
           </div>
 
-          {/* CTAs */}
           <div className="flex flex-wrap gap-3">
             <a href="/PDFs/Resume0913.pdf">
               <button className="group relative px-6 py-3 text-white rounded-full font-medium overflow-hidden
                 bg-gradient-to-r from-cyan-500 to-violet-600
                 hover:shadow-[0_0_35px_rgba(6,182,212,0.5)] hover:scale-105 active:scale-95 transition-all duration-300">
-                <span className="relative z-10">Download Resume</span>
+                <span className="relative z-10">Download Resume ↗</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <span className="relative z-10"> ↗</span>
               </button>
             </a>
             <a href="#projects">
@@ -101,14 +99,13 @@ const HeroSection = () => {
             </a>
           </div>
 
-          {/* Mini tech stack row */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
             className="flex flex-wrap gap-2 mt-8">
             {['Python', 'OpenAI', 'LangChain', 'React', 'Next.js', 'AWS'].map(t => (
-              <span key={t} className="text-[10px] font-mono text-[#666] border border-[#222] rounded px-1.5 py-0.5 hover:text-cyan-500/80 hover:border-cyan-500/30 transition-colors cursor-default">
+              <span key={t} className="text-[10px] font-mono text-[#555] border border-[#1e1e1e] rounded px-1.5 py-0.5 hover:text-cyan-500/80 hover:border-cyan-500/30 transition-colors cursor-default">
                 {t}
               </span>
             ))}
@@ -122,73 +119,39 @@ const HeroSection = () => {
           transition={{ duration: 0.7, ease: 'easeOut', delay: 0.1 }}
           className="col-span-5 mt-4 place-self-center lg:mt-0">
 
-          <div className="relative" style={{ width: 340, height: 340 }}>
-            {/* Outer orbit */}
-            <div
-              className="absolute rounded-full border border-dashed border-cyan-500/12"
-              style={{ inset: '-42px' }}
-            />
-            {/* Rotating dot on orbit */}
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 28, repeat: Infinity, ease: 'linear' }}
-              className="absolute rounded-full"
-              style={{ inset: '-42px' }}>
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2
-                w-3 h-3 rounded-full bg-cyan-400
-                shadow-[0_0_12px_2px_rgba(6,182,212,0.9)]" />
-            </motion.div>
-            {/* Counter-rotating dot (violet) */}
-            <motion.div
-              animate={{ rotate: -360 }}
-              transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}
-              className="absolute rounded-full"
-              style={{ inset: '-42px' }}>
-              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2
-                w-2 h-2 rounded-full bg-violet-400
-                shadow-[0_0_10px_2px_rgba(139,92,246,0.8)]" />
-            </motion.div>
+          {/* Container: small on mobile, full on desktop */}
+          <div className="relative w-[300px] h-[300px] lg:w-[460px] lg:h-[460px]">
 
-            {/* Floating tech badges */}
-            {orbitBadges.map(({ label, angle, r }) => {
+            {/* Floating tech badges — desktop only */}
+            {orbitBadges.map(({ label, angle }) => {
               const rad = (angle * Math.PI) / 180
-              const cx = 170 + r * Math.cos(rad)
-              const cy = 170 + r * Math.sin(rad)
+              const x   = BADGE_CX + BADGE_R * Math.cos(rad)
+              const y   = BADGE_CY + BADGE_R * Math.sin(rad)
               return (
                 <motion.div
                   key={label}
                   initial={{ opacity: 0, scale: 0 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.5 + angle / 700, duration: 0.4 }}
-                  className="absolute -translate-x-1/2 -translate-y-1/2
+                  transition={{ delay: 0.6 + angle / 800, duration: 0.35 }}
+                  className="hidden lg:block absolute z-10 -translate-x-1/2 -translate-y-1/2
                     px-2 py-0.5 text-[9px] font-mono rounded-full
                     border border-cyan-500/25 bg-[#060608]/90 text-cyan-400/70
                     hover:border-cyan-400 hover:text-cyan-300
                     hover:shadow-[0_0_12px_rgba(6,182,212,0.5)]
                     transition-all duration-200 cursor-default select-none whitespace-nowrap"
-                  style={{ left: cx, top: cy }}>
+                  style={{ left: x, top: y }}>
                   {label}
                 </motion.div>
               )
             })}
 
-            {/* Avatar */}
+            {/* AiCore centered */}
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-[280px] h-[280px] rounded-full overflow-hidden
-                border border-cyan-500/20
-                shadow-[0_0_60px_rgba(6,182,212,0.15),inset_0_0_40px_rgba(6,182,212,0.04)]
-                scan-overlay">
-                <Image
-                  src="/images/image1.jpg"
-                  alt="Aaron TAO"
-                  className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                  width={300}
-                  height={300}
-                />
-              </div>
+              <AiCore />
             </div>
           </div>
         </motion.div>
+
       </div>
     </section>
   )

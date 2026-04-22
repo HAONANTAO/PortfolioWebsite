@@ -28,7 +28,7 @@ export default function Home() {
       <CursorGlow />
       <NavBar />
 
-      <div className="container px-12 py-4 mx-auto mt-24 relative z-10">
+      <div className="container px-4 sm:px-8 lg:px-12 py-4 mx-auto mt-24 relative z-10">
         <HeroSection />
         <AchievementSection />
         <AboutSection />

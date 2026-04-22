@@ -39,6 +39,7 @@ const ProjectCard = ({ imgUrl, title, description, gitUrl, preview, tag, tech })
         style={{
           background: `url(${imgUrl})`,
           backgroundSize: "cover",
+          backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}>
         {/* Bottom gradient fade */}

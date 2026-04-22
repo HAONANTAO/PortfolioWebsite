@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useTransition } from "react";
-import Image from "next/image";
 import TabButton from "./TabButton";
+import TerminalCard from "./TerminalCard";
 import TAB_DATA from "../Data/TabData.js";
 import { motion } from "framer-motion";
 
@@ -14,7 +14,7 @@ const AboutSection = () => {
   };
 
   return (
-    <section className="text-white relative py-12">
+    <section id="about" className="text-white relative py-12">
       {/* Section label */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -29,29 +29,8 @@ const AboutSection = () => {
       </motion.div>
 
       <div className="gap-10 items-start md:grid md:grid-cols-2 xl:gap-16">
-        {/* Image */}
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="relative group">
-          <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-cyan-500/15 to-violet-500/15
-            opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm" />
-          <Image
-            src="/images/image2.png"
-            alt="about me"
-            width={500}
-            height={500}
-            className="relative z-10 rounded-lg border border-[#1a1a2e]
-              group-hover:border-cyan-500/25
-              group-hover:shadow-[0_0_50px_rgba(6,182,212,0.12)]
-              transition-all duration-500"
-          />
-          {/* Corner brackets */}
-          <div className="absolute top-3 left-3 w-5 h-5 border-t-2 border-l-2 border-cyan-500/40 opacity-0 group-hover:opacity-100 transition-opacity" />
-          <div className="absolute bottom-3 right-3 w-5 h-5 border-b-2 border-r-2 border-violet-500/40 opacity-0 group-hover:opacity-100 transition-opacity" />
-        </motion.div>
+        {/* Terminal card */}
+        <TerminalCard />
 
         {/* Content */}
         <motion.div

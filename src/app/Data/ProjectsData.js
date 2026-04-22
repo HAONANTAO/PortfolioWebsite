@@ -1,5 +1,15 @@
 const ProjectsData = [
   {
+    id: -1,
+    title: "DocuMind",
+    description: `AI-powered SaaS that lets users upload PDF documents and ask natural language questions using RAG (Retrieval-Augmented Generation). Built with LangChain, OpenAI GPT-4o-mini, and Pinecone vector database. Features streaming responses (SSE), source citations, multi-turn conversation memory, and per-user namespace isolation. Deployed on Vercel + Render.`,
+    tag: ["All", "React", "NextJS", "TypeScript"],
+    imgUrl: "/images/Projects/documind.png",
+    gitUrl: "https://github.com/HAONANTAO/DocuMind",
+    preview: "https://docu-mind-neon.vercel.app",
+    Tech: ["React", "Node.js", "LangChain", "OpenAI", "Pinecone", "MongoDB", "Tailwind CSS"],
+  },
+  {
     id: 0,
     title: "All Storage",
     description: `AllStorage is a modern, full-featured storage management and file sharing platform that allows users to upload, organise, and share files effortlessly. Built with Next.js 15, TypeScript, TailwindCSS, and AppWrite, it features secure passwordless authentication via email OTP, real-time data management, and a modular, maintainable architecture designed for both personal use and enterprise-level storage solutions.`,
