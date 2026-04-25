@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useTransition } from "react";
 import TabButton from "./TabButton";
-import TerminalCard from "./TerminalCard";
+import AIChatDemo from "./AIChatDemo";
 import TAB_DATA from "../Data/TabData.js";
 import { motion } from "framer-motion";
 
@@ -29,8 +29,8 @@ const AboutSection = () => {
       </motion.div>
 
       <div className="gap-10 items-start md:grid md:grid-cols-2 xl:gap-16">
-        {/* Terminal card */}
-        <TerminalCard />
+        {/* AI Chat Demo */}
+        <AIChatDemo />
 
         {/* Content */}
         <motion.div
@@ -43,18 +43,17 @@ const AboutSection = () => {
           {/* Bio */}
           <div className="relative pl-4 border-l border-cyan-500/20 mb-6">
             <p className="text-[#ADB7BE] text-sm lg:text-base leading-7">
-              Full Stack Engineer with <span className="text-cyan-400 font-medium">2+ years</span> shipping
-              production apps across web, mobile, and AI. Built a
-              <span className="text-violet-400 font-medium"> RAG-powered document SaaS</span> (DocuMind),
-              a <span className="text-emerald-400 font-medium">wage management dashboard</span>, and a
-              <span className="text-sky-400 font-medium"> finance iOS app live on the App Store</span> —
-              from idea to deployed product.
+              I'm an engineer who ships end-to-end —
+              <span className="text-sky-400 font-medium"> sole-authored a finance app to the App Store</span>,
+              built a <span className="text-violet-400 font-medium">production RAG SaaS</span> (DocuMind)
+              with streaming responses and vector search, and I'm obsessed with closing the gap between
+              <span className="text-cyan-400 font-medium"> LLM demos and real-world products</span>.
             </p>
             <p className="text-[#ADB7BE] text-sm lg:text-base leading-7 mt-3">
               Stack: <span className="text-cyan-400 font-medium">React · Next.js · TypeScript · Node.js · React Native</span>.
-              Integrates LLMs via <span className="text-violet-400 font-medium">OpenAI API &amp; LangChain</span>,
-              currently exploring <span className="text-amber-400 font-medium">AI Agent architectures</span>.
-              Certified <span className="text-amber-400 font-medium">AWS Cloud Practitioner</span> &amp; <span className="text-pink-400 font-medium">PMP®</span> · Australian PR · Full work rights.
+              Reaches for <span className="text-violet-400 font-medium">LangChain &amp; OpenAI API</span> when
+              the problem needs LLMs, and <span className="text-amber-400 font-medium">AWS</span> when it needs scale.
+              <span className="text-emerald-400 font-medium"> AWS CCP · PMP®</span> certified · Australian PR · Full work rights.
             </p>
           </div>
 

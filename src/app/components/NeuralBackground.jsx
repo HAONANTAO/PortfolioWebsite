@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react'
 
 export default function NeuralBackground() {
   const canvasRef = useRef(null)
+  const mouseRef  = useRef({ x: -9999, y: -9999 })
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -16,30 +17,61 @@ export default function NeuralBackground() {
     resize()
     window.addEventListener('resize', resize)
 
+    const onMouseMove = (e) => {
+      mouseRef.current = { x: e.clientX, y: e.clientY }
+    }
+    window.addEventListener('mousemove', onMouseMove)
+
     const NUM = 70
     const CONNECT_DIST = 130
+    const MOUSE_RADIUS = 180
+    const MAX_SPEED    = 1.4
     const particles = Array.from({ length: NUM }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
       vx: (Math.random() - 0.5) * 0.35,
       vy: (Math.random() - 0.5) * 0.35,
       r: Math.random() * 1.8 + 0.6,
-      pulse: 0,          // 0-1 activation pulse
+      pulse: 0,
       pulseDecay: 0.015 + Math.random() * 0.01,
     }))
 
-    // Randomly "fire" neurons
     const fireInterval = setInterval(() => {
       const p = particles[Math.floor(Math.random() * particles.length)]
       p.pulse = 1
     }, 600)
 
     let animId
-    const draw = () => {
+    let lastFrame = 0
+    const FPS_CAP = 30
+    const MS_PER_FRAME = 1000 / FPS_CAP
+
+    const draw = (now = 0) => {
+      animId = requestAnimationFrame(draw)
+      if (now - lastFrame < MS_PER_FRAME) return
+      lastFrame = now
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-      // Move & decay
+      const { x: mx, y: my } = mouseRef.current
+
+      // Move, attract toward cursor, clamp speed
       particles.forEach(p => {
+        const dx   = mx - p.x
+        const dy   = my - p.y
+        const dist = Math.sqrt(dx * dx + dy * dy)
+
+        if (dist < MOUSE_RADIUS && dist > 0) {
+          const strength = ((MOUSE_RADIUS - dist) / MOUSE_RADIUS) * 0.018
+          p.vx += (dx / dist) * strength
+          p.vy += (dy / dist) * strength
+          // Nearby particles glow
+          if (dist < 90) p.pulse = Math.max(p.pulse, (90 - dist) / 90 * 0.7)
+        }
+
+        // Speed cap
+        const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy)
+        if (speed > MAX_SPEED) { p.vx = (p.vx / speed) * MAX_SPEED; p.vy = (p.vy / speed) * MAX_SPEED }
+
         p.x += p.vx
         p.y += p.vy
         if (p.x < 0 || p.x > canvas.width)  p.vx *= -1
@@ -93,14 +125,14 @@ export default function NeuralBackground() {
         ctx.fill()
       })
 
-      animId = requestAnimationFrame(draw)
     }
-    draw()
+    animId = requestAnimationFrame(draw)
 
     return () => {
       cancelAnimationFrame(animId)
       clearInterval(fireInterval)
       window.removeEventListener('resize', resize)
+      window.removeEventListener('mousemove', onMouseMove)
     }
   }, [])
 

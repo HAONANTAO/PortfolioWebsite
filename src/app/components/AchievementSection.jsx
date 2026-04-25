@@ -6,14 +6,16 @@ import {
   FolderOpenIcon,
   AcademicCapIcon,
   CalendarDaysIcon,
+  DevicePhoneMobileIcon,
 } from "@heroicons/react/24/outline";
 
 const AnimatedNumbers = dynamic(() => import("react-animated-numbers"), { ssr: false });
 
 const stats = [
-  { metric: "AI Projects",    value: "10", postfix: "+", icon: FolderOpenIcon,  color: "cyan",    label: "PROJECTS_TOTAL" },
-  { metric: "Certifications", value: "4",  postfix: "+", icon: AcademicCapIcon, color: "violet",  label: "CERTS_EARNED"   },
-  { metric: "Yrs Experience", value: "2",  postfix: "+", icon: CalendarDaysIcon,color: "emerald", label: "YRS_EXPERIENCE" },
+  { metric: "Apps Shipped",      value: "6",  postfix: "+", icon: FolderOpenIcon,        color: "cyan",    label: "PRODUCTION_APPS"  },
+  { metric: "iOS · App Store",   value: "1",  postfix: "",  icon: DevicePhoneMobileIcon, color: "emerald", label: "LIVE_ON_APPSTORE"  },
+  { metric: "Certifications",    value: "3",  postfix: "",  icon: AcademicCapIcon,       color: "violet",  label: "AWS_PMP_ITIL"      },
+  { metric: "Yrs Experience",    value: "2",  postfix: "+", icon: CalendarDaysIcon,      color: "amber",   label: "YRS_EXPERIENCE"    },
 ];
 
 const palette = {
@@ -36,7 +38,7 @@ const AchievementSection = () => {
         </p>
       </motion.div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
         {stats.map((stat, i) => {
           const c = palette[stat.color];
           const Icon = stat.icon;

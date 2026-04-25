@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Hide native cursor on pointer devices — replaced by CursorGlow */
+@media (pointer: fine) {
+  * { cursor: none !important; }
+}
+
+html { scroll-behavior: smooth; }
+
 :root {
   --foreground-rgb: 255, 255, 255;
   --glow-cyan: rgba(6, 182, 212, 0.5);
@@ -165,4 +172,13 @@
 
 @layer utilities {
   .text-balance { text-wrap: balance; }
+}
+
+/* Project card image — shows top on load, pans to bottom on hover */
+.img-pan {
+  background-position: top center !important;
+  transition: background-position 3.5s ease-in-out;
+}
+.img-pan:hover {
+  background-position: bottom center !important;
 }

@@ -1,8 +1,9 @@
 'use client'
 import React from 'react'
-import { TypeAnimation } from 'react-type-animation'
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import AiCore from './AiCore'
+import MagneticWrapper from './MagneticWrapper'
 
 // Badges sit just outside AiCore (container=460, center=230, r=210)
 const orbitBadges = [
@@ -46,58 +47,91 @@ const HeroSection = () => {
             SYS_STATUS: OPEN_TO_OPPORTUNITIES
           </motion.div>
 
-          <h1 className="mb-4 text-4xl font-extrabold sm:text-5xl lg:text-7xl lg:leading-tight">
+          <h1 className="mb-3 text-4xl font-extrabold sm:text-5xl lg:text-7xl lg:leading-tight">
             <span className="gradient-text-animated">Hello, I'm</span>
             <br />
-            <span className="text-white">
-              <TypeAnimation
-                sequence={[
-                  'Aaron TAO',            1500,
-                  'AI Engineer',          1200,
-                  'Full Stack Developer', 1200,
-                ]}
-                wrapper="span"
-                speed={55}
-                repeat={Infinity}
-              />
-              <span className="inline-block w-0.5 h-[0.9em] bg-cyan-400 ml-1 animate-pulse align-middle" />
-            </span>
+            <span className="text-white">Aaron TAO</span>
           </h1>
 
-          <p className="text-[#ADB7BE] text-base mb-2 sm:text-lg max-w-lg">
-            Building intelligent, production-grade applications that leverage
-            <span className="text-cyan-400"> LLMs</span>,
-            <span className="text-violet-400"> generative AI</span>, and
-            <span className="text-emerald-400"> modern full-stack architecture</span>.
+          <p className="text-lg sm:text-xl lg:text-2xl font-semibold text-white/90 mb-5 leading-snug max-w-lg">
+            I build{' '}
+            <span className="text-cyan-400">AI-powered products</span>
+            {' '}— from{' '}
+            <span className="text-violet-400">LLM pipelines</span>
+            {' '}to the{' '}
+            <span className="text-emerald-400">App Store</span>.
+          </p>
+
+          <p className="text-[#ADB7BE] text-sm sm:text-base mb-2 max-w-lg leading-relaxed">
+            Melbourne-trained full-stack engineer. Shipped a{' '}
+            <span className="text-emerald-400 font-medium">finance app to the App Store solo</span>,
+            built a{' '}
+            <span className="text-violet-400 font-medium">production RAG SaaS</span>,
+            and obsessed with closing the gap between LLM demos and real-world products.
           </p>
 
           <div className="flex items-center gap-3 mb-7 mt-5">
             <div className="h-px flex-1 max-w-[100px] bg-gradient-to-r from-cyan-500/70 to-transparent" />
             <span className="text-[10px] font-mono text-cyan-500/50 tracking-[0.2em] uppercase">
-              AI × Full Stack × Cloud
+              AI · Full Stack · Mobile · Cloud
             </span>
             <div className="h-px w-8 bg-violet-500/40" />
           </div>
 
           <div className="flex flex-wrap gap-3">
-            <a href="/PDFs/Resume0913.pdf">
-              <button className="group relative px-6 py-3 text-white rounded-full font-medium overflow-hidden
-                bg-gradient-to-r from-cyan-500 to-violet-600
-                hover:shadow-[0_0_35px_rgba(6,182,212,0.5)] hover:scale-105 active:scale-95 transition-all duration-300">
-                <span className="relative z-10">Download Resume ↗</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </button>
-            </a>
-            <a href="#projects">
-              <button className="px-6 py-3 text-cyan-400 rounded-full font-medium
-                border border-cyan-500/40 bg-transparent
-                hover:border-cyan-400 hover:bg-cyan-500/8
-                hover:shadow-[0_0_20px_rgba(6,182,212,0.2)]
-                hover:scale-105 active:scale-95 transition-all duration-300">
-                Explore Projects →
-              </button>
-            </a>
+            <MagneticWrapper>
+              <a href="/PDFs/Resume0913.pdf">
+                <button className="group relative px-6 py-3 text-white rounded-full font-medium overflow-hidden
+                  bg-gradient-to-r from-cyan-500 to-violet-600
+                  hover:shadow-[0_0_35px_rgba(6,182,212,0.5)] active:scale-95 transition-all duration-300">
+                  <span className="relative z-10">Download Resume ↗</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </button>
+              </a>
+            </MagneticWrapper>
+            <MagneticWrapper>
+              <a href="#projects">
+                <button className="px-6 py-3 text-cyan-400 rounded-full font-medium
+                  border border-cyan-500/40 bg-transparent
+                  hover:border-cyan-400 hover:bg-cyan-500/8
+                  hover:shadow-[0_0_20px_rgba(6,182,212,0.2)]
+                  active:scale-95 transition-all duration-300">
+                  Explore Projects →
+                </button>
+              </a>
+            </MagneticWrapper>
           </div>
+
+          {/* Social links */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.0 }}
+            className="flex items-center gap-4 mt-6"
+          >
+            <span className="text-[10px] font-mono text-[#444] tracking-widest">FIND ME</span>
+            <div className="h-px w-6 bg-[#222]" />
+            {[
+              { href: 'https://github.com/HAONANTAO', src: '/images/icons/github-icon.svg', label: 'GitHub' },
+              { href: 'https://www.linkedin.com/in/haonan-tao-4a9855270/', src: '/images/icons/linkedin-icon.svg', label: 'LinkedIn' },
+            ].map(({ href, src, label }) => (
+              <motion.a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ y: -3, scale: 1.15 }}
+                whileTap={{ scale: 0.9 }}
+                className="w-9 h-9 flex items-center justify-center rounded-full
+                  border border-[#1e1e1e] bg-[#0a0a10]
+                  hover:border-cyan-500/40 hover:shadow-[0_0_14px_rgba(6,182,212,0.3)]
+                  transition-all duration-200"
+                aria-label={label}
+              >
+                <Image src={src} alt={label} width={18} height={18} className="opacity-60 hover:opacity-100 transition-opacity" />
+              </motion.a>
+            ))}
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0 }}

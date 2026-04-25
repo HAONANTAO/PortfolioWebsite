@@ -102,10 +102,9 @@ const TAB_DATA = [
     content: (
       <div className="flex flex-col gap-2.5">
         {[
-          { href: "/PDFs/ITIL.pdf",     label: "ITIL® Foundation",         org: "Axelos",    color: "border-violet-500/35 text-violet-300", bg: "bg-violet-500/5" },
-          { href: "/PDFs/PMP.pdf",       label: "PMP® Certified",           org: "PMI",       color: "border-cyan-500/35 text-cyan-300",     bg: "bg-cyan-500/5" },
           { href: "/PDFs/AWS.pdf",       label: "AWS Cloud Practitioner",   org: "Amazon",    color: "border-amber-500/35 text-amber-300",   bg: "bg-amber-500/5" },
-          { href: "/PDFs/Microsoft.pdf", label: "Microsoft Office Expert",  org: "Microsoft", color: "border-emerald-500/35 text-emerald-300",bg: "bg-emerald-500/5" },
+          { href: "/PDFs/PMP.pdf",       label: "PMP® Certified",           org: "PMI",       color: "border-cyan-500/35 text-cyan-300",     bg: "bg-cyan-500/5" },
+          { href: "/PDFs/ITIL.pdf",      label: "ITIL® Foundation",         org: "Axelos",    color: "border-violet-500/35 text-violet-300", bg: "bg-violet-500/5" },
         ].map((cert) => (
           <a key={cert.label} href={cert.href} className="group block">
             <div className={`flex items-center justify-between px-4 py-2.5 rounded-xl border

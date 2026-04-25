@@ -4,7 +4,7 @@ import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
 import { CodeBracketIcon, EyeIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
-const ProjectCard = ({ imgUrl, title, description, gitUrl, preview, tag, tech }) => {
+const ProjectCard = ({ imgUrl, title, description, metric, gitUrl, preview, tag, tech }) => {
   const cardRef = useRef(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -35,11 +35,10 @@ const ProjectCard = ({ imgUrl, title, description, gitUrl, preview, tag, tech })
 
       {/* Image */}
       <div
-        className="relative h-52 md:h-[230px] group scan-overlay"
+        className="relative h-52 md:h-[230px] group scan-overlay img-pan"
         style={{
           background: `url(${imgUrl})`,
           backgroundSize: "cover",
-          backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}>
         {/* Bottom gradient fade */}
@@ -84,6 +83,12 @@ const ProjectCard = ({ imgUrl, title, description, gitUrl, preview, tag, tech })
       <div className="py-5 px-4">
         <h5 className="mb-2 text-base font-semibold text-white">{title}</h5>
         <p className="text-[#ADB7BE] text-sm line-clamp-3 leading-relaxed">{description}</p>
+
+        {metric && (
+          <p className="mt-2.5 text-[10px] font-mono text-cyan-400/70 border-l-2 border-cyan-500/30 pl-2 leading-relaxed">
+            {metric}
+          </p>
+        )}
 
         {tech && tech.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mt-3">
