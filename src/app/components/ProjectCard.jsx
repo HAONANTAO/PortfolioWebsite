@@ -1,10 +1,10 @@
 'use client'
 import React, { useRef } from "react";
 import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
-import { CodeBracketIcon, EyeIcon } from "@heroicons/react/24/outline";
+import { CodeBracketIcon, EyeIcon, BookOpenIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
-const ProjectCard = ({ imgUrl, title, description, metric, gitUrl, preview, tag, tech }) => {
+const ProjectCard = ({ imgUrl, title, description, metric, gitUrl, preview, tag, tech, relatedWriting }) => {
   const cardRef = useRef(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -102,6 +102,20 @@ const ProjectCard = ({ imgUrl, title, description, metric, gitUrl, preview, tag,
               </span>
             ))}
           </div>
+        )}
+
+        {relatedWriting && (
+          <Link
+            href={`/writings/${relatedWriting.slug}`}
+            className="group/dive mt-4 flex items-center gap-1.5 text-[11px] font-mono
+              text-cyan-400/80 hover:text-cyan-300 transition-colors w-fit"
+          >
+            <BookOpenIcon className="w-3.5 h-3.5" />
+            <span className="underline decoration-cyan-500/30 underline-offset-4 group-hover/dive:decoration-cyan-400">
+              Read the deep dive
+            </span>
+            <span className="transition-transform group-hover/dive:translate-x-1">→</span>
+          </Link>
         )}
       </div>
     </motion.div>

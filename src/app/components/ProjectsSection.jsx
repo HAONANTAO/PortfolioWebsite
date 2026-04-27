@@ -4,18 +4,24 @@ import ProjectCard from "./ProjectCard";
 import ProjectsData from "../Data/ProjectsData.js";
 import ProjectTag from "./ProjectTag";
 import { motion, useInView } from "framer-motion";
-import { CodeBracketIcon, EyeIcon } from "@heroicons/react/24/outline";
+import { CodeBracketIcon, EyeIcon, BookOpenIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
 const FILTERS = ["All", "AI", "NextJS", "TypeScript"];
 
-const ProjectsSection = () => {
+const findRelatedWriting = (project, writings) =>
+  writings.find(
+    (w) => w.category === "project" && w.project === project.title
+  );
+
+const ProjectsSection = ({ writings = [] }) => {
   const [tag, setTag] = useState("All");
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
   const featured = ProjectsData[0]; // DocuMind — always first
   const rest = ProjectsData.slice(1);
+  const featuredWriting = findRelatedWriting(featured, writings);
 
   // When "All": featured card handles DocuMind, grid shows the rest.
   // When filtered: grid shows all matching projects (including DocuMind if it matches).
@@ -115,7 +121,7 @@ const ProjectsSection = () => {
                 </div>
               )}
 
-              <div className="flex gap-3">
+              <div className="flex gap-3 flex-wrap">
                 <Link href={featured.gitUrl}>
                   <div className="flex items-center gap-2 bg-[#0f0f14] border border-cyan-500/40
                     text-cyan-400 px-4 py-2 rounded-full text-sm font-medium
@@ -133,6 +139,21 @@ const ProjectsSection = () => {
                   </div>
                 </Link>
               </div>
+
+              {featuredWriting && (
+                <Link
+                  href={`/writings/${featuredWriting.slug}`}
+                  className="group/dive mt-5 flex items-center gap-2 text-xs font-mono
+                    text-cyan-400/80 hover:text-cyan-300 transition-colors w-fit"
+                >
+                  <BookOpenIcon className="w-3.5 h-3.5" />
+                  <span className="opacity-70">Deep dive:</span>
+                  <span className="underline decoration-cyan-500/30 underline-offset-4 group-hover/dive:decoration-cyan-400">
+                    {featuredWriting.title}
+                  </span>
+                  <span className="transition-transform group-hover/dive:translate-x-1">→</span>
+                </Link>
+              )}
             </div>
 
             {/* Right: image */}
@@ -168,6 +189,7 @@ const ProjectsSection = () => {
               preview={project.preview}
               tag={project.tag}
               tech={project.Tech}
+              relatedWriting={findRelatedWriting(project, writings)}
             />
           </motion.li>
         ))}

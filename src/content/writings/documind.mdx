@@ -1,0 +1,70 @@
+---
+title: "Building DocuMind — My First Real AI Project"
+slug: "documind"
+date: "2026-04-27"
+summary: "What I learned shipping a RAG SaaS from zero — the mistakes, the architecture, and why the second version threw most of the first away."
+tags: ["RAG", "LangChain", "Pinecone", "Next.js"]
+category: "project"
+project: "DocuMind"
+cover: "/images/Projects/documind.png"
+readingTime: "8 min"
+---
+
+The first version of DocuMind worked. It also embarrassed me.
+
+A user could upload a PDF, ask a question, and get an answer back. On paper that's a RAG app. In practice it hallucinated half its citations, took twelve seconds to respond, and re-embedded the same document if you re-uploaded it. The code path for "answer a question" touched eight files and three services. I had built the demo, not the product.
+
+This post is about what changed between v1 and the version that's live now — and what I'd tell myself if I were starting over today.
+
+## The naive pipeline
+
+My first instinct was the textbook RAG diagram everyone draws on a napkin:
+
+```
+PDF → chunks → embeddings → Pinecone → retrieve top-k → stuff into prompt → GPT
+```
+
+I implemented exactly that. It works for a hello-world. It falls apart the moment a real user uploads a 200-page contract and asks "what changed in section 4 compared to the original draft?"
+
+The failures clustered into three buckets:
+
+1. **Chunking was stupid.** Fixed 500-token windows split sentences mid-clause, separated headers from their tables, and treated a footnote the same as a topic sentence. Retrieval fetched the right *region* and the wrong *meaning*.
+2. **Top-k was a guess.** k=4 missed context. k=10 blew the prompt budget and made the model pick the wrong passage to cite. I had no measurement to tune against — I was eyeballing answers.
+3. **No memory of the conversation.** Each question was a cold start. Users asked follow-ups assuming the model remembered the last answer; it didn't.
+
+## What v2 actually looks like
+
+The version live at [docu-mind-neon.vercel.app](https://docu-mind-neon.vercel.app) has a different shape.
+
+**Chunking is structure-aware.** I parse the PDF into a tree of headers → sections → paragraphs first, then chunk *inside* leaves with overlap. A "chunk" now carries its breadcrumbs (`Doc > Section 4.2 > "Termination"`), which the retriever uses for re-ranking and the UI uses for citations.
+
+**Per-user namespaces in Pinecone.** This sounds like a security bullet point but it actually solved a different problem: it made re-uploads cheap. Same user + same content hash = skip embedding. Saved my OpenAI bill the week I started showing the demo to friends.
+
+**Streaming SSE end-to-end.** The 12-second response wasn't the model — it was me waiting for the full completion before sending anything. Switching to Server-Sent Events made the perceived latency drop to ~600ms (time-to-first-token). Same total time, completely different feel.
+
+**Multi-turn memory with a window.** Last N turns get summarized and prepended. Not novel, but the trick was *not* re-embedding the whole conversation as context — only the current question gets retrieved against, then prior turns are conditioned in the prompt.
+
+## The thing nobody warned me about
+
+LangChain is great until it isn't. The chains compose beautifully when you're following a tutorial. The moment you need to debug why a specific retrieval returned a specific chunk, you're three abstraction layers deep in callbacks and the stack trace is a wall of `RunnableSequence`.
+
+Halfway through v2 I ripped out about 60% of the LangChain surface area and replaced it with direct OpenAI + Pinecone SDK calls plus a thin orchestration layer of my own. The prompt templates and a couple of utilities stayed. Everything else became code I could actually read.
+
+This isn't a knock on LangChain — for prototyping it's unmatched. But for something you're going to operate, the abstractions hide the wrong things. You want to see your prompt. You want to see your retrieval. You don't want them buried in a `Runnable`.
+
+## What I'd do differently
+
+If I were starting today, with what I know now:
+
+- **Build the eval set on day one.** Twenty Q&A pairs with known-good answers. Run them every time you change chunking, k, or the prompt. I built this in week six. Should've been week zero.
+- **Pick the smallest model that works.** I started on GPT-4. GPT-4o-mini hits the same quality on this task at ~10× lower cost. The "use the big model" instinct is wrong if you haven't measured.
+- **Citations are the product.** Users don't trust AI answers — they trust AI answers *with sources they can click*. I treated citations as a UI feature; they're actually the trust mechanism the whole thing rides on.
+- **Stream from the first byte.** Even if the backend isn't ready, fake the streaming. Perceived latency is the difference between "this is slow" and "this is alive."
+
+## Why this was worth doing
+
+DocuMind isn't novel. It's the same RAG pattern a thousand teams shipped in 2024. The point of building it wasn't to invent something — it was to internalize, by hand, every layer between "user types a question" and "model returns an answer." Vector stores stop being mysterious once you've watched your own embeddings fail to retrieve obvious matches. Prompt engineering stops being magic once you've A/B'd the same prompt across three models.
+
+The vibe-coding era doesn't change this. You can scaffold a RAG app in an afternoon now. But the failure modes are the same ones I hit in v1, and the fixes are still the boring ones: better chunking, eval sets, smaller models, clearer code.
+
+The repo is on [GitHub](https://github.com/HAONANTAO/DocuMind) if you want to poke at it. The README is honest about what's still rough.

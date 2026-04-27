@@ -1,33 +1,49 @@
+"use client";
 import React from "react";
-import { Link as ScrollLink } from "react-scroll"; // 导入 react-scroll 的 Link 组件
-// import NavLink from "./NavLink"; // 导入你的 NavLink 组件
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const MenuOverlay = ({ links }) => {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+
+  const handleAnchorClick = (event, path) => {
+    if (!isHome) return; // let normal navigation happen
+    event.preventDefault();
+    const el = document.querySelector(path);
+    if (el) {
+      window.scrollTo({ top: el.offsetTop - 70, behavior: "smooth" });
+    }
+  };
+
   return (
-    <ul className="flex flex-col items-center py-4">
-      {links.map((link, index) => (
-        <li key={index}>
-          {/* 使用 react-scroll 的 Link 组件包裹 NavLink 组件 */}
-          <ScrollLink
-            to={link.path} // 目标元素的 ID
-            spy={true}
-            offset={400}
-            smooth={true}
-            duration={500} // 可选：滚动持续时间，单位为毫秒
-            className="text-2xl text-purple-300 cursor-pointer" // 可选：添加样式
-            onClick={(event) => {
-              // 阻止默认的链接行为
-              event.preventDefault();
-              // 执行平滑滚动操作
-              window.scrollTo({
-                top: document.querySelector(link.path).offsetTop - 70,
-                behavior: "smooth",
-              });
-            }}>
-            {link.title}
-          </ScrollLink>
-        </li>
-      ))}
+    <ul className="flex flex-col items-center py-4 gap-2">
+      {links.map((link, index) => {
+        if (link.type === "route") {
+          return (
+            <li key={index}>
+              <Link
+                href={link.path}
+                className="text-2xl text-purple-300 cursor-pointer"
+              >
+                {link.title}
+              </Link>
+            </li>
+          );
+        }
+        const href = isHome ? link.path : `/${link.path}`;
+        return (
+          <li key={index}>
+            <a
+              href={href}
+              onClick={(e) => handleAnchorClick(e, link.path)}
+              className="text-2xl text-purple-300 cursor-pointer"
+            >
+              {link.title}
+            </a>
+          </li>
+        );
+      })}
     </ul>
   );
 };

@@ -22,7 +22,7 @@ const EmailSection = () => {
         viewport={{ once: true }}
         className="mb-12">
         <p className="text-xs font-mono text-cyan-500/50 tracking-[0.3em] uppercase mb-2">
-          // 04 &nbsp; INIT_CONNECTION
+          // 05 &nbsp; INIT_CONNECTION
         </p>
         <h2 className="text-4xl font-bold gradient-text-animated mb-1">Let's Build Together</h2>
         <div className="h-px w-20 bg-gradient-to-r from-cyan-500/60 to-transparent" />

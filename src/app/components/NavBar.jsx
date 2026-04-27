@@ -1,28 +1,39 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import MenuOverlay from "./MenuOverlay";
 import AnimatedLogo from "./AnimatedLogo";
 
 const navLinks = [
-  { title: "About",    path: "#about"    },
-  { title: "Projects", path: "#projects" },
-  { title: "Contact",  path: "#contact"  },
+  { title: "About",    path: "#about",    type: "anchor" },
+  { title: "Projects", path: "#projects", type: "anchor" },
+  { title: "Writings", path: "/writings", type: "route"  },
+  { title: "Contact",  path: "#contact",  type: "anchor" },
 ];
 
 const NavBar = () => {
   const [navbarOpen,     setNavbarOpen]     = useState(false);
   const [scrolled,       setScrolled]       = useState(false);
   const [activeSection,  setActiveSection]  = useState("");
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 20);
 
-      // Active section detection
-      const sectionIds = navLinks.map(l => l.path.slice(1));
+      if (!isHome) {
+        setActiveSection("");
+        return;
+      }
+
+      // Active section detection (home only)
+      const sectionIds = navLinks
+        .filter((l) => l.type === "anchor")
+        .map((l) => l.path.slice(1));
       let current = "";
       for (const id of sectionIds) {
         const el = document.getElementById(id);
@@ -31,9 +42,20 @@ const NavBar = () => {
       setActiveSection(current);
     };
 
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [isHome]);
+
+  const hrefFor = (link) => {
+    if (link.type === "route") return link.path;
+    return isHome ? link.path : `/${link.path}`;
+  };
+
+  const isLinkActive = (link) => {
+    if (link.type === "route") return pathname.startsWith(link.path);
+    return isHome && activeSection === link.path.slice(1);
+  };
 
   return (
     <nav
@@ -59,11 +81,13 @@ const NavBar = () => {
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link, i) => {
-            const isActive = activeSection === link.path.slice(1);
+            const isActive = isLinkActive(link);
+            const href = hrefFor(link);
+            const LinkTag = link.type === "route" ? Link : "a";
             return (
-              <a
+              <LinkTag
                 key={i}
-                href={link.path}
+                href={href}
                 className="relative text-sm font-mono group flex flex-col items-center gap-0.5"
               >
                 <span
@@ -89,7 +113,7 @@ const NavBar = () => {
                     <span className="absolute inset-0 bg-gradient-to-r from-cyan-400/50 to-violet-500/50 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
                   )}
                 </span>
-              </a>
+              </LinkTag>
             );
           })}
 
