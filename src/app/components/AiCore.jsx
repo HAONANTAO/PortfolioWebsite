@@ -118,29 +118,6 @@ export default function AiCore() {
     canvas.width  = S
     canvas.height = S
 
-    // Stars
-    const stars = Array.from({ length: 240 }, () => ({
-      x: Math.random() * S, y: Math.random() * S,
-      r: Math.random() * 1.2 + 0.2,
-      base: 0.3 + Math.random() * 0.7,
-      sp: 0.4 + Math.random() * 2.0,
-      ph: Math.random() * Math.PI * 2,
-    }))
-
-    // Milky Way band
-    const mw = Array.from({ length: 350 }, (_, i) => {
-      const t  = i / 350
-      const a  = t * Math.PI * 2
-      const sp = (Math.random() - 0.5) * 80
-      const core = Math.exp(-((t - 0.5) ** 2) / 0.06) * 0.18
-      return {
-        x: S * 0.5 + Math.cos(a * 1.2 + 0.4) * S * 0.46 + Math.cos(a * 2.4) * sp,
-        y: S * 0.5 + Math.sin(a * 1.2 + 0.4) * S * 0.32 + Math.sin(a * 2.4) * sp,
-        r: Math.random() * 1.8 + 0.3,
-        a: Math.random() * (0.06 + core) + 0.02,
-      }
-    })
-
     // Clouds
     const clouds = Array.from({ length: 28 }, () => ({
       lon: Math.random() * 360 - 180,
@@ -161,32 +138,7 @@ export default function AiCore() {
 
       ctx.clearRect(0, 0, S, S)
 
-      // ── Space bg ──────────────────────────────
-      const bg = ctx.createRadialGradient(CX, CY - 50, 0, CX, CY, S * 0.75)
-      bg.addColorStop(0, '#0e0b20')
-      bg.addColorStop(0.5,'#08070f')
-      bg.addColorStop(1, '#040408')
-      ctx.fillStyle = bg
-      ctx.fillRect(0, 0, S, S)
-
-      // Milky Way
-      mw.forEach(p => {
-        ctx.beginPath()
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(170,150,255,${p.a})`
-        ctx.fill()
-      })
-
-      // Stars
-      stars.forEach(s => {
-        const tw = 0.35 + 0.65 * (0.5 + 0.5 * Math.sin(t * s.sp + s.ph))
-        ctx.beginPath()
-        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(210,225,255,${s.base * tw})`
-        ctx.fill()
-      })
-
-      // ── Earth ─────────────────────────────────
+      // ── Earth (transparent space — works on any page bg) ─────────
       ctx.save()
       ctx.beginPath()
       ctx.arc(CX, CY, R, 0, Math.PI * 2)
@@ -276,24 +228,14 @@ export default function AiCore() {
       ctx.restore()
 
       // Atmosphere halo (outside clip)
-      const atm = ctx.createRadialGradient(CX, CY, R * 0.9, CX, CY, R * 1.22)
+      const atm = ctx.createRadialGradient(CX, CY, R * 0.95, CX, CY, R * 1.25)
       atm.addColorStop(0,    'rgba(80,160,255,0)')
-      atm.addColorStop(0.35, 'rgba(60,150,255,0.22)')
-      atm.addColorStop(0.7,  'rgba(40,100,200,0.08)')
+      atm.addColorStop(0.4,  'rgba(60,150,255,0.18)')
+      atm.addColorStop(0.75, 'rgba(40,100,200,0.06)')
       atm.addColorStop(1,    'rgba(20,60,180,0)')
       ctx.fillStyle = atm
       ctx.beginPath()
-      ctx.arc(CX, CY, R * 1.22, 0, Math.PI * 2)
-      ctx.fill()
-
-      // Outer glow
-      const og = ctx.createRadialGradient(CX, CY, R * 1.1, CX, CY, R * 1.5)
-      og.addColorStop(0,   'rgba(6,182,212,0.10)')
-      og.addColorStop(0.5, 'rgba(6,182,212,0.03)')
-      og.addColorStop(1,   'rgba(6,182,212,0)')
-      ctx.fillStyle = og
-      ctx.beginPath()
-      ctx.arc(CX, CY, R * 1.5, 0, Math.PI * 2)
+      ctx.arc(CX, CY, R * 1.25, 0, Math.PI * 2)
       ctx.fill()
 
       animId = requestAnimationFrame(frame)
