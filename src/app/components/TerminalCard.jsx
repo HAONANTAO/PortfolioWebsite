@@ -7,7 +7,7 @@ const commits = [
   { hash: 'b7d209a', type: 'ship',  color: 'text-cyan-400',    label: 'Wage Dashboard',    desc: 'management analytics platform',    time: '1 week ago'   },
   { hash: 'c91ef34', type: 'feat',  color: 'text-violet-400',  label: 'Mock AI ChatBot',   desc: 'GPT-3.5 powered chat interface',   time: '3 weeks ago'  },
   { hash: 'd44ba12', type: 'ship',  color: 'text-sky-400',     label: 'Money Recorder',    desc: 'iOS finance app · App Store live', time: '1 month ago'  },
-  { hash: 'e03c871', type: 'feat',  color: 'text-amber-400',   label: 'All Storage',       desc: 'cloud file management platform',   time: '2 months ago' },
+  { hash: 'e03c871', type: 'feat',  color: 'text-cyan-400',    label: 'All Storage',       desc: 'cloud file management platform',   time: '2 months ago' },
   { hash: 'f8a2d56', type: 'feat',  color: 'text-cyan-400',    label: 'Evently',           desc: 'event platform · Stripe + Clerk',  time: '3 months ago' },
   { hash: 'g12c390', type: 'fix',   color: 'text-pink-400',    label: 'Issue Tracker',     desc: 'Next.js project management app',   time: '4 months ago' },
   { hash: 'h77f021', type: 'feat',  color: 'text-emerald-400', label: 'Mock Threads',      desc: 'social platform · MongoDB + SSR',  time: '5 months ago' },

@@ -1,122 +1,79 @@
 'use client'
-import React, { useRef } from "react";
-import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
-import { CodeBracketIcon, EyeIcon, BookOpenIcon } from "@heroicons/react/24/outline";
+import React from "react";
+import { motion } from "framer-motion";
+import { CodeBracketIcon, EyeIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
 const ProjectCard = ({ imgUrl, title, description, metric, gitUrl, preview, tag, tech, relatedWriting }) => {
-  const cardRef = useRef(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const rotateX = useSpring(useTransform(y, [-80, 80], [8, -8]), { stiffness: 200, damping: 20 });
-  const rotateY = useSpring(useTransform(x, [-80, 80], [-8, 8]), { stiffness: 200, damping: 20 });
-  const glowX   = useTransform(x, [-80, 80], [0, 100]);
-  const glowY   = useTransform(y, [-80, 80], [0, 100]);
-
-  const handleMouseMove = (e) => {
-    const rect = cardRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    x.set(e.clientX - rect.left - rect.width / 2);
-    y.set(e.clientY - rect.top - rect.height / 2);
-  };
-  const handleMouseLeave = () => { x.set(0); y.set(0); };
-
   return (
     <motion.div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{ rotateX, rotateY, transformPerspective: 800 }}
-      className="rounded-xl overflow-hidden border border-[#33353F]/60
-        hover:border-cyan-500/30 transition-border duration-300
-        bg-[#0a0a0f]/90 cursor-default"
-      whileHover={{ scale: 1.02 }}>
+      whileHover={{ y: -3 }}
+      transition={{ duration: 0.2 }}
+      className="rounded-xl overflow-hidden border border-zinc-900/10
+        hover:border-zinc-900/25 bg-white/70 backdrop-blur-sm transition-colors duration-300 h-full flex flex-col">
 
-      {/* Image */}
       <div
-        className="relative h-52 md:h-[230px] group scan-overlay img-pan"
+        className="relative h-48 md:h-[200px] img-pan"
         style={{
           background: `url(${imgUrl})`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
-        }}>
-        {/* Bottom gradient fade */}
-        <div className="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-[#0a0a0f] to-transparent" />
+          boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.05)',
+        }}
+      />
 
-        {/* Mouse-following glow highlight */}
-        <motion.div
-          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-          style={{
-            background: useTransform(
-              [glowX, glowY],
-              ([gx, gy]) =>
-                `radial-gradient(circle at ${gx}% ${gy}%, rgba(6,182,212,0.12), transparent 60%)`,
-            ),
-          }}
-        />
-
-        {/* Hover overlay */}
-        <div className="overlay flex-col items-center justify-center absolute top-0 left-0 w-full h-full
-          bg-opacity-0 hidden bg-[#080810] group-hover:flex group-hover:bg-opacity-88
-          transition-all duration-400 p-4">
-          <div className="flex gap-3">
-            <Link href={gitUrl} className="hover:scale-110 transition-transform">
-              <div className="flex items-center gap-2 bg-[#0f0f14] border border-cyan-500/40
-                text-cyan-400 px-4 py-1.5 rounded-full text-sm font-medium
-                hover:shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-shadow">
-                <CodeBracketIcon className="w-4 h-4" /> GitHub
-              </div>
-            </Link>
-            <Link href={preview} target="_blank" className="hover:scale-110 transition-transform">
-              <div className="flex items-center gap-2 border border-violet-500/40
-                text-violet-300 px-4 py-1.5 rounded-full text-sm font-medium
-                hover:shadow-[0_0_15px_rgba(139,92,246,0.4)] transition-shadow">
-                <EyeIcon className="w-4 h-4" /> Live Demo
-              </div>
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* Info */}
-      <div className="py-5 px-4">
-        <h5 className="mb-2 text-base font-semibold text-white">{title}</h5>
-        <p className="text-[#ADB7BE] text-sm line-clamp-3 leading-relaxed">{description}</p>
+      <div className="py-5 px-5 flex-1 flex flex-col">
+        <h5 className="mb-2 text-base font-semibold text-zinc-900">{title}</h5>
+        <p className="text-zinc-600 text-sm line-clamp-3 leading-relaxed">{description}</p>
 
         {metric && (
-          <p className="mt-2.5 text-[10px] font-mono text-cyan-400/70 border-l-2 border-cyan-500/30 pl-2 leading-relaxed">
+          <p className="mt-3 text-xs text-zinc-500 leading-relaxed">
             {metric}
           </p>
         )}
 
         {tech && tech.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mt-3">
-            {tech.map((te, i) => (
+            {tech.slice(0, 4).map((te, i) => (
               <span
                 key={i}
-                className="px-2 py-0.5 text-[10px] font-mono border border-cyan-500/20
-                  bg-cyan-500/5 text-cyan-400/80 rounded-full
-                  hover:border-cyan-500/50 hover:text-cyan-300 transition-all duration-150">
+                className="px-1.5 py-0.5 text-[10px] text-zinc-600 border border-zinc-900/10 rounded">
                 {te}
               </span>
             ))}
           </div>
         )}
 
+        {/* Deep dive — surfaces the related writing prominently */}
         {relatedWriting && (
           <Link
             href={`/writings/${relatedWriting.slug}`}
-            className="group/dive mt-4 flex items-center gap-1.5 text-[11px] font-mono
-              text-cyan-400/80 hover:text-cyan-300 transition-colors w-fit"
+            className="group/dive mt-4 flex items-start gap-2 px-3 py-2.5 rounded-lg
+              border border-zinc-900/10 bg-zinc-900/[0.025]
+              hover:border-zinc-900/25 hover:bg-zinc-900/[0.04] transition-colors"
           >
-            <BookOpenIcon className="w-3.5 h-3.5" />
-            <span className="underline decoration-cyan-500/30 underline-offset-4 group-hover/dive:decoration-cyan-400">
-              Read the deep dive
-            </span>
-            <span className="transition-transform group-hover/dive:translate-x-1">→</span>
+            <div className="flex-1 min-w-0">
+              <span className="block text-[10px] uppercase tracking-widest text-zinc-400 mb-0.5">
+                Deep dive
+              </span>
+              <span className="block text-xs font-medium text-zinc-800 line-clamp-2 leading-snug">
+                {relatedWriting.title}
+              </span>
+            </div>
+            <ArrowRightIcon className="w-3.5 h-3.5 mt-2 text-zinc-400 shrink-0
+              transition-transform group-hover/dive:translate-x-0.5 group-hover/dive:text-zinc-700" />
           </Link>
         )}
+
+        <div className="mt-auto pt-4 flex items-center gap-3 text-sm">
+          <Link href={gitUrl} className="flex items-center gap-1 text-zinc-600 hover:text-zinc-900 transition-colors">
+            <CodeBracketIcon className="w-4 h-4" /> Code
+          </Link>
+          <span className="text-zinc-300">·</span>
+          <Link href={preview} target="_blank" className="flex items-center gap-1 text-zinc-600 hover:text-zinc-900 transition-colors">
+            <EyeIcon className="w-4 h-4" /> Live
+          </Link>
+        </div>
       </div>
     </motion.div>
   );

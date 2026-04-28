@@ -4,7 +4,7 @@ import ProjectCard from "./ProjectCard";
 import ProjectsData from "../Data/ProjectsData.js";
 import ProjectTag from "./ProjectTag";
 import { motion, useInView } from "framer-motion";
-import { CodeBracketIcon, EyeIcon, BookOpenIcon } from "@heroicons/react/24/outline";
+import { CodeBracketIcon, EyeIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
 const FILTERS = ["All", "AI", "NextJS", "TypeScript"];
@@ -19,92 +19,73 @@ const ProjectsSection = ({ writings = [] }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
-  const featured = ProjectsData[0]; // DocuMind — always first
+  const featured = ProjectsData[0];
   const rest = ProjectsData.slice(1);
   const featuredWriting = findRelatedWriting(featured, writings);
 
-  // When "All": featured card handles DocuMind, grid shows the rest.
-  // When filtered: grid shows all matching projects (including DocuMind if it matches).
   const showFeatured = tag === "All";
   const gridProjects = tag === "All"
     ? rest
     : ProjectsData.filter((p) => p.tag.includes(tag));
 
-  const totalShown = showFeatured
-    ? 1 + gridProjects.length
-    : gridProjects.length;
-
   const cardVariants = {
-    initial: { y: 50, opacity: 0 },
+    initial: { y: 24, opacity: 0 },
     animate: { y: 0, opacity: 1 },
   };
 
   return (
-    <section id="projects" ref={ref} className="relative py-12">
+    <section id="projects" ref={ref} className="relative py-20 border-t border-zinc-900/10">
 
-      {/* ── Header ── */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}>
-        <p className="text-xs font-mono text-cyan-500/50 tracking-[0.3em] uppercase mb-2">
-          // 03 &nbsp; PROJECT_LOGS
+        <h2 className="serif text-4xl sm:text-5xl font-normal text-zinc-900 mb-3">Selected work</h2>
+        <p className="text-zinc-500 text-sm max-w-xl mb-10">
+          A handful of things I've shipped — each link is a real product or a working repo.
         </p>
-        <div className="flex items-end gap-4 mb-1">
-          <h2 className="text-4xl font-bold gradient-text-animated">My Projects</h2>
-          <span className="text-xs font-mono text-[#555] mb-1.5">
-            [{totalShown} loaded]
-          </span>
-        </div>
-        <div className="h-px w-20 bg-gradient-to-r from-cyan-500/60 to-transparent" />
       </motion.div>
 
-      {/* ── Filter bar ── */}
-      <div className="flex flex-wrap gap-2 justify-start items-center py-7 mt-2">
-        <span className="text-[10px] font-mono text-[#555] mr-1">filter:</span>
+      <div className="flex flex-wrap gap-2 mb-10">
         {FILTERS.map((t) => (
           <ProjectTag key={t} onClick={setTag} tag={t} isSelected={tag === t} />
         ))}
       </div>
 
-      {/* ── Featured card (DocuMind) ── */}
       {showFeatured && (
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 16 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
           transition={{ duration: 0.5 }}
-          className="mb-8 rounded-2xl overflow-hidden border border-cyan-500/20
-            bg-[#0a0a0f]/90 hover:border-cyan-500/40
-            transition-colors duration-300 group">
+          className="mb-10 rounded-xl overflow-hidden border border-zinc-900/10
+            hover:border-zinc-900/25 transition-colors duration-300 group bg-white
+            shadow-[0_4px_24px_rgba(0,0,0,0.04)]">
 
           <div className="grid md:grid-cols-2">
 
-            {/* Left: content */}
             <div className="p-7 lg:p-9 flex flex-col justify-center">
 
               <div className="flex items-center gap-2 mb-4">
-                <span className="px-2 py-0.5 text-[9px] font-mono tracking-widest uppercase
-                  text-cyan-400 border border-cyan-500/30 rounded-full bg-cyan-500/5">
-                  Flagship Project
+                <span className="text-[10px] uppercase tracking-widest text-zinc-500">
+                  Featured
                 </span>
-                <span className="px-2 py-0.5 text-[9px] font-mono tracking-widest uppercase
-                  text-violet-400 border border-violet-500/30 rounded-full bg-violet-500/5">
+                <span className="h-px w-8 bg-zinc-900/15" />
+                <span className="text-[10px] uppercase tracking-widest text-zinc-500">
                   AI · RAG · SaaS
                 </span>
               </div>
 
-              <h3 className="text-2xl lg:text-3xl font-bold text-white mb-3">
+              <h3 className="text-2xl lg:text-3xl font-semibold text-zinc-900 mb-3">
                 {featured.title}
               </h3>
 
-              <p className="text-[#ADB7BE] text-sm leading-relaxed mb-4">
+              <p className="text-zinc-600 text-sm leading-relaxed mb-5">
                 {featured.description}
               </p>
 
               {featured.metric && (
-                <p className="text-[10px] font-mono text-cyan-400/70
-                  border-l-2 border-cyan-500/30 pl-2 leading-relaxed mb-5">
+                <p className="text-xs text-zinc-500 leading-relaxed mb-5">
                   {featured.metric}
                 </p>
               )}
@@ -113,73 +94,66 @@ const ProjectsSection = ({ writings = [] }) => {
                 <div className="flex flex-wrap gap-1.5 mb-6">
                   {featured.Tech.map((te) => (
                     <span key={te}
-                      className="px-2 py-0.5 text-[10px] font-mono border border-cyan-500/20
-                        bg-cyan-500/5 text-cyan-400/80 rounded-full">
+                      className="px-2 py-0.5 text-[11px] text-zinc-700 border border-zinc-900/10 rounded">
                       {te}
                     </span>
                   ))}
                 </div>
               )}
 
-              <div className="flex gap-3 flex-wrap">
-                <Link href={featured.gitUrl}>
-                  <div className="flex items-center gap-2 bg-[#0f0f14] border border-cyan-500/40
-                    text-cyan-400 px-4 py-2 rounded-full text-sm font-medium
-                    hover:shadow-[0_0_15px_rgba(6,182,212,0.4)] hover:border-cyan-400
-                    transition-all duration-200">
-                    <CodeBracketIcon className="w-4 h-4" /> GitHub
-                  </div>
+              <div className="flex gap-3 flex-wrap items-center mb-5">
+                <Link href={featured.gitUrl} className="flex items-center gap-2 text-sm text-zinc-700 hover:text-zinc-900 transition-colors">
+                  <CodeBracketIcon className="w-4 h-4" /> GitHub
                 </Link>
-                <Link href={featured.preview} target="_blank">
-                  <div className="flex items-center gap-2 border border-violet-500/40
-                    text-violet-300 px-4 py-2 rounded-full text-sm font-medium
-                    hover:shadow-[0_0_15px_rgba(139,92,246,0.4)] hover:border-violet-400
-                    transition-all duration-200">
-                    <EyeIcon className="w-4 h-4" /> Live Demo
-                  </div>
+                <span className="text-zinc-300">·</span>
+                <Link href={featured.preview} target="_blank" className="flex items-center gap-2 text-sm text-zinc-700 hover:text-zinc-900 transition-colors">
+                  <EyeIcon className="w-4 h-4" /> Live
                 </Link>
               </div>
 
               {featuredWriting && (
                 <Link
                   href={`/writings/${featuredWriting.slug}`}
-                  className="group/dive mt-5 flex items-center gap-2 text-xs font-mono
-                    text-cyan-400/80 hover:text-cyan-300 transition-colors w-fit"
+                  className="group/dive flex items-center gap-3 px-4 py-3 rounded-lg
+                    border border-zinc-900/10 bg-zinc-900/[0.025]
+                    hover:border-zinc-900/25 hover:bg-zinc-900/[0.04] transition-colors w-fit max-w-full"
                 >
-                  <BookOpenIcon className="w-3.5 h-3.5" />
-                  <span className="opacity-70">Deep dive:</span>
-                  <span className="underline decoration-cyan-500/30 underline-offset-4 group-hover/dive:decoration-cyan-400">
-                    {featuredWriting.title}
-                  </span>
-                  <span className="transition-transform group-hover/dive:translate-x-1">→</span>
+                  <div className="flex-1 min-w-0">
+                    <span className="block text-[10px] uppercase tracking-widest text-zinc-400 mb-0.5">
+                      Deep dive
+                    </span>
+                    <span className="block text-sm font-medium text-zinc-800 line-clamp-1">
+                      {featuredWriting.title}
+                    </span>
+                  </div>
+                  <ArrowRightIcon className="w-4 h-4 text-zinc-400 shrink-0
+                    transition-transform group-hover/dive:translate-x-0.5 group-hover/dive:text-zinc-700" />
                 </Link>
               )}
             </div>
 
-            {/* Right: image */}
             <div
-              className="relative h-56 md:h-auto img-pan scan-overlay min-h-[220px]"
+              className="relative h-56 md:h-auto img-pan min-h-[260px]"
               style={{
                 background: `url(${featured.imgUrl})`,
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
+                boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.05)',
               }}>
-              <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0f] via-[#0a0a0f]/30 to-transparent md:block hidden" />
-              <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-[#0a0a0f] to-transparent md:hidden" />
+              <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-black/15 to-transparent md:hidden" />
             </div>
           </div>
         </motion.div>
       )}
 
-      {/* ── Project grid ── */}
-      <ul className="grid gap-6 md:grid-cols-3 md:gap-8">
+      <ul className="grid gap-6 md:grid-cols-3">
         {gridProjects.map((project, index) => (
           <motion.li
             key={project.id}
             initial="initial"
             variants={cardVariants}
             animate={isInView ? "animate" : "initial"}
-            transition={{ duration: 0.4, delay: index * 0.1 }}>
+            transition={{ duration: 0.4, delay: index * 0.06 }}>
             <ProjectCard
               imgUrl={project.imgUrl}
               title={project.title}
