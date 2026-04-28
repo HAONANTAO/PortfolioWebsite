@@ -134,10 +134,10 @@ export default function AIChatDemo() {
   })
 
   const styleClass = (s) =>
-    s === 'code'   ? 'text-emerald-400/90' :
-    s === 'sub'    ? 'text-sky-400/80'     :
-    s === 'result' ? 'text-cyan-400 font-semibold' :
-                     'text-[#7788aa]'
+    s === 'code'   ? 'text-emerald-700' :
+    s === 'sub'    ? 'text-zinc-500'    :
+    s === 'result' ? 'text-zinc-900 font-semibold' :
+                     'text-zinc-700'
 
   return (
     <motion.div
@@ -146,65 +146,45 @@ export default function AIChatDemo() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
-      className="w-full rounded-2xl overflow-hidden border border-[#181828]
-        shadow-[0_0_60px_rgba(6,182,212,0.09)] bg-[#080810]"
+      className="w-full rounded-2xl overflow-hidden border border-zinc-900/10
+        shadow-[0_4px_24px_rgba(0,0,0,0.04)] bg-white"
     >
       {/* ── Header ── */}
-      <div className="flex items-center justify-between px-4 py-3 bg-[#0b0b16] border-b border-[#161624]">
+      <div className="flex items-center justify-between px-4 py-3 bg-zinc-50 border-b border-zinc-900/8">
         <div className="flex items-center gap-3">
           <div className="relative shrink-0">
             <div className="w-9 h-9 rounded-full flex items-center justify-center text-[11px]
-              font-extrabold text-white tracking-wide
-              bg-gradient-to-br from-cyan-500 to-violet-600
-              shadow-[0_0_16px_rgba(6,182,212,0.5)]">
+              font-extrabold text-white tracking-wide bg-zinc-900">
               AI
             </div>
             <motion.span
               animate={{ opacity: [1, 0.3, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
               className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full
-                bg-emerald-400 border-2 border-[#0b0b16]
-                shadow-[0_0_8px_rgba(52,211,153,0.8)]"
+                bg-emerald-500 border-2 border-zinc-50"
             />
           </div>
           <div>
-            <p className="text-[13px] font-semibold text-white leading-none">Aaron's AI Assistant</p>
-            <p className="text-[9px] font-mono text-emerald-400/70 mt-0.5">
+            <p className="text-[13px] font-semibold text-zinc-900 leading-none">Aaron's AI Assistant</p>
+            <p className="text-[9px] text-emerald-600 mt-0.5">
               ● Online · Knowledge base loaded
             </p>
           </div>
         </div>
 
-        {/* Cycle indicator dots */}
         <div className="flex items-center gap-2">
           {CYCLES.map((_, i) => (
             <div key={i} className={`w-1.5 h-1.5 rounded-full transition-all duration-300
-              ${cycleIdx % CYCLES.length === i ? 'bg-cyan-400 shadow-[0_0_6px_rgba(6,182,212,0.8)]' : 'bg-[#333]'}`} />
+              ${cycleIdx % CYCLES.length === i ? 'bg-zinc-900' : 'bg-zinc-300'}`} />
           ))}
-          <span className="text-[8px] font-mono text-[#333] ml-1">
+          <span className="text-[9px] text-zinc-400 ml-1 tabular-nums">
             {cycleIdx % CYCLES.length + 1}/{CYCLES.length}
           </span>
         </div>
       </div>
 
-      {/* ── Topic badge ── */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={cycleIdx}
-          initial={{ opacity: 0, y: -6 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 6 }}
-          transition={{ duration: 0.2 }}
-          className="px-4 pt-3 pb-0"
-        >
-          <span className="text-[9px] font-mono text-violet-400/50 tracking-[0.25em] uppercase">
-            {['// LLM_STRATEGY', '// RELIABILITY_PATTERNS', '// AGENT_ARCHITECTURE'][cycleIdx % CYCLES.length]}
-          </span>
-        </motion.div>
-      </AnimatePresence>
-
       {/* ── Messages ── */}
-      <div className="px-4 pt-3 pb-4 space-y-4" style={{ minHeight: 310 }}>
+      <div className="px-4 pt-4 pb-4 space-y-4" style={{ minHeight: 320 }}>
 
         {/* User bubble */}
         <AnimatePresence mode="wait">
@@ -217,9 +197,7 @@ export default function AIChatDemo() {
               className="flex justify-end"
             >
               <div className="max-w-[80%] px-3.5 py-2.5 rounded-2xl rounded-tr-sm
-                font-mono text-[12px] leading-relaxed text-cyan-50/90
-                bg-gradient-to-br from-cyan-500/20 to-violet-500/12
-                border border-cyan-500/24">
+                text-[12.5px] leading-relaxed text-white bg-zinc-900">
                 {cycle.q}
               </div>
             </motion.div>
@@ -237,16 +215,16 @@ export default function AIChatDemo() {
               className="flex items-center gap-2.5"
             >
               <div className="w-7 h-7 shrink-0 rounded-full flex items-center justify-center text-[11px]
-                bg-gradient-to-br from-cyan-500/22 to-violet-600/22 border border-cyan-500/18">
+                bg-zinc-100 border border-zinc-900/8">
                 🤖
               </div>
               <div className="flex gap-1.5 px-3.5 py-2.5 rounded-2xl rounded-tl-sm
-                bg-[#0e0e1e] border border-[#1c1c2c]">
+                bg-zinc-100 border border-zinc-900/8">
                 {[0, 1, 2].map(i => (
                   <motion.div key={i}
                     animate={{ y: [0, -5, 0], opacity: [0.3, 1, 0.3] }}
                     transition={{ duration: 0.72, repeat: Infinity, delay: i * 0.18 }}
-                    className="w-1.5 h-1.5 rounded-full bg-cyan-400/70"
+                    className="w-1.5 h-1.5 rounded-full bg-zinc-500"
                   />
                 ))}
               </div>
@@ -265,12 +243,11 @@ export default function AIChatDemo() {
               className="flex items-start gap-2.5"
             >
               <div className="w-7 h-7 mt-1 shrink-0 rounded-full flex items-center justify-center text-[11px]
-                bg-gradient-to-br from-cyan-500/22 to-violet-600/22 border border-cyan-500/18">
+                bg-zinc-100 border border-zinc-900/8">
                 🤖
               </div>
               <div className="flex-1 px-3.5 py-3 rounded-2xl rounded-tl-sm
-                bg-[#0d0d1e] border border-[#181828]
-                shadow-[inset_0_0_24px_rgba(6,182,212,0.025)]">
+                bg-zinc-50 border border-zinc-900/8">
                 {lines.map(({ text, shown, style }, i) => {
                   if (style === 'blank') return <div key={i} className="h-1.5" />
                   if (!shown) return null
@@ -278,14 +255,14 @@ export default function AIChatDemo() {
                     <div key={i} className={`font-mono text-[11.5px] leading-[1.75] ${styleClass(style)}`}>
                       {shown}
                       {i === activeIdx && (
-                        <span className="inline-block w-[5px] h-[12px] ml-px align-middle bg-cyan-400/85"
+                        <span className="inline-block w-[5px] h-[12px] ml-px align-middle bg-zinc-900"
                           style={{ opacity: blink ? 1 : 0, transition: 'opacity 0.08s' }} />
                       )}
                     </div>
                   )
                 })}
                 {phase === 4 && (
-                  <span className="inline-block w-[5px] h-[12px] align-middle bg-cyan-400/55 ml-px"
+                  <span className="inline-block w-[5px] h-[12px] align-middle bg-zinc-400 ml-px"
                     style={{ opacity: blink ? 1 : 0, transition: 'opacity 0.08s' }} />
                 )}
               </div>
@@ -295,17 +272,16 @@ export default function AIChatDemo() {
       </div>
 
       {/* ── Input bar ── */}
-      <div className="px-4 py-3 border-t border-[#111120] flex items-center gap-3">
-        <div className="flex-1 px-3.5 py-2 rounded-xl bg-[#0a0a16] border border-[#1a1a2c]
-          text-[10px] font-mono text-[#22223a] select-none">
+      <div className="px-4 py-3 border-t border-zinc-900/8 flex items-center gap-3 bg-zinc-50/50">
+        <div className="flex-1 px-3.5 py-2 rounded-xl bg-white border border-zinc-900/10
+          text-[11px] text-zinc-300 select-none">
           Ask about AI architecture...
         </div>
-        <motion.button
-          whileHover={{ scale: 1.06 }} whileTap={{ scale: 0.94 }}
-          className="shrink-0 px-3.5 py-2 rounded-xl bg-cyan-500/8 border border-cyan-500/22
-            text-[10px] font-mono text-cyan-400/65 hover:bg-cyan-500/15 transition-colors">
+        <button
+          className="shrink-0 px-3.5 py-2 rounded-xl bg-zinc-900 text-[11px] text-white
+            hover:bg-zinc-700 transition-colors">
           Send ↗
-        </motion.button>
+        </button>
       </div>
     </motion.div>
   )
