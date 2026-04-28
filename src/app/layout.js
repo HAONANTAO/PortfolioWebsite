@@ -1,7 +1,23 @@
-import { Inter } from "next/font/google";
+import { Inter, Homemade_Apple, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
+
+const signature = Homemade_Apple({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-signature",
+});
+
+const serif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
+  variable: "--font-serif",
+});
 
 export const metadata = {
   title: "Aaron TAO — AI Engineer & Full Stack Developer",
@@ -40,7 +56,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${inter.variable} ${signature.variable} ${serif.variable}`}>
       <body className={inter.className}>{children}</body>
     </html>
   );

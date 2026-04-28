@@ -24,7 +24,7 @@ const MenuOverlay = ({ links }) => {
             <li key={index}>
               <Link
                 href={link.path}
-                className="text-2xl text-purple-300 cursor-pointer"
+                className="text-2xl text-zinc-700 hover:text-zinc-900 transition-colors cursor-pointer"
               >
                 {link.title}
               </Link>
@@ -37,7 +37,7 @@ const MenuOverlay = ({ links }) => {
             <a
               href={href}
               onClick={(e) => handleAnchorClick(e, link.path)}
-              className="text-2xl text-purple-300 cursor-pointer"
+              className="text-2xl text-zinc-700 hover:text-zinc-900 transition-colors cursor-pointer"
             >
               {link.title}
             </a>

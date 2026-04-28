@@ -20,12 +20,12 @@ export default function BackToTop() {
           animate={{ opacity: 1, y: 0,  scale: 1 }}
           exit={{   opacity: 0, y: 16, scale: 0.85 }}
           transition={{ duration: 0.25 }}
-          whileHover={{ scale: 1.1, boxShadow: '0 0 20px rgba(6,182,212,0.45)' }}
-          whileTap={{ scale: 0.92 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           className="fixed bottom-8 right-6 z-[9980] w-10 h-10 rounded-full flex items-center justify-center
-            border border-cyan-500/30 bg-[#060608]/80 backdrop-blur-md text-cyan-400
-            hover:border-cyan-400 transition-colors duration-200"
+            border border-zinc-900/15 bg-white/80 backdrop-blur-md text-zinc-700
+            hover:border-zinc-900/40 hover:text-zinc-900 transition-colors duration-200"
           aria-label="Back to top"
         >
           <ChevronUpIcon className="w-4 h-4" />

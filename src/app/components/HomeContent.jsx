@@ -8,19 +8,17 @@ import ProjectsSection from "./ProjectsSection";
 import EmailSection from "./EmailSection";
 import Footer from "./Footer";
 import AchievementSection from "./AchievementSection";
-import CursorGlow from "./CursorGlow";
-import NeuralBackground from "./NeuralBackground";
 import ScrollProgress from "./ScrollProgress";
-import NoiseOverlay from "./NoiseOverlay";
 import LoadingScreen from "./LoadingScreen";
 import BackToTop from "./BackToTop";
 import LatestWritingsSection from "./LatestWritingsSection";
+import ScrollCompanion from "./ScrollCompanion";
 
 export default function HomeContent({ writings = [] }) {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    const t = setTimeout(() => setLoaded(true), 4000);
+    const t = setTimeout(() => setLoaded(true), 1800);
     return () => clearTimeout(t);
   }, []);
 
@@ -32,25 +30,15 @@ export default function HomeContent({ writings = [] }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: loaded ? 1 : 0 }}
         transition={{ duration: 0.5 }}
-        className="flex min-h-screen flex-col bg-[#060608] relative overflow-x-hidden"
+        className="flex min-h-screen flex-col relative overflow-x-hidden"
+        style={{ background: 'var(--bg)' }}
       >
-        <NeuralBackground />
-
-        <div
-          className="fixed inset-0 pointer-events-none z-0"
-          style={{
-            background:
-              "radial-gradient(ellipse 80% 40% at 50% -10%, rgba(6,182,212,0.07) 0%, transparent 70%)",
-          }}
-        />
-
-        <NoiseOverlay />
         <ScrollProgress />
-        <CursorGlow />
         <NavBar />
         <BackToTop />
+        <ScrollCompanion />
 
-        <div className="container px-4 sm:px-8 lg:px-12 py-4 mx-auto mt-24 relative z-10">
+        <div className="container max-w-5xl px-6 sm:px-10 py-4 mx-auto mt-24 relative z-10">
           <HeroSection />
           <AchievementSection />
           <AboutSection />

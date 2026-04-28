@@ -140,7 +140,7 @@ export default function NeuralBackground() {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 z-0 pointer-events-none"
-      style={{ opacity: 0.35 }}
+      style={{ opacity: 0.22 }}
     />
   )
 }

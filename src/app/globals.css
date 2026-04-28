@@ -2,183 +2,166 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Hide native cursor on pointer devices — replaced by CursorGlow */
-@media (pointer: fine) {
-  * { cursor: none !important; }
-}
-
 html { scroll-behavior: smooth; }
 
 :root {
-  --foreground-rgb: 255, 255, 255;
-  --glow-cyan: rgba(6, 182, 212, 0.5);
-  --glow-violet: rgba(139, 92, 246, 0.4);
+  --bg: #f7f5f0;
+  --bg-elev: #fdfcf8;
+  --ink: #0d0d0e;
+  --ink-2: rgba(13,13,14,0.62);
+  --ink-3: rgba(13,13,14,0.42);
+  --ink-4: rgba(13,13,14,0.18);
+  --line: rgba(13,13,14,0.08);
+  --accent: #e8825c;
+  --accent-hover: #d96e47;
+  --accent-soft: rgba(232,130,92,0.10);
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
 }
 
 /* ─── Scrollbar ─── */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: #080810; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #06b6d4, #8b5cf6);
+  background: rgba(13,13,14,0.15);
   border-radius: 10px;
 }
-
-/* ─── Subtle static grid (behind canvas) ─── */
-.cyber-grid {
-  background-image:
-    linear-gradient(rgba(6, 182, 212, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(6, 182, 212, 0.025) 1px, transparent 1px);
-  background-size: 64px 64px;
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(13,13,14,0.30);
 }
 
-/* ─── Dot grid ─── */
-.dot-grid {
-  background-image: radial-gradient(circle, rgba(6, 182, 212, 0.1) 1px, transparent 1px);
-  background-size: 28px 28px;
+/* ─── Subtle hover lift ─── */
+.hover-lift {
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-2px);
 }
 
-/* ─── Glitch ─── */
-@keyframes glitch {
-  0%, 88%, 100% { clip-path: none; transform: none; }
-  90% { clip-path: inset(20% 0 60% 0); transform: translateX(-3px); color: #06b6d4; }
-  92% { clip-path: inset(60% 0 10% 0); transform: translateX(3px); color: #8b5cf6; }
-  94% { clip-path: none; transform: none; }
-  96% { clip-path: inset(40% 0 30% 0); transform: translateX(-2px); color: #22d3ee; }
-  98% { clip-path: none; transform: none; }
+/* ─── Input focus ─── */
+.input-focus:focus {
+  outline: none;
+  border-color: var(--ink) !important;
 }
-.glitch { animation: glitch 6s ease-in-out infinite; }
 
 /* ─── Float ─── */
 @keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  33%       { transform: translateY(-10px) rotate(1deg); }
-  66%       { transform: translateY(5px) rotate(-1deg); }
+  0%, 100% { transform: translateY(0px); }
+  50%      { transform: translateY(-6px); }
 }
-.animate-float { animation: float 7s ease-in-out infinite; }
-
-/* ─── Gradient animated text ─── */
-.gradient-text-animated {
-  background: linear-gradient(135deg, #06b6d4, #8b5cf6, #22d3ee, #a78bfa);
-  background-size: 300% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: gradient-shift 5s ease infinite;
-}
-@keyframes gradient-shift {
-  0%   { background-position: 0% center; }
-  50%  { background-position: 100% center; }
-  100% { background-position: 0% center; }
-}
-
-/* ─── Glow ─── */
-.glow-cyan   { box-shadow: 0 0 30px rgba(6,182,212,0.25), 0 0 60px rgba(6,182,212,0.1); }
-.glow-violet { box-shadow: 0 0 30px rgba(139,92,246,0.25), 0 0 60px rgba(139,92,246,0.1); }
-.glow-text-cyan { text-shadow: 0 0 20px rgba(6,182,212,0.7); }
-
-/* ─── Animated gradient border card ─── */
-.gradient-border {
-  background: linear-gradient(#0a0a0f, #0a0a0f) padding-box,
-    linear-gradient(135deg, #06b6d4, #8b5cf6, #06b6d4) border-box;
-  border: 1px solid transparent;
-  background-size: 100%, 200% 200%;
-  animation: gradient-border-spin 5s ease infinite;
-}
-@keyframes gradient-border-spin {
-  0%   { background-position: 0 0, 0% 50%; }
-  50%  { background-position: 0 0, 100% 50%; }
-  100% { background-position: 0 0, 0% 50%; }
-}
-
-/* ─── Glass ─── */
-.glass {
-  background: rgba(10, 10, 20, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(6, 182, 212, 0.1);
-}
-
-/* ─── Hover lift + glow ─── */
-.hover-glow {
-  transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
-}
-.hover-glow:hover {
-  box-shadow: 0 0 30px rgba(6,182,212,0.2), 0 0 60px rgba(139,92,246,0.1);
-  transform: translateY(-4px);
-}
-
-/* ─── Input glow on focus ─── */
-.input-glow:focus {
-  outline: none;
-  border-color: #06b6d4 !important;
-  box-shadow: 0 0 0 2px rgba(6,182,212,0.2), 0 0 20px rgba(6,182,212,0.15);
-}
-
-/* ─── Scan line overlay ─── */
-.scan-overlay { position: relative; overflow: hidden; }
-.scan-overlay::after {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(to right, transparent, rgba(6,182,212,0.7), transparent);
-  animation: scan-line 4s linear infinite;
-}
-@keyframes scan-line {
-  0%   { top: -2px; }
-  100% { top: 100%; }
-}
-
-/* ─── Corner bracket decoration ─── */
-.corner-bracket { position: relative; }
-.corner-bracket::before,
-.corner-bracket::after {
-  content: '';
-  position: absolute;
-  width: 18px;
-  height: 18px;
-  border-color: rgba(6,182,212,0.5);
-  border-style: solid;
-  transition: border-color 0.3s ease, width 0.3s ease, height 0.3s ease;
-}
-.corner-bracket::before { top: -4px; left: -4px; border-width: 2px 0 0 2px; }
-.corner-bracket::after  { bottom: -4px; right: -4px; border-width: 0 2px 2px 0; }
-.corner-bracket:hover::before,
-.corner-bracket:hover::after {
-  border-color: rgba(6,182,212,0.9);
-  width: 22px;
-  height: 22px;
-}
+.animate-float { animation: float 6s ease-in-out infinite; }
 
 /* ─── Pulse dot ─── */
 @keyframes ping-slow {
-  0%    { transform: scale(1); opacity: 1; }
+  0%        { transform: scale(1);   opacity: 1; }
   75%, 100% { transform: scale(2.2); opacity: 0; }
 }
 .ping-slow { animation: ping-slow 2s cubic-bezier(0,0,0.2,1) infinite; }
 
-/* ─── Stat card glow on hover ─── */
-.stat-card {
-  transition: all 0.3s ease;
-  background: rgba(10,10,20,0.8);
+/* ─── Road divider — turtle walks back & forth with stops ─── */
+/* Position: ease-in-out per segment so it accelerates when leaving stops
+   and decelerates when arriving — feels less mechanical than linear */
+@keyframes walk-pos {
+  /* Walk right with two stops */
+  0%   { left: -40px;                   animation-timing-function: ease-in-out; }
+  15%  { left: 28%;                     animation-timing-function: linear; }
+  19%  { left: 28%;                     animation-timing-function: ease-in-out; }   /* stop 1 → resume */
+  33%  { left: 60%;                     animation-timing-function: linear; }
+  37%  { left: 60%;                     animation-timing-function: ease-in-out; }   /* stop 2 → resume */
+  48%  { left: calc(100% + 40px);       animation-timing-function: linear; }
+  50%  { left: calc(100% + 40px);       animation-timing-function: ease-in-out; }   /* off-screen turn */
+  /* Walk left with mirrored stops */
+  62%  { left: 60%;                     animation-timing-function: linear; }
+  66%  { left: 60%;                     animation-timing-function: ease-in-out; }
+  82%  { left: 28%;                     animation-timing-function: linear; }
+  86%  { left: 28%;                     animation-timing-function: ease-in-out; }
+  100% { left: -40px; }
 }
-.stat-card:hover {
-  background: rgba(6,182,212,0.04);
-  box-shadow: 0 0 40px rgba(6,182,212,0.15), inset 0 0 20px rgba(6,182,212,0.03);
-  transform: translateY(-6px) scale(1.02);
+
+/* Flip horizontally at the turn-around */
+@keyframes walk-flip {
+  0%, 49%   { transform: scaleX(1); }
+  50%, 99%  { transform: scaleX(-1); }
+  100%      { transform: scaleX(1); }
+}
+
+/* Waddle: tiny up/down bob + slight side rotation, like real turtle steps.
+   Runs continuously, so it doubles as "breathing while resting" at stops. */
+@keyframes walk-bob {
+  0%   { transform: translateY(0px)   rotate(0deg); }
+  25%  { transform: translateY(-1.4px) rotate(-1.8deg); }
+  50%  { transform: translateY(0px)   rotate(0deg); }
+  75%  { transform: translateY(-1.4px) rotate(1.8deg); }
+  100% { transform: translateY(0px)   rotate(0deg); }
+}
+
+.walker-pos {
+  animation: walk-pos 36s infinite;
+}
+.walker-flip {
+  animation: walk-flip 36s linear infinite;
+  display: inline-block;
+  transform-origin: center center;
+}
+.walker-bob {
+  animation: walk-bob 0.55s ease-in-out infinite;
+  display: inline-block;
+  transform-origin: center bottom;
+}
+
+/* ─── Project image — slow pan on hover ─── */
+.img-pan {
+  background-position: top center !important;
+  transition: background-position 1.4s ease-in-out;
+}
+.img-pan:hover {
+  background-position: bottom center !important;
+}
+
+/* ─── Handwritten signature ─── */
+.signature {
+  font-family: var(--font-signature), 'Homemade Apple', cursive;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+/* ─── Resume CTA — accent on hover ─── */
+.cta-resume:hover {
+  background: var(--accent) !important;
+}
+.cta-secondary:hover {
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+}
+
+/* ─── Underlined link — accent ─── */
+.link-accent {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: rgba(13,13,14,0.20);
+  text-underline-offset: 4px;
+  transition: text-decoration-color 0.2s;
+}
+.link-accent:hover {
+  text-decoration-color: var(--accent);
+}
+
+/* ─── Display serif (Instrument Serif) ─── */
+.serif {
+  font-family: var(--font-serif), 'Instrument Serif', Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+.serif-italic {
+  font-family: var(--font-serif), 'Instrument Serif', Georgia, serif;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.01em;
 }
 
 @layer utilities {
   .text-balance { text-wrap: balance; }
-}
-
-/* Project card image — shows top on load, pans to bottom on hover */
-.img-pan {
-  background-position: top center !important;
-  transition: background-position 3.5s ease-in-out;
-}
-.img-pan:hover {
-  background-position: bottom center !important;
 }
