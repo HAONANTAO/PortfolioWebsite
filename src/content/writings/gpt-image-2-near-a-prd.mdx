@@ -1,0 +1,47 @@
+---
+title: "GPT-Image-2 is the first image model I'd put near a PRD"
+slug: "gpt-image-2-near-a-prd"
+date: "2026-04-29"
+summary: "Text rendering, instruction following, and inpainting all crossed the threshold at once. Three workflows I'm rebuilding around it."
+tags: ["GPT-Image-2", "OpenAI", "Design"]
+category: "ideas"
+readingTime: "5 min"
+---
+
+For most of the last two years, image generation has been a parlour trick. You typed a prompt, you got a pretty picture, and if the picture had any text in it the text was nonsense. The image-model demo was the thing you showed at a conference. It wasn't the thing you put inside a real workflow.
+
+GPT-Image-2 changed that. The text rendering works. The instruction following works. The edits work. Three things that were each almost-good in different models all crossed the threshold at the same time. The result is the first image model I'd put near a product requirements doc.
+
+I'm a week or two into actually using it. These are early notes, not a finished take.
+
+## The text-rendering problem was the bottleneck
+
+Older image models couldn't write. If you asked for a sign that said *Welcome*, you got a sign that said *WelconE* or *Wlecome*, with a half-formed letter floating next to it. This sounds like a small thing. It's not. It meant you couldn't generate any image that contained UI, logos, signage, screenshots, or anything text-shaped — which excluded most of the images a software company actually needs.
+
+GPT-Image-2 writes. Not perfectly, but reliably enough that I trust it for short strings: button labels, headlines, brand names, room signs. The first time I generated a mock landing page where the headline read exactly the headline I'd asked for, I sat there for a minute. That had never been possible before.
+
+## Three workflows are different now
+
+**Mockups before code.** I can describe a feature — *"a chat sidebar with a list of past documents on the left, a streaming answer on the right, citations at the bottom"* — and get a usable visual mock in two minutes. Not pixel-perfect. Good enough that a stakeholder can react to a real picture instead of a verbal description. Replaces about half of what I was using Figma for at the early concept stage.
+
+**Marketing-asset iteration.** Hero images, social posts, App Store screenshots. The previous workflow was *describe to a designer, wait three days, iterate twice*. The new workflow is *iterate twenty times in an hour, pick one, hand it to the designer for polish*. The designer's job becomes the last twenty percent (consistency, brand, polish), not the first eighty percent (composition, layout, idea).
+
+**Inpainting as design conversation.** *"Keep this layout, change the colour palette to warmer tones."* *"Same image, but the person is older."* *"Add a small floating menu in the corner."* These edits used to be either impossible or a manual rebuild. Now they're a sentence. The editing model is what makes the tool feel collaborative instead of slot-machine.
+
+## What it doesn't do yet
+
+The failure modes that remain are real. Long text strings still break — anything over about a sentence. Specific brand fonts are out of reach; you can ask for "in the style of Helvetica" and get something that looks vaguely Helvetica-adjacent but isn't. Compositional precision is a step better but not surgical: ask for *exactly seven elements in the foreground* and you'll get six or eight. Generating the same character consistently across multiple images is still hard, though improving.
+
+These are real limits. They mean the model isn't a replacement for a designer. It's a faster first draft.
+
+## What I'm rebuilding
+
+I'm experimenting with a workflow where the PRD itself includes generated mockups inline. The doc has the user story, the tech notes, *and* a rough visual. The visual is wrong in detail but right in shape. It pulls the conversation off "what should this look like in the abstract" and onto "what's wrong with this specific picture."
+
+That shift — from abstract to concrete — is what makes design conversations productive. Faster shift means faster feedback. Faster feedback means the design that ships is closer to the design that was right.
+
+## The bigger pattern
+
+Image generation has followed the same arc text generation followed two years earlier. For a while it was a fun toy. Then one threshold flipped — instruction following, in the case of language; text rendering, here — and suddenly the toy was tooling. The interesting question isn't "is the output perfect" (it isn't). It's "is the output good enough that the workflow around it is faster end-to-end." For most of what I do visually now, the answer is yes.
+
+I'll come back to this in a few months when I've actually shipped something with it.

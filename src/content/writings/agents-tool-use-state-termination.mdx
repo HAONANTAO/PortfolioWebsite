@@ -1,0 +1,70 @@
+---
+title: "Agents are tool use, state, and a termination condition"
+slug: "agents-tool-use-state-termination"
+date: "2026-04-29"
+summary: "Strip away the framework hype and most 'AI agents' are a for-loop with three problems: tool plumbing, state, and knowing when to stop."
+tags: ["AI Agents", "LLMs", "Engineering"]
+category: "ideas"
+readingTime: "6 min"
+---
+
+Last month a friend showed me his "AI agent." It was a demo where you typed a request and a Claude prompt with a few tools — search, code execution, a file system — looped until it produced an answer. The demo worked beautifully. He asked me what I thought.
+
+I asked him what happens when the agent runs for an hour and burns through forty dollars of API credits without producing anything. He laughed. Then he stopped laughing.
+
+This is most "agent" demos. They're impressive in a four-minute video and broken in any context where the loop has to terminate cleanly. The hype around agents has skipped over the engineering that actually makes them work.
+
+## Strip away the framework
+
+An agent, when you delete the marketing language, is three things:
+
+1. **Tools.** A set of functions the model can call. `search`, `read_file`, `run_python`, `send_email`. Each one is a black box with a typed signature.
+2. **State.** The transcript of what's happened so far — which tools were called, what they returned, what the model said about each result. The model needs this to decide the next step.
+3. **A termination condition.** Something that decides when the loop is done. *"The model returned an answer with no tool call."* Or *"we hit the iteration cap."* Or *"the user said stop."*
+
+That's it. Most "agent frameworks" are wrappers over those three. Once you see them, the demos that look magical and the demos that look broken use the same machinery; the difference is whether each piece was thought about or hoped for.
+
+## Termination is where the real engineering is
+
+Tools are easy. The hard part is knowing when to stop.
+
+The naive loop is *"keep calling the model until it stops requesting tools."* This works for simple tasks. It also runs forever on hard tasks, because the model will keep trying things — searching one more time, refining one more query, asking itself one more question — long past the point of usefulness.
+
+The fixes are unglamorous. Iteration caps. Token budgets. Cost ceilings. Detection of repeating tool calls (if you've already searched for the same string three times, you're stuck). Confidence-based exit: a separate model call that asks *"does this look like the answer, or like more work to do?"* Most production agent code is, at heart, a careful management of these stopping conditions.
+
+## The autonomy ladder
+
+There's a useful spectrum that the word "agent" papers over:
+
+- **Single-step tool call.** The model picks one tool, calls it, returns the result. Not really an agent. This is just function calling.
+- **Multi-step linear chain.** The model calls a tool, sees the result, calls another, returns. Still not agentic — the model isn't planning, it's reacting.
+- **Bounded loop with fixed shape.** The model calls tools in a loop until either the answer is ready or the cap is hit. *This* is what most useful production agents are. The loop has a known maximum size and known exit conditions.
+- **Open-ended planning agent.** The model decides what tools to call, in what order, with no fixed shape, until it decides it's done. These are the demos. They're also the ones that burn forty dollars of credits and produce nothing.
+
+Most products that say "agent" are at level three. The level-four claim is usually marketing.
+
+## A pattern that works
+
+The agents I've seen survive contact with production share a shape. They are **scoped, bounded, and observable.**
+
+*Scoped* means the agent does one thing. *"Answer questions about a single document."* *"Triage incoming bug reports."* Not "be helpful." General-purpose agents are research projects; specific agents are products.
+
+*Bounded* means there is a known maximum loop count, a known token budget, and a clear failure path when those caps are hit. The user gets a *"this took too long, here's what I found"* instead of a hung process.
+
+*Observable* means you can read the transcript. Every tool call, every model response, every reasoning step is logged. When the agent does something stupid, you can find out why. When it does something smart, you can replicate it.
+
+If a framework hides any of these three, replace the framework. The framework's job is to remove boilerplate, not to remove visibility.
+
+## A pattern that fails
+
+The pattern I see fail most often is the *agent-of-everything*. One agent with twenty tools, an open loop, and a system prompt that says "be helpful." The demo works because the demo task happens to suit one of the twenty tools. Production fails because real users ask things that don't suit any of the twenty tools, and the agent thrashes.
+
+The fix is not "give it more tools." The fix is "give it fewer tools and a clearer scope."
+
+## The interesting question
+
+The interesting question isn't *should I build an agent*. It's *is the work I'm trying to do the kind of work where the loop earns its overhead*. Sometimes the answer is no — a single LLM call with retrieval is fine. Sometimes the answer is yes — you genuinely need iterative tool use. When the answer is yes, the engineering is in the loop, not in the model.
+
+Agents aren't a magic ingredient. They're an interface. The interface gives you iterative tool use; the engineering decides whether iterative tool use is what you needed.
+
+I keep coming back to the same line: a naive agent is a for-loop with delusions of grandeur. A good one is a for-loop someone thought hard about.

@@ -1,0 +1,57 @@
+---
+title: "RAG is mostly information retrieval"
+slug: "rag-is-mostly-retrieval"
+date: "2026-04-29"
+summary: "Most 'my RAG hallucinates' bug reports are retrieval bugs, not LLM bugs — and the four levers that actually move the needle."
+tags: ["RAG", "Retrieval", "LLMs"]
+category: "ideas"
+readingTime: "6 min"
+---
+
+The first time I shipped a RAG app, the demo broke during the demo.
+
+I was showing a friend the system answering questions about a 200-page contract. The first three questions worked. The fourth was *"what's the difference between section 4.2 and the original draft?"* and the model confidently invented a difference that didn't exist. We laughed. Then I went home and spent four hours figuring out what went wrong.
+
+The model wasn't the problem. The retrieval was. The retriever had pulled five chunks; only one of them mentioned section 4.2; the others were about section 5.1, 6.3, and the table of contents. With that context, the model did the most plausible thing: synthesise a plausible-sounding answer from the wrong chunks. The hallucination was the symptom. The retrieval was the disease.
+
+I keep meeting people who treat RAG as if the model is doing the work. It isn't. Most of what makes a RAG app feel smart, or feel stupid, happens before the model sees a single token. The interesting engineering is in retrieval. The LLM is the part at the end that turns the right inputs into readable output.
+
+## "My RAG hallucinates" is usually "my retrieval missed"
+
+The pattern I see most often: a team notices the model is making things up, blames the model, switches to a bigger model, and gets the same problem back. Bigger models hallucinate more confidently. They aren't a fix.
+
+The questions that actually matter are upstream. What chunks did the retriever return? Did the right one even make it into the top-k? If you handed those exact chunks to a human who didn't have access to the document, would *they* answer correctly? When the answer is no, the model isn't broken — you handed it impossible inputs.
+
+This is hard to debug because retrieval bugs are silent. The retriever returns *something*. The model produces *something*. Both look fine in isolation. The mismatch only shows up when you compare what was retrieved against what was needed, and most teams don't have a workflow that does that.
+
+## Four levers most teams don't pull
+
+Most teams pull one (chunk size) and stop. Here are the four I think actually matter, in order of how often they're skipped.
+
+**Chunking that respects structure.** Fixed-size windows split sentences mid-clause and separate headers from their tables. The fix is to parse the document first — into headers, sections, paragraphs — and chunk *inside* those leaves with overlap. Each chunk carries its breadcrumb (`Doc > Section 4.2 > "Termination"`) so retrieval can re-rank on it and the UI can show it as a citation.
+
+**Query rewriting.** Users ask "what's wrong with the renewal clause?" but the document says "termination provisions." Naive embedding-based retrieval will miss because the surface words don't overlap. A small rewrite step — "rephrase this question into three search queries that might appear in a contract" — recovers that. It's one extra LLM call. It often doubles recall.
+
+**Hybrid search.** Embedding-only retrieval is great at semantic match and bad at exact match. If a user asks about "section 4.2," they need that exact string, and an embedding might or might not surface the right chunk. Combining vector search with BM25 (or a similar lexical retrieval) recovers the cases where the user is searching for a specific term. Most vector DBs ship this now; few demos use it.
+
+**Re-ranking the top-k.** Pull twenty candidate chunks, then run a small re-ranking model to pick the five that are actually about the question. Embedding similarity is a fast first-pass filter, not a final answer. Re-rankers are cheap and cut hallucinations more than any prompt-engineering trick I've found.
+
+## The eval set is the thing
+
+You cannot tune retrieval without measuring it. Twenty Q&A pairs with known-good answers, run automatically every time you change anything. If your eval set doesn't move, your change didn't help. If it moves backwards, your change hurt. This sounds obvious. Almost no one does it on day one.
+
+I built mine in week six on DocuMind. It should have been week zero. Most of the work between v1 and v2 was rediscovering things I would have measured directly if I'd had the eval set in hand.
+
+## The vector DB is not the answer
+
+There's a tendency, when retrieval is bad, to switch vector DBs. Pinecone to Weaviate. Weaviate to pgvector. pgvector to Turbopuffer. The logo on the marketing page does not affect your recall. Your recall is affected by the four levers above, applied to your data, measured against your eval set.
+
+Vector DBs are commodity infrastructure now. Pick one, stop touching it, move on.
+
+## The model is the easy part now
+
+In 2024 the model was the bottleneck — choosing the right one mattered, prompt engineering was a real craft, and the difference between a good and bad output was often the model. That's mostly over. `gpt-4o-mini` and Claude Haiku are good enough at reading comprehension that the bottleneck has moved upstream.
+
+If your RAG app feels stupid, look at retrieval first. Almost every time, that's where the bug is.
+
+I wrote about how this played out in practice in the [DocuMind case study](/writings/documind) — the same four levers, applied to one specific product, with the actual code.
