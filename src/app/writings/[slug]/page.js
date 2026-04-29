@@ -60,7 +60,7 @@ export default function WritingPage({ params }) {
 
   return (
     <main className="flex min-h-screen flex-col relative overflow-x-hidden" style={{ background: 'var(--bg)' }}>
-      <ScrollProgress />
+      <ScrollProgress selector="article" />
       <NavBar />
       <BackToTop />
 
