@@ -1,5 +1,6 @@
 "use client";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
+import { MotionConfig } from "framer-motion";
 
 export default function ThemeProvider({ children }) {
   return (
@@ -9,7 +10,7 @@ export default function ThemeProvider({ children }) {
       enableSystem
       disableTransitionOnChange
     >
-      {children}
+      <MotionConfig reducedMotion="user">{children}</MotionConfig>
     </NextThemesProvider>
   );
 }
