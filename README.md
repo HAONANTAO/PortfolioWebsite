@@ -1,159 +1,102 @@
+# Aaron Tao — Portfolio
 
+> I build AI products that ship.
 
-<!--
- * @Date: 2025-04-15 21:26:49
- * @LastEditors: 陶浩南 taoaaron5@gmail.com
- * @LastEditTime: 2025-05-17 20:40:10
- * @FilePath: /PortfolioWebsite/README.md
--->
+Live at **[taohaonan.com](https://www.taohaonan.com)**.
 
-# Personal Portfolio Website
-
-
-[![Next.js](https://img.shields.io/badge/Next.js-14.1.4-black)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-18-blue)](https://reactjs.org/)
-[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.3.0-38B2AC)](https://tailwindcss.com/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.4.3-blue)](https://www.typescriptlang.org/)
-[![Framer Motion](https://img.shields.io/badge/Framer_Motion-10.16.4-ff69b4)](https://www.framer.com/motion/)
-[![Resend](https://img.shields.io/badge/Resend-1.0.0-orange)](https://resend.com)
-[![Vercel](https://img.shields.io/badge/Vercel-latest-000000)](https://vercel.com)
-[![ESLint](https://img.shields.io/badge/ESLint-8.0.0-4B32C3)](https://eslint.org)
-
----
-
-## 🌟 Overview
-
-**Personal Portfolio Website** is a modern, fully responsive portfolio built with Next.js, React, TailwindCSS, and TypeScript.  
-It showcases your skills, projects, achievements, and contact information in a clean, professional layout with smooth animations and email integration.  
-Perfect for developers, designers, and anyone looking to present their work online.
-
----
-
-## 🌐 Live Demo
-
-[www.aarontao.com](https://www.aarontao.com/)
+Source for my personal portfolio. A Next.js App Router site with MDX-backed writings, light/dark themes, a `⌘K` command palette, and a handful of details I cared enough about to bother engineering.
 
 <p align="center">
-  <img src="Web.png" width="900" alt="Portfolio Website Preview" />
+  <img src="Web.png" width="900" alt="Portfolio screenshot" />
 </p>
 
+## Stack
+
+| Layer | Tool |
+|---|---|
+| Framework | Next.js 14 (App Router) |
+| UI | React 18 + Tailwind CSS 3 |
+| Animation | Framer Motion 11 (respects `prefers-reduced-motion`) |
+| Theming | `next-themes` — light + dark, system-aware, no FOUC |
+| Command palette | `cmdk` |
+| Writings | MDX via `next-mdx-remote` with frontmatter |
+| Email | Resend (contact form) |
+| Hosting | Vercel |
+
+## Things worth pointing out
+
+- **`⌘K` command palette.** Fuzzy-search across pages, projects, writings, theme toggle, and contact actions. Triggered by `⌘K` / `Ctrl K` or the navbar `Search` button.
+- **Two themes, no flash on first paint.** Surfaces use CSS variables so the flip is consistent across every component, including MDX-rendered articles.
+- **Per-writing OG images.** Every MDX post gets its own 1200×630 share card rendered with `next/og` `ImageResponse` at build time. The site root has a matching one.
+- **Article-scoped reading progress.** On `/writings/[slug]` the top progress bar measures how far you are through the `<article>`, not the full page (navbar + footer don't skew it).
+- **A scrolling turtle** (`ScrollCompanion`) that walks across the bottom of the page with your scroll position. It does nothing useful. That is the point.
+- **RSS** at `/feed.xml`, **sitemap** at `/sitemap.xml`, **robots** at `/robots.txt` — all generated from real frontmatter data, no hand-maintained lists.
+- **Accessibility-aware motion.** `prefers-reduced-motion` is honoured both via a CSS sledgehammer and `<MotionConfig reducedMotion="user">`; decorative animation stops for users who opt out.
+- **404 with personality.** A wandering turtle and a `⌘K` hint, because someone is going to land there.
+
+## Run locally
+
+```bash
+npm install
+npm run dev   # http://localhost:3000
+```
+
+For the contact form to actually send, set the following in `.env.local`:
+
+```
+RESEND_API_KEY=...
+FROM_EMAIL=...
+MY_EMAIL=...
+```
+
+Without them the form returns 500; the rest of the site works fine.
+
+## Layout
+
+```
+src/
+├── app/                       Next.js App Router
+│   ├── components/            UI (HeroSection, NavBar, CommandPalette, …)
+│   ├── writings/              Post listing + dynamic [slug] route
+│   │   └── [slug]/
+│   │       ├── page.js
+│   │       ├── opengraph-image.jsx    Per-post OG card
+│   │       └── twitter-image.jsx
+│   ├── api/send/              Contact form endpoint (Resend)
+│   ├── feed.xml/route.js      RSS feed
+│   ├── sitemap.js             Sitemap
+│   ├── robots.js              robots.txt
+│   ├── opengraph-image.jsx    Site-wide OG card
+│   ├── twitter-image.jsx
+│   └── not-found.jsx          404
+├── content/writings/          MDX articles
+└── lib/writings.js            Frontmatter loader
+```
+
+## Add a writing
+
+Drop a new MDX file in `src/content/writings/`:
+
+```yaml
 ---
-
-## Table of Contents
-
-- [Personal Portfolio Website](#personal-portfolio-website)
-  - [🌟 Overview](#-overview)
-  - [🌐 Live Demo](#-live-demo)
-  - [Table of Contents](#table-of-contents)
-  - [🚀 Features](#-features)
-  - [🛠️ Tech Stack](#-tech-stack)
-  - [🗂️ Key Sections](#-key-sections)
-  - [🖼️ Screenshots](#-screenshots)
-  - [❓ FAQ](#-faq)
-  - [🤝 Contributing](#-contributing)
-  - [⚖️ License](#-license)
-  - [📬 Contact](#-contact)
-  - [🙏 Acknowledgements](#-acknowledgements)
-
+title: "..."
+slug: "..."
+date: "2026-04-29"
+summary: "..."
+tags: ["RAG", "..."]
+category: "project" | "ideas"
+readingTime: "6 min"
 ---
+```
 
-## 🚀 Features
+The post then appears in `/writings`, on the homepage feed, in `sitemap.xml`, and in `feed.xml`, and gets its own OG / Twitter card — all on the next build. No additional wiring.
 
-- 📱 **Fully Responsive Design** – Looks great on all devices.
-- 🎨 **Modern UI with TailwindCSS** – Clean, customizable, and fast.
-- ✨ **Smooth Animations with Framer Motion** – Engaging user experience.
-- 📧 **Contact Form with Email Integration** – Direct messages to your inbox.
-- 🌙 **Dark/Light Mode Support** – Comfortable viewing anytime.
-- 📊 **Dynamic Project Filtering** – Showcase your work interactively.
-- 📈 **Animated Achievement Numbers** – Highlight your milestones.
-- 🔗 **Social Links** – Easy access to your online presence.
+## Contact
 
----
+- [taoaaron5@gmail.com](mailto:taoaaron5@gmail.com)
+- [github.com/HAONANTAO](https://github.com/HAONANTAO)
+- [linkedin.com/in/haonan-tao-4a9855270](https://www.linkedin.com/in/haonan-tao-4a9855270/)
 
-## 🛠️ Tech Stack
+## License
 
-- **Frontend Framework:** Next.js 14
-- **Styling:** TailwindCSS 3
-- **Animations:** Framer Motion
-- **Type Checking:** TypeScript
-- **Email Service:** Resend (or your preferred provider)
-- **Deployment:** Vercel
-
----
-
-## 🗂️ Key Sections
-
-
-- 🏠 Hero Section
-- 📊 Achievement Section
-- 👨‍💻 About Me (Skills, Education, Certifications)
-- 🎯 Projects Showcase
-- 📬 Contact Form
-- 🔗 Social Links
-
----
-
-## 🖼️ Screenshots
-
-
-<p align="center">
-  <img src="Web.png" width="900" alt="Home Page" />
-  <!-- Add more screenshots as needed -->
-</p>
-
----
-
-## ❓ FAQ
-
-
-**Q: How do I add new projects to the portfolio?**  
-A: Modify the `data/projects.ts` file and add your projects following the existing format.
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome!  
-To contribute:
-
-1. Fork the repository.
-2. Create a feature branch (`git checkout -b feature/your-feature`).
-3. Commit your changes (`git commit -m 'Add your feature'`).
-4. Push to your branch (`git push origin feature/your-feature`).
-5. Open a Pull Request.
-
-Please run `npm run lint` before submitting and follow the project’s coding style.
-
----
-
-## ⚖️ License
-
-
-This project is licensed under the MIT License.  
-See the [LICENSE](LICENSE) file for details.
-
----
-
-## 📬 Contact
-
-
-- **Name:** Aaron TAO
-- **Email:** [taoaaron5@gmail.com](mailto:taoaaron5@gmail.com)
-- **GitHub:** [HAONANTAO](https://github.com/HAONANTAO)
-- **Website:** [www.aarontao.com](https://www.aarontao.com/)
-
----
-
-## 🙏 Acknowledgements
-
-
-- [Next.js](https://nextjs.org/)
-- [TailwindCSS](https://tailwindcss.com/)
-- [Framer Motion](https://www.framer.com/motion/)
-- [Resend](https://resend.com/)
-- [Vercel](https://vercel.com/)
-- All open source contributors and community
-
----
-
-Thank you for visiting my portfolio! 🚀
+MIT — see [LICENSE](LICENSE).
