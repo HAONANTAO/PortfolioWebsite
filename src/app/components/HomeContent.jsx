@@ -9,27 +9,34 @@ import EmailSection from "./EmailSection";
 import Footer from "./Footer";
 import RecentlyShipped from "./RecentlyShipped";
 import ScrollProgress from "./ScrollProgress";
-import LoadingScreen from "./LoadingScreen";
+import LoadingScreen, { LOADER_SESSION_KEY } from "./LoadingScreen";
 import BackToTop from "./BackToTop";
 import LatestWritingsSection from "./LatestWritingsSection";
 import ScrollCompanion from "./ScrollCompanion";
 
 export default function HomeContent({ writings = [] }) {
-  const [loaded, setLoaded] = useState(false);
+  // Returning visitors in this session (loader already shown) start visible
+  // immediately — no fade penalty when navigating /writings → /. First-time
+  // visitors stay hidden until LoadingScreen fires onComplete.
+  const [loaded, setLoaded] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return !!sessionStorage.getItem(LOADER_SESSION_KEY);
+  });
 
   useEffect(() => {
-    const t = setTimeout(() => setLoaded(true), 1400);
+    if (loaded) return;
+    const t = setTimeout(() => setLoaded(true), 1100);
     return () => clearTimeout(t);
-  }, []);
+  }, [loaded]);
 
   return (
     <>
       <LoadingScreen onComplete={() => setLoaded(true)} />
 
       <motion.main
-        initial={{ opacity: 0 }}
+        initial={{ opacity: loaded ? 1 : 0 }}
         animate={{ opacity: loaded ? 1 : 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.3 }}
         className="flex min-h-screen flex-col relative overflow-x-hidden"
         style={{ background: 'var(--bg)' }}
       >
