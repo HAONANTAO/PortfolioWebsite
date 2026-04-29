@@ -7,7 +7,7 @@ import AboutSection from "./AboutSection";
 import ProjectsSection from "./ProjectsSection";
 import EmailSection from "./EmailSection";
 import Footer from "./Footer";
-import AchievementSection from "./AchievementSection";
+import RecentlyShipped from "./RecentlyShipped";
 import ScrollProgress from "./ScrollProgress";
 import LoadingScreen from "./LoadingScreen";
 import BackToTop from "./BackToTop";
@@ -40,7 +40,7 @@ export default function HomeContent({ writings = [] }) {
 
         <div className="container max-w-5xl px-6 sm:px-10 py-4 mx-auto mt-24 relative z-10">
           <HeroSection />
-          <AchievementSection />
+          <RecentlyShipped />
           <AboutSection />
           <ProjectsSection writings={writings} />
           <LatestWritingsSection posts={writings} />
