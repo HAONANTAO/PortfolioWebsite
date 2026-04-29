@@ -4,29 +4,30 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowUpRightIcon } from "@heroicons/react/24/outline";
 
-// TODO: confirm dates if these don't match your actual ship history.
+// Dates verified from public sources: App Store releaseDate (Money Recorder)
+// and GitHub repo created_at (everything else).
 const ITEMS = [
   {
     date: "Now",
-    title: "DocuMind v2",
+    title: "DocuMind",
     note: "Streaming RAG, source citations, multi-turn memory",
     href: "https://docu-mind-neon.vercel.app",
     accent: true,
   },
   {
     date: "Apr 2026",
-    title: "This portfolio",
-    note: "Light/dark theme · ⌘K palette · MDX writings",
+    title: "Portfolio refresh",
+    note: "Light/dark theme · ⌘K palette · MDX writings · RSS feed",
     href: "/",
   },
   {
-    date: "Mar 2026",
+    date: "Jul 2025",
     title: "AllStorage",
     note: "Passwordless cloud storage SaaS — Next.js 15 + AppWrite",
     href: "https://all-storage.vercel.app",
   },
   {
-    date: "Feb 2026",
+    date: "Apr 2025",
     title: "Money Recorder",
     note: "Live on the App Store — React Native + Expo",
     href: "https://apps.apple.com/us/app/moneyrecorder/id6744058988",
