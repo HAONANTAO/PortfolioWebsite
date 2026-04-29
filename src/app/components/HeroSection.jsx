@@ -4,13 +4,25 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import AiCore from './AiCore'
 
-// AI concepts orbiting the globe — paper-style tags
+// AI concepts orbiting the globe — each tag carries a hue token that maps
+// into HUE_STYLES below for the colored dot, soft tinted background, and
+// border. Light/dark themes share the same translucent values so they read
+// the same on both backgrounds.
 const FLOATING_TAGS = [
-  { label: 'RAG',        top: '8%',   left: '-6%',  delay: 0.5 },
-  { label: 'AI Agents',  top: '24%',  left: '92%',  delay: 0.7 },
-  { label: 'LLMs',       top: '70%',  left: '-2%',  delay: 0.9 },
-  { label: 'Embeddings', top: '85%',  left: '78%',  delay: 1.1 },
+  { label: 'RAG',        top: '6%',   left: '-6%',  delay: 0.45, hue: 'orange' },
+  { label: 'AI Agents',  top: '20%',  left: '92%',  delay: 0.65, hue: 'violet' },
+  { label: 'Embeddings', top: '54%',  left: '-8%',  delay: 0.85, hue: 'emerald' },
+  { label: 'Streaming',  top: '64%',  left: '94%',  delay: 1.05, hue: 'cyan' },
+  { label: 'LLMs',       top: '90%',  left: '38%',  delay: 1.25, hue: 'blue' },
 ]
+
+const HUE_STYLES = {
+  orange:  { dot: '#e8825c', bg: 'rgba(232,130,92,0.12)',  border: 'rgba(232,130,92,0.32)',  text: '#b65a37' },
+  violet:  { dot: '#8b5cf6', bg: 'rgba(139,92,246,0.12)',  border: 'rgba(139,92,246,0.32)',  text: '#6d3fce' },
+  emerald: { dot: '#10b981', bg: 'rgba(16,185,129,0.12)',  border: 'rgba(16,185,129,0.32)',  text: '#0e8c63' },
+  cyan:    { dot: '#06b6d4', bg: 'rgba(6,182,212,0.12)',   border: 'rgba(6,182,212,0.32)',   text: '#0e7c9b' },
+  blue:    { dot: '#3b82f6', bg: 'rgba(59,130,246,0.12)',  border: 'rgba(59,130,246,0.32)',  text: '#2a63cc' },
+}
 
 const HeroSection = () => {
   return (
@@ -141,35 +153,46 @@ const HeroSection = () => {
 
             {/* Floating tags around the globe */}
             <div className="hidden lg:block absolute inset-0 pointer-events-none">
-              {FLOATING_TAGS.map(({ label, top, left, delay }) => (
-                <motion.span
-                  key={label}
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay, ease: 'easeOut' }}
-                  className="absolute -translate-x-1/2 -translate-y-1/2
-                    px-2 py-0.5 text-[10px] tracking-wide
-                    rounded-full bg-white/85 border border-zinc-900/10
-                    text-zinc-700 shadow-[0_2px_6px_rgba(0,0,0,0.04)]
-                    dark:bg-zinc-100/[0.06] dark:border-zinc-100/10 dark:text-zinc-300
-                    pointer-events-auto select-none cursor-default
-                    backdrop-blur-sm"
-                  style={{ top, left }}
-                >
+              {FLOATING_TAGS.map(({ label, top, left, delay, hue }) => {
+                const c = HUE_STYLES[hue];
+                return (
                   <motion.span
-                    animate={{ y: [0, -3, 0] }}
-                    transition={{
-                      duration: 3 + delay,
-                      repeat: Infinity,
-                      ease: 'easeInOut',
-                      delay,
+                    key={label}
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay, ease: 'easeOut' }}
+                    className="absolute -translate-x-1/2 -translate-y-1/2
+                      inline-flex items-center gap-1.5
+                      px-2.5 py-1 text-[10px] font-medium tracking-wide
+                      rounded-full border shadow-[0_2px_8px_rgba(0,0,0,0.05)]
+                      pointer-events-auto select-none cursor-default
+                      backdrop-blur-sm"
+                    style={{
+                      top, left,
+                      background: c.bg,
+                      borderColor: c.border,
+                      color: c.text,
                     }}
-                    className="inline-block"
                   >
-                    {label}
+                    <motion.span
+                      animate={{ y: [0, -3, 0] }}
+                      transition={{
+                        duration: 3 + delay,
+                        repeat: Infinity,
+                        ease: 'easeInOut',
+                        delay,
+                      }}
+                      className="inline-flex items-center gap-1.5"
+                    >
+                      <span
+                        className="inline-block w-1.5 h-1.5 rounded-full"
+                        style={{ background: c.dot, boxShadow: `0 0 6px ${c.dot}66` }}
+                      />
+                      {label}
+                    </motion.span>
                   </motion.span>
-                </motion.span>
-              ))}
+                );
+              })}
             </div>
           </div>
         </motion.div>
