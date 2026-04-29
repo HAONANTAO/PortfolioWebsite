@@ -22,7 +22,8 @@ export function generateMetadata({ params }) {
       title: frontmatter.title,
       description: frontmatter.summary,
       type: "article",
-      images: frontmatter.cover ? [frontmatter.cover] : undefined,
+      publishedTime: frontmatter.date,
+      tags: frontmatter.tags,
     },
   };
 }
