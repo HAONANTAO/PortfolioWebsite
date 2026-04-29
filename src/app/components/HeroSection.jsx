@@ -67,10 +67,12 @@ const HeroSection = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.6 }}
             className="flex items-center gap-3 mb-10 px-3.5 py-2 rounded-md
-              border border-zinc-900/10 bg-white/60 w-fit max-w-full">
-            <span className="text-[10px] uppercase tracking-widest text-zinc-400 shrink-0">Now</span>
-            <span className="h-3 w-px bg-zinc-900/15" />
-            <span className="text-sm text-zinc-700">
+              border border-zinc-900/10 bg-white/60
+              dark:border-zinc-100/10 dark:bg-zinc-100/[0.04]
+              w-fit max-w-full">
+            <span className="text-[10px] uppercase tracking-widest text-zinc-400 dark:text-zinc-500 shrink-0">Now</span>
+            <span className="h-3 w-px bg-zinc-900/15 dark:bg-zinc-100/15" />
+            <span className="text-sm text-zinc-700 dark:text-zinc-300">
               ⚗️ Going deep on <span className="font-medium" style={{ color: 'var(--accent)' }}>LangChain + RAG</span>
             </span>
           </motion.div>
@@ -78,9 +80,9 @@ const HeroSection = () => {
           {/* CTAs */}
           <div className="flex flex-wrap items-center gap-3 mb-10">
             <a
-              href="/PDFs/resume0428.docx"
-              className="cta-resume px-5 py-2.5 text-sm font-medium text-white rounded-md transition-colors"
-              style={{ background: 'var(--ink)' }}>
+              href="/PDFs/resume0428.pdf"
+              className="cta-resume px-5 py-2.5 text-sm font-medium rounded-md transition-colors"
+              style={{ background: 'var(--ink)', color: 'var(--bg)' }}>
               Download résumé
             </a>
             <a
@@ -149,6 +151,7 @@ const HeroSection = () => {
                     px-2 py-0.5 text-[10px] tracking-wide
                     rounded-full bg-white/85 border border-zinc-900/10
                     text-zinc-700 shadow-[0_2px_6px_rgba(0,0,0,0.04)]
+                    dark:bg-zinc-100/[0.06] dark:border-zinc-100/10 dark:text-zinc-300
                     pointer-events-auto select-none cursor-default
                     backdrop-blur-sm"
                   style={{ top, left }}

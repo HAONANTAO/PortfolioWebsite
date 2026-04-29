@@ -25,7 +25,10 @@ export default function BackToTop() {
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           className="fixed bottom-8 right-6 z-[9980] w-10 h-10 rounded-full flex items-center justify-center
             border border-zinc-900/15 bg-white/80 backdrop-blur-md text-zinc-700
-            hover:border-zinc-900/40 hover:text-zinc-900 transition-colors duration-200"
+            hover:border-zinc-900/40 hover:text-zinc-900
+            dark:border-zinc-100/15 dark:bg-zinc-900/80 dark:text-zinc-300
+            dark:hover:border-zinc-100/40 dark:hover:text-zinc-100
+            transition-colors duration-200"
           aria-label="Back to top"
         >
           <ChevronUpIcon className="w-4 h-4" />

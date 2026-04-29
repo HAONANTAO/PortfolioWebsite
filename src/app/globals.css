@@ -4,6 +4,15 @@
 
 html { scroll-behavior: smooth; }
 
+::selection {
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+::-moz-selection {
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
 :root {
   --bg: #f7f5f0;
   --bg-elev: #fdfcf8;
@@ -12,10 +21,34 @@ html { scroll-behavior: smooth; }
   --ink-3: rgba(13,13,14,0.42);
   --ink-4: rgba(13,13,14,0.18);
   --line: rgba(13,13,14,0.08);
+  --line-strong: rgba(13,13,14,0.18);
+  --bg-translucent: rgba(247,245,240,0.85);
+  --paper: #fdfaf3;
+  --paper-grain: rgba(13,13,14,1);
   --accent: #e8825c;
   --accent-hover: #d96e47;
   --accent-soft: rgba(232,130,92,0.10);
 }
+
+[data-theme="dark"] {
+  --bg: #0d0d0f;
+  --bg-elev: #18181b;
+  --bg-translucent: rgba(13,13,15,0.82);
+  --paper: #1c1a17;
+  --paper-grain: rgba(244,244,245,1);
+  --ink: #f4f4f5;
+  --ink-2: rgba(244,244,245,0.72);
+  --ink-3: rgba(244,244,245,0.48);
+  --ink-4: rgba(244,244,245,0.22);
+  --line: rgba(244,244,245,0.10);
+  --line-strong: rgba(244,244,245,0.20);
+  --accent: #f4926a;
+  --accent-hover: #f7a583;
+  --accent-soft: rgba(244,146,106,0.14);
+}
+
+html { color-scheme: light; }
+[data-theme="dark"] { color-scheme: dark; }
 
 body {
   background: var(--bg);
@@ -26,11 +59,11 @@ body {
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: rgba(13,13,14,0.15);
+  background: var(--line-strong);
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(13,13,14,0.30);
+  background: var(--ink-3);
 }
 
 /* ─── Subtle hover lift ─── */
@@ -112,13 +145,13 @@ body {
   transform-origin: center bottom;
 }
 
-/* ─── Project image — slow pan on hover ─── */
-.img-pan {
-  background-position: top center !important;
-  transition: background-position 1.4s ease-in-out;
+/* ─── Project image — slow object-position pan on hover ─── */
+.img-pan-img {
+  object-position: top center;
+  transition: object-position 1.4s ease-in-out;
 }
-.img-pan:hover {
-  background-position: bottom center !important;
+.group:hover .img-pan-img {
+  object-position: bottom center;
 }
 
 /* ─── Handwritten signature ─── */
@@ -164,4 +197,23 @@ body {
 
 @layer utilities {
   .text-balance { text-wrap: balance; }
+}
+
+/* ─── Command palette (cmdk) ─── */
+.cmdk-root [cmdk-group-heading] {
+  padding: 8px 12px 4px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(13,13,14,0.42);
+}
+.cmdk-item[data-selected="true"] {
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+.cmdk-item[data-selected="true"] svg {
+  color: var(--accent);
+}
+.cmdk-root [cmdk-list] {
+  scroll-padding-block: 6px;
 }

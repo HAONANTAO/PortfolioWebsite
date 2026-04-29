@@ -1,5 +1,9 @@
 import { Inter, Homemade_Apple, Instrument_Serif } from "next/font/google";
 import "./globals.css";
+import { getAllWritings } from "@/lib/writings";
+import ProjectsData from "./Data/ProjectsData";
+import CommandPalette from "./components/CommandPalette";
+import ThemeProvider from "./components/ThemeProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -29,20 +33,11 @@ export const metadata = {
     url: "https://www.taohaonan.com",
     siteName: "Aaron TAO Portfolio",
     type: "website",
-    images: [
-      {
-        url: "/images/Projects/documind.png",
-        width: 1200,
-        height: 630,
-        alt: "Aaron TAO — AI Engineer Portfolio",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Aaron TAO — AI Engineer & Full Stack Developer",
     description: "Building LLM pipelines, RAG systems, and production full-stack apps.",
-    images: ["/images/Projects/documind.png"],
   },
   icons: {
     icon: [
@@ -52,12 +47,25 @@ export const metadata = {
     shortcut: '/favicon.svg',
     apple: '/favicon.svg',
   },
+  alternates: {
+    types: {
+      "application/rss+xml": [
+        { url: "/feed.xml", title: "Aaron Tao — Writings" },
+      ],
+    },
+  },
 };
 
 export default function RootLayout({ children }) {
+  const writings = getAllWritings();
   return (
-    <html lang="en" className={`${inter.variable} ${signature.variable} ${serif.variable}`}>
-      <body className={inter.className}>{children}</body>
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${signature.variable} ${serif.variable}`}>
+      <body className={inter.className}>
+        <ThemeProvider>
+          {children}
+          <CommandPalette writings={writings} projects={ProjectsData} />
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

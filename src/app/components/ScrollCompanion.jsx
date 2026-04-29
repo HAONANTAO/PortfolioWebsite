@@ -60,7 +60,7 @@ export default function ScrollCompanion() {
       aria-hidden="true">
 
       {/* The line — like a margin rule the turtle walks on */}
-      <div className="absolute inset-x-0 bottom-0 h-px bg-zinc-900/10" />
+      <div className="absolute inset-x-0 bottom-0 h-px bg-zinc-900/10 dark:bg-zinc-100/10" />
 
       {/* Subtle dashed center stripe */}
       <div

@@ -18,7 +18,7 @@ export default function HomeContent({ writings = [] }) {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    const t = setTimeout(() => setLoaded(true), 1800);
+    const t = setTimeout(() => setLoaded(true), 1400);
     return () => clearTimeout(t);
   }, []);
 

@@ -32,7 +32,7 @@ export default function LoadingScreen({ onComplete }) {
     const t1 = setTimeout(() => {
       setExiting(true)
       onComplete()
-    }, 1400)
+    }, 1000)
 
     return () => clearTimeout(t1)
   }, [shouldShow])
@@ -116,12 +116,14 @@ export default function LoadingScreen({ onComplete }) {
               className="relative"
             >
               <div className="px-4 py-2.5 rounded-2xl rounded-bl-sm
-                bg-white border border-zinc-900/10 shadow-[0_2px_10px_rgba(0,0,0,0.04)]">
-                <span className="text-zinc-500 text-sm">Hi, I'm </span>
-                <span className="text-zinc-900 text-lg font-semibold tracking-tight">Aaron</span>
+                bg-white border border-zinc-900/10 shadow-[0_2px_10px_rgba(0,0,0,0.04)]
+                dark:bg-zinc-100/[0.05] dark:border-zinc-100/10">
+                <span className="text-zinc-500 dark:text-zinc-400 text-sm">Hi, I'm </span>
+                <span className="text-zinc-900 dark:text-zinc-100 text-lg font-semibold tracking-tight">Aaron</span>
               </div>
               <div className="absolute -bottom-[5px] left-3 w-2.5 h-2.5 rotate-45
-                bg-white border-r border-b border-zinc-900/10" />
+                bg-white border-r border-b border-zinc-900/10
+                dark:bg-zinc-100/[0.05] dark:border-zinc-100/10" />
             </motion.div>
 
             {/* Cycling line */}
@@ -133,7 +135,7 @@ export default function LoadingScreen({ onComplete }) {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -6 }}
                   transition={{ duration: 0.22 }}
-                  className="text-xs text-zinc-500 absolute"
+                  className="text-xs text-zinc-500 dark:text-zinc-400 absolute"
                 >
                   {FUN_LINES[lineIdx]}
                 </motion.span>
@@ -141,12 +143,12 @@ export default function LoadingScreen({ onComplete }) {
             </div>
 
             {/* Soft progress bar */}
-            <div className="w-32 h-[3px] rounded-full bg-zinc-900/[0.08] overflow-hidden">
+            <div className="w-32 h-[3px] rounded-full bg-zinc-900/[0.08] dark:bg-zinc-100/[0.10] overflow-hidden">
               <motion.div
                 initial={{ x: '-100%' }}
                 animate={{ x: '100%' }}
                 transition={{ duration: 1.2, repeat: Infinity, ease: 'easeInOut' }}
-                className="h-full w-1/2 bg-zinc-900/40 rounded-full"
+                className="h-full w-1/2 bg-zinc-900/40 dark:bg-zinc-100/40 rounded-full"
               />
             </div>
 

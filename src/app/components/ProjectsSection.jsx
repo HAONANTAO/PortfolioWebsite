@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useRef } from "react";
+import Image from "next/image";
 import ProjectCard from "./ProjectCard";
 import ProjectsData from "../Data/ProjectsData.js";
 import ProjectTag from "./ProjectTag";
@@ -34,15 +35,15 @@ const ProjectsSection = ({ writings = [] }) => {
   };
 
   return (
-    <section id="projects" ref={ref} className="relative py-20 border-t border-zinc-900/10">
+    <section id="projects" ref={ref} className="relative py-20 border-t border-zinc-900/10 dark:border-zinc-100/10">
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}>
-        <h2 className="serif text-4xl sm:text-5xl font-normal text-zinc-900 mb-3">Selected work</h2>
-        <p className="text-zinc-500 text-sm max-w-xl mb-10">
+        <h2 className="serif text-4xl sm:text-5xl font-normal text-zinc-900 dark:text-zinc-100 mb-3">Selected work</h2>
+        <p className="text-zinc-500 dark:text-zinc-400 text-sm max-w-xl mb-10">
           A handful of things I've shipped — each link is a real product or a working repo.
         </p>
       </motion.div>
@@ -60,32 +61,33 @@ const ProjectsSection = ({ writings = [] }) => {
           transition={{ duration: 0.5 }}
           className="mb-10 rounded-xl overflow-hidden border border-zinc-900/10
             hover:border-zinc-900/25 transition-colors duration-300 group bg-white
-            shadow-[0_4px_24px_rgba(0,0,0,0.04)]">
+            dark:border-zinc-100/10 dark:hover:border-zinc-100/25 dark:bg-zinc-100/[0.03]
+            shadow-[0_4px_24px_rgba(0,0,0,0.04)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.3)]">
 
           <div className="grid md:grid-cols-2">
 
             <div className="p-7 lg:p-9 flex flex-col justify-center">
 
               <div className="flex items-center gap-2 mb-4">
-                <span className="text-[10px] uppercase tracking-widest text-zinc-500">
+                <span className="text-[10px] uppercase tracking-widest text-zinc-500 dark:text-zinc-400">
                   Featured
                 </span>
-                <span className="h-px w-8 bg-zinc-900/15" />
-                <span className="text-[10px] uppercase tracking-widest text-zinc-500">
+                <span className="h-px w-8 bg-zinc-900/15 dark:bg-zinc-100/15" />
+                <span className="text-[10px] uppercase tracking-widest text-zinc-500 dark:text-zinc-400">
                   AI · RAG · SaaS
                 </span>
               </div>
 
-              <h3 className="text-2xl lg:text-3xl font-semibold text-zinc-900 mb-3">
+              <h3 className="text-2xl lg:text-3xl font-semibold text-zinc-900 dark:text-zinc-100 mb-3">
                 {featured.title}
               </h3>
 
-              <p className="text-zinc-600 text-sm leading-relaxed mb-5">
+              <p className="text-zinc-600 dark:text-zinc-300 text-sm leading-relaxed mb-5">
                 {featured.description}
               </p>
 
               {featured.metric && (
-                <p className="text-xs text-zinc-500 leading-relaxed mb-5">
+                <p className="text-xs text-zinc-500 dark:text-zinc-500 leading-relaxed mb-5">
                   {featured.metric}
                 </p>
               )}
@@ -94,7 +96,7 @@ const ProjectsSection = ({ writings = [] }) => {
                 <div className="flex flex-wrap gap-1.5 mb-6">
                   {featured.Tech.map((te) => (
                     <span key={te}
-                      className="px-2 py-0.5 text-[11px] text-zinc-700 border border-zinc-900/10 rounded">
+                      className="px-2 py-0.5 text-[11px] text-zinc-700 dark:text-zinc-300 border border-zinc-900/10 dark:border-zinc-100/10 rounded">
                       {te}
                     </span>
                   ))}
@@ -102,11 +104,11 @@ const ProjectsSection = ({ writings = [] }) => {
               )}
 
               <div className="flex gap-3 flex-wrap items-center mb-5">
-                <Link href={featured.gitUrl} className="flex items-center gap-2 text-sm text-zinc-700 hover:text-zinc-900 transition-colors">
+                <Link href={featured.gitUrl} className="flex items-center gap-2 text-sm text-zinc-700 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-zinc-100 transition-colors">
                   <CodeBracketIcon className="w-4 h-4" /> GitHub
                 </Link>
-                <span className="text-zinc-300">·</span>
-                <Link href={featured.preview} target="_blank" className="flex items-center gap-2 text-sm text-zinc-700 hover:text-zinc-900 transition-colors">
+                <span className="text-zinc-300 dark:text-zinc-600">·</span>
+                <Link href={featured.preview} target="_blank" className="flex items-center gap-2 text-sm text-zinc-700 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-zinc-100 transition-colors">
                   <EyeIcon className="w-4 h-4" /> Live
                 </Link>
               </div>
@@ -116,31 +118,38 @@ const ProjectsSection = ({ writings = [] }) => {
                   href={`/writings/${featuredWriting.slug}`}
                   className="group/dive flex items-center gap-3 px-4 py-3 rounded-lg
                     border border-zinc-900/10 bg-zinc-900/[0.025]
-                    hover:border-zinc-900/25 hover:bg-zinc-900/[0.04] transition-colors w-fit max-w-full"
+                    hover:border-zinc-900/25 hover:bg-zinc-900/[0.04]
+                    dark:border-zinc-100/10 dark:bg-zinc-100/[0.04]
+                    dark:hover:border-zinc-100/25 dark:hover:bg-zinc-100/[0.07]
+                    transition-colors w-fit max-w-full"
                 >
                   <div className="flex-1 min-w-0">
-                    <span className="block text-[10px] uppercase tracking-widest text-zinc-400 mb-0.5">
+                    <span className="block text-[10px] uppercase tracking-widest text-zinc-400 dark:text-zinc-500 mb-0.5">
                       Deep dive
                     </span>
-                    <span className="block text-sm font-medium text-zinc-800 line-clamp-1">
+                    <span className="block text-sm font-medium text-zinc-800 dark:text-zinc-200 line-clamp-1">
                       {featuredWriting.title}
                     </span>
                   </div>
-                  <ArrowRightIcon className="w-4 h-4 text-zinc-400 shrink-0
-                    transition-transform group-hover/dive:translate-x-0.5 group-hover/dive:text-zinc-700" />
+                  <ArrowRightIcon className="w-4 h-4 text-zinc-400 dark:text-zinc-500 shrink-0
+                    transition-transform group-hover/dive:translate-x-0.5 group-hover/dive:text-zinc-700 dark:group-hover/dive:text-zinc-200" />
                 </Link>
               )}
             </div>
 
             <div
-              className="relative h-56 md:h-auto img-pan min-h-[260px]"
-              style={{
-                background: `url(${featured.imgUrl})`,
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.05)',
-              }}>
-              <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-black/15 to-transparent md:hidden" />
+              className="relative h-56 md:h-auto min-h-[260px] overflow-hidden"
+              style={{ boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.05)' }}
+            >
+              <Image
+                src={featured.imgUrl}
+                alt={featured.title}
+                fill
+                priority
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover img-pan-img"
+              />
+              <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-black/15 to-transparent md:hidden pointer-events-none" />
             </div>
           </div>
         </motion.div>

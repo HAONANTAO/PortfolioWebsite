@@ -11,14 +11,14 @@ const stats = [
 
 const AchievementSection = () => {
   return (
-    <section className="py-16 border-t border-zinc-900/10">
+    <section className="py-16 border-t border-zinc-900/10 dark:border-zinc-100/10">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
         className="mb-8">
-        <span className="text-[10px] uppercase tracking-widest text-zinc-400">
+        <span className="text-[10px] uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
           By the numbers
         </span>
       </motion.div>
@@ -32,10 +32,10 @@ const AchievementSection = () => {
 
         {stats.map((stat, i) => (
           <div key={i} className="flex flex-col">
-            <span className="text-3xl sm:text-4xl font-semibold text-zinc-900 tabular-nums">
+            <span className="text-3xl sm:text-4xl font-semibold text-zinc-900 dark:text-zinc-100 tabular-nums">
               {stat.value}
             </span>
-            <span className="mt-1.5 text-xs text-zinc-500">
+            <span className="mt-1.5 text-xs text-zinc-500 dark:text-zinc-400">
               {stat.label}
             </span>
           </div>

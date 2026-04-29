@@ -22,10 +22,10 @@ export default function WritingsPage() {
 
       <div className="container max-w-5xl px-6 sm:px-10 py-4 mx-auto mt-24 relative z-10">
         <section className="pt-8 pb-12">
-          <h1 className="serif text-5xl sm:text-6xl font-normal text-zinc-900 tracking-tight mb-4">
+          <h1 className="serif text-5xl sm:text-6xl font-normal text-zinc-900 dark:text-zinc-100 tracking-tight mb-4">
             Notes from the build floor
           </h1>
-          <p className="text-zinc-600 max-w-2xl text-base leading-relaxed">
+          <p className="text-zinc-600 dark:text-zinc-300 max-w-2xl text-base leading-relaxed">
             Project retros and engineering notes — what I learned shipping AI
             products, what broke, and what I&apos;d do differently. No tutorials,
             no hot takes. Just honest write-ups.
