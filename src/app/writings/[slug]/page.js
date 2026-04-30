@@ -1,11 +1,30 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
-import { getWritingBySlug, getAllSlugs } from "@/lib/writings";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import { getWritingBySlug, getAllSlugs, extractHeadings } from "@/lib/writings";
 import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
 import ScrollProgress from "../../components/ScrollProgress";
 import BackToTop from "../../components/BackToTop";
+import TableOfContents from "../../components/TableOfContents";
+
+const mdxOptions = {
+  mdxOptions: {
+    rehypePlugins: [
+      rehypeSlug,
+      [
+        rehypeAutolinkHeadings,
+        {
+          behavior: "append",
+          properties: { className: ["heading-anchor"], "aria-label": "Permalink" },
+          content: { type: "text", value: "#" },
+        },
+      ],
+    ],
+  },
+};
 
 export function generateStaticParams() {
   return getAllSlugs().map((slug) => ({ slug }));
@@ -57,6 +76,7 @@ export default function WritingPage({ params }) {
   if (!post) notFound();
 
   const { frontmatter, content } = post;
+  const headings = extractHeadings(content);
 
   return (
     <main className="flex min-h-screen flex-col relative overflow-x-hidden" style={{ background: 'var(--bg)' }}>
@@ -64,7 +84,9 @@ export default function WritingPage({ params }) {
       <NavBar />
       <BackToTop />
 
-      <div className="container max-w-3xl px-6 sm:px-10 py-4 mx-auto mt-24 relative z-10">
+      <div className="container max-w-6xl px-6 sm:px-10 py-4 mx-auto mt-24 relative z-10">
+        <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_220px] xl:gap-16">
+          <div className="max-w-3xl mx-auto xl:mx-0">
         <Link
           href="/writings"
           className="inline-flex items-center gap-1.5 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 text-sm mt-4 mb-10 transition-colors"
@@ -125,7 +147,7 @@ export default function WritingPage({ params }) {
             prose-blockquote:not-italic
             prose-img:rounded-lg"
         >
-          <MDXRemote source={content} components={mdxComponents} />
+          <MDXRemote source={content} components={mdxComponents} options={mdxOptions} />
         </article>
 
         <div className="border-t border-zinc-900/10 dark:border-zinc-100/10 pt-8 pb-16">
@@ -135,6 +157,10 @@ export default function WritingPage({ params }) {
           >
             <span>←</span> All writings
           </Link>
+        </div>
+          </div>
+
+          <TableOfContents headings={headings} />
         </div>
       </div>
 

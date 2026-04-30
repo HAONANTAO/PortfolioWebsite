@@ -211,6 +211,31 @@ body {
   .text-balance { text-wrap: balance; }
 }
 
+/* ─── Anchor links on writing headings (rehype-autolink-headings) ─── */
+.heading-anchor {
+  margin-left: 0.4em;
+  color: var(--ink-4);
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 0.15s ease, color 0.15s ease;
+  font-weight: 400;
+}
+h2:hover .heading-anchor,
+h3:hover .heading-anchor,
+.heading-anchor:focus {
+  opacity: 1;
+}
+.heading-anchor:hover {
+  color: var(--accent);
+}
+
+/* Headings with rehype-slug get an id; offset for the sticky navbar
+   when jumping via #anchor */
+.prose h2[id],
+.prose h3[id] {
+  scroll-margin-top: 6rem;
+}
+
 /* ─── Command palette (cmdk) ─── */
 .cmdk-root [cmdk-group-heading] {
   padding: 8px 12px 4px;
