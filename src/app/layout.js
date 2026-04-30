@@ -1,5 +1,7 @@
 import { Inter, Homemade_Apple, Instrument_Serif } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { getAllWritings } from "@/lib/writings";
 import ProjectsData from "./Data/ProjectsData";
 import CommandPalette from "./components/CommandPalette";
@@ -65,6 +67,8 @@ export default function RootLayout({ children }) {
           {children}
           <CommandPalette writings={writings} projects={ProjectsData} />
         </ThemeProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
