@@ -47,7 +47,6 @@ export const metadata = {
       { url: '/favicon.ico' },
     ],
     shortcut: '/favicon.svg',
-    apple: '/favicon.svg',
   },
   alternates: {
     types: {
@@ -58,10 +57,44 @@ export const metadata = {
   },
 };
 
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Aaron Tao",
+  alternateName: "Haonan Tao",
+  url: "https://www.taohaonan.com",
+  image: "https://www.taohaonan.com/opengraph-image",
+  jobTitle: "AI Engineer & Full Stack Developer",
+  email: "mailto:taoaaron5@gmail.com",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Melbourne",
+    addressCountry: "AU",
+  },
+  knowsAbout: [
+    "Large Language Models",
+    "Retrieval-Augmented Generation",
+    "LangChain",
+    "Next.js",
+    "React Native",
+    "AWS",
+  ],
+  sameAs: [
+    "https://github.com/HAONANTAO",
+    "https://www.linkedin.com/in/haonan-tao-4a9855270/",
+  ],
+};
+
 export default function RootLayout({ children }) {
   const writings = getAllWritings();
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${signature.variable} ${serif.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
+      </head>
       <body className={inter.className}>
         <ThemeProvider>
           {children}

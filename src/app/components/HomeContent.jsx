@@ -46,9 +46,9 @@ export default function HomeContent({ writings = [] }) {
         <ScrollCompanion />
 
         <div className="container max-w-5xl px-6 sm:px-10 py-4 mx-auto mt-24 relative z-10">
-          <HeroSection />
-          <RecentlyShipped />
+          <HeroSection latestWriting={writings[0]} />
           <AboutSection />
+          <RecentlyShipped />
           <ProjectsSection writings={writings} />
           <LatestWritingsSection posts={writings} />
           <EmailSection />

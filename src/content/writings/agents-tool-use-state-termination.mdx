@@ -1,7 +1,7 @@
 ---
 title: "Agents are tool use, state, and a termination condition"
 slug: "agents-tool-use-state-termination"
-date: "2026-04-29"
+date: "2026-03-22"
 summary: "Strip away the framework hype and most 'AI agents' are a for-loop with three problems: tool plumbing, state, and knowing when to stop."
 tags: ["AI Agents", "LLMs", "Engineering"]
 category: "ideas"
@@ -23,6 +23,36 @@ An agent, when you delete the marketing language, is three things:
 3. **A termination condition.** Something that decides when the loop is done. *"The model returned an answer with no tool call."* Or *"we hit the iteration cap."* Or *"the user said stop."*
 
 That's it. Most "agent frameworks" are wrappers over those three. Once you see them, the demos that look magical and the demos that look broken use the same machinery; the difference is whether each piece was thought about or hoped for.
+
+## What the loop actually looks like
+
+Here's the entire agent pattern in 20 lines. No framework, no abstractions, just the three things above:
+
+```js
+async function runAgent({ task, tools, maxIterations = 8, maxTokens = 50_000 }) {
+  const messages = [{ role: "user", content: task }];   // 1. STATE
+  let tokensUsed = 0;
+
+  for (let i = 0; i < maxIterations; i++) {             // 3. TERMINATION (cap)
+    const reply = await llm.chat({ messages, tools });
+    messages.push(reply);
+    tokensUsed += reply.usage.total_tokens;
+
+    if (tokensUsed > maxTokens) return { messages, reason: "budget" };
+    if (!reply.tool_calls?.length) return { messages, reason: "done" };
+
+    for (const call of reply.tool_calls) {              // 2. TOOL USE
+      const result = await tools[call.name](call.args);
+      messages.push({ role: "tool", tool_call_id: call.id, content: result });
+    }
+  }
+  return { messages, reason: "max_iterations" };        // 3. TERMINATION (cap)
+}
+```
+
+Every "agent framework" you'll touch — LangGraph, OpenAI's Assistants API, the Anthropic agent SDK — adds structure around this loop, but the loop underneath is identical. When you read framework source code, look for this shape. It's always there.
+
+The interesting lines aren't the LLM call. They're the three return statements. Each one is a distinct way the loop ends, and each one needs a distinct UX: *"here's your answer," "I gave up because this was getting expensive," "I tried 8 times and couldn't figure it out."* A demo agent has one return path. A production agent has three (or more) and tells the user which one fired.
 
 ## Termination is where the real engineering is
 

@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import { getWritingBySlug, getAllSlugs, extractHeadings } from "@/lib/writings";
+import { getWritingBySlug, getAllSlugs, getAllWritings, extractHeadings } from "@/lib/writings";
 import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
 import ScrollProgress from "../../components/ScrollProgress";
@@ -78,6 +78,13 @@ export default function WritingPage({ params }) {
   const { frontmatter, content } = post;
   const headings = extractHeadings(content);
 
+  // getAllWritings sorts newest-first; the post above current is "newer",
+  // the post below is "older".
+  const all = getAllWritings();
+  const idx = all.findIndex((p) => p.slug === params.slug);
+  const newer = idx > 0 ? all[idx - 1] : null;
+  const older = idx >= 0 && idx < all.length - 1 ? all[idx + 1] : null;
+
   return (
     <main className="flex min-h-screen flex-col relative overflow-x-hidden" style={{ background: 'var(--bg)' }}>
       <ScrollProgress selector="article" />
@@ -150,7 +157,40 @@ export default function WritingPage({ params }) {
           <MDXRemote source={content} components={mdxComponents} options={mdxOptions} />
         </article>
 
-        <div className="border-t border-zinc-900/10 dark:border-zinc-100/10 pt-8 pb-16">
+        {(newer || older) && (
+          <nav className="grid grid-cols-2 gap-6 border-t border-zinc-900/10 dark:border-zinc-100/10 pt-8">
+            {newer ? (
+              <Link href={`/writings/${newer.slug}`} className="group block min-w-0">
+                <span className="block text-[10px] uppercase tracking-widest text-zinc-400 dark:text-zinc-500 mb-1.5">
+                  ← Newer
+                </span>
+                <span className="block text-sm font-medium text-zinc-700 dark:text-zinc-300
+                  group-hover:text-[color:var(--accent)] dark:group-hover:text-[color:var(--accent)]
+                  transition-colors leading-snug">
+                  {newer.title}
+                </span>
+              </Link>
+            ) : (
+              <div />
+            )}
+            {older ? (
+              <Link href={`/writings/${older.slug}`} className="group block text-right min-w-0">
+                <span className="block text-[10px] uppercase tracking-widest text-zinc-400 dark:text-zinc-500 mb-1.5">
+                  Older →
+                </span>
+                <span className="block text-sm font-medium text-zinc-700 dark:text-zinc-300
+                  group-hover:text-[color:var(--accent)] dark:group-hover:text-[color:var(--accent)]
+                  transition-colors leading-snug">
+                  {older.title}
+                </span>
+              </Link>
+            ) : (
+              <div />
+            )}
+          </nav>
+        )}
+
+        <div className="border-t border-zinc-900/10 dark:border-zinc-100/10 mt-8 pt-8 pb-16">
           <Link
             href="/writings"
             className="inline-flex items-center gap-1.5 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 text-sm transition-colors"

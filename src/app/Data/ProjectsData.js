@@ -11,6 +11,17 @@ const ProjectsData = [
     Tech: ["React", "Node.js", "LangChain", "OpenAI", "Pinecone", "MongoDB", "Tailwind CSS"],
   },
   {
+    id: 6,
+    title: "ShangXue · Teacher Salary System",
+    description: `Internship project for Shangxue Tutoring — production payroll platform replacing paper-based teacher salary claims. 10+ weeks shipping with one PM and Claude Code as my AI pair. Three-tier RBAC (teacher · admin · superadmin), invitation-based onboarding, live AUD→CNY rate locked per claim, bilingual EN/Chinese UI. Layered Express backend with 39 unit tests.`,
+    metric: "Internship · 10+ weeks · Team build · 3-tier RBAC · Bilingual · 39 backend tests",
+    tag: ["All", "React", "MongoDB"],
+    imgUrl: "/images/Projects/shangxue.png",
+    gitUrl: "https://github.com/HAONANTAO/MXCareer",
+    preview: "https://mx-career.vercel.app",
+    Tech: ["React 19", "Vite", "Express", "MongoDB", "Tailwind", "i18next", "Cloudinary"],
+  },
+  {
     id: 0,
     title: "All Storage",
     description: `Full-featured cloud storage and file-sharing platform. Passwordless email OTP auth, real-time data sync, and modular architecture built for scale. Next.js 15 App Router with TypeScript and AppWrite backend.`,

@@ -22,10 +22,10 @@ const SECTIONS = [
     roman: 'iii.',
     label: 'Building',
     icon: '🛠️',
-    title: 'DocuMind',
-    body: 'Production RAG SaaS — streaming responses, vector search, source-grounded citations. The product I keep iterating on.',
-    href: 'https://github.com/HAONANTAO/DocuMind',
-    cta: 'See the repo',
+    title: 'ShangXue · Teacher Salary System',
+    body: 'Internship at Shangxue Tutoring. 10+ weeks shipping a production payroll platform with one PM and Claude Code as my AI pair — three-tier RBAC, bilingual EN/Chinese, 39 backend tests. Launching to real teachers May–June.',
+    href: 'https://mx-career.vercel.app',
+    cta: 'See it live',
   },
 ]
 

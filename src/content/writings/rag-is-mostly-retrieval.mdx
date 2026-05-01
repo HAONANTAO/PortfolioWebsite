@@ -1,7 +1,7 @@
 ---
 title: "RAG is mostly information retrieval"
 slug: "rag-is-mostly-retrieval"
-date: "2026-04-29"
+date: "2026-04-26"
 summary: "Most 'my RAG hallucinates' bug reports are retrieval bugs, not LLM bugs — and the four levers that actually move the needle."
 tags: ["RAG", "Retrieval", "LLMs"]
 category: "ideas"
@@ -15,6 +15,24 @@ I was showing a friend the system answering questions about a 200-page contract.
 The model wasn't the problem. The retrieval was. The retriever had pulled five chunks; only one of them mentioned section 4.2; the others were about section 5.1, 6.3, and the table of contents. With that context, the model did the most plausible thing: synthesise a plausible-sounding answer from the wrong chunks. The hallucination was the symptom. The retrieval was the disease.
 
 I keep meeting people who treat RAG as if the model is doing the work. It isn't. Most of what makes a RAG app feel smart, or feel stupid, happens before the model sees a single token. The interesting engineering is in retrieval. The LLM is the part at the end that turns the right inputs into readable output.
+
+## What RAG actually is, in 90 seconds
+
+If you haven't shipped one yet, here's the whole pattern. **Retrieval-Augmented Generation** is two pipelines glued together with a database in the middle.
+
+**Indexing** (offline, once per document):
+1. Split the document into chunks of a few hundred tokens each.
+2. Run each chunk through an embedding model. You get back a vector — a list of ~1,536 floating-point numbers — that represents the chunk's *meaning*. Two chunks about the same topic land near each other in vector space; two unrelated chunks land far apart.
+3. Store the vectors in a vector database (Pinecone, pgvector, Turbopuffer) keyed by which chunk they came from.
+
+**Query** (online, every user question):
+1. Embed the user's question with the same model. You get one vector.
+2. Ask the database: *which stored vectors are closest to this one?* Get back the top-k chunks (typically k=5).
+3. Stuff those chunks into the LLM prompt as context, alongside the question. The model answers using them.
+
+That's it. The clever part isn't the LLM at the end — every modern model can read passages and answer questions about them. The clever part is making sure step 2 actually returns the chunks the model needs. **When a RAG app feels stupid, it's almost always because step 2 returned the wrong chunks.** The model then does its job — answer based on the context — and the answer is wrong because the context was wrong.
+
+People skip this framing because vector databases sound exotic. They aren't. A vector DB is a key-value store where the "key" happens to be 1,536 numbers and the lookup function happens to be cosine similarity. Once you see the shape, the mystery evaporates and you start looking at the part that actually matters: what got retrieved.
 
 ## "My RAG hallucinates" is usually "my retrieval missed"
 
@@ -30,7 +48,25 @@ Most teams pull one (chunk size) and stop. Here are the four I think actually ma
 
 **Chunking that respects structure.** Fixed-size windows split sentences mid-clause and separate headers from their tables. The fix is to parse the document first — into headers, sections, paragraphs — and chunk *inside* those leaves with overlap. Each chunk carries its breadcrumb (`Doc > Section 4.2 > "Termination"`) so retrieval can re-rank on it and the UI can show it as a citation.
 
-**Query rewriting.** Users ask "what's wrong with the renewal clause?" but the document says "termination provisions." Naive embedding-based retrieval will miss because the surface words don't overlap. A small rewrite step — "rephrase this question into three search queries that might appear in a contract" — recovers that. It's one extra LLM call. It often doubles recall.
+**Query rewriting.** Users ask "what's wrong with the renewal clause?" but the document says "termination provisions." Naive embedding-based retrieval will miss because the surface words don't overlap. A small rewrite step — "rephrase this question into three search queries that might appear in a contract" — recovers that. It's one extra LLM call. It often doubles recall. The shape of it:
+
+```js
+const queries = await llm.invoke(`
+  Rewrite the user's question as three search queries
+  that might literally appear in a legal contract.
+  Return JSON: { queries: [string, string, string] }
+
+  Question: ${userQuestion}
+`);
+
+const allHits = await Promise.all(
+  queries.map(q => vectorStore.similaritySearch(q, 8))
+);
+const dedup = uniqueByChunkId(allHits.flat()).slice(0, 20);
+// hand `dedup` to the re-ranker (next lever)
+```
+
+One extra round-trip, ~80ms with a small model, and the recall improvement usually pays for it twice.
 
 **Hybrid search.** Embedding-only retrieval is great at semantic match and bad at exact match. If a user asks about "section 4.2," they need that exact string, and an embedding might or might not surface the right chunk. Combining vector search with BM25 (or a similar lexical retrieval) recovers the cases where the user is searching for a specific term. Most vector DBs ship this now; few demos use it.
 

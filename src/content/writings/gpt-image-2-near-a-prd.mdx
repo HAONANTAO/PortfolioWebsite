@@ -1,7 +1,7 @@
 ---
 title: "GPT-Image-2 is the first image model I'd put near a PRD"
 slug: "gpt-image-2-near-a-prd"
-date: "2026-04-29"
+date: "2026-04-30"
 summary: "Text rendering, instruction following, and inpainting all crossed the threshold at once. Three workflows I'm rebuilding around it."
 tags: ["GPT-Image-2", "OpenAI", "Design"]
 category: "ideas"
@@ -14,11 +14,22 @@ GPT-Image-2 changed that. The text rendering works. The instruction following wo
 
 I'm a week or two into actually using it. These are early notes, not a finished take.
 
+## A quick mental model of how this works
+
+If you've never looked under the hood, image generation in 2026 is two architectural ideas competing:
+
+- **Diffusion models** (Stable Diffusion, Midjourney through v6): start from pure random noise and gradually *denoise* it over ~30 steps, conditioned on your prompt. Each step nudges the pixels toward something that matches the text. Diffusion is great at texture, lighting, and "vibes" because it's literally sculpting from noise — but it's bad at structure, because each pixel only sees its neighbours. A glyph like the letter "e" is a global structural commitment that local denoising fights against.
+- **Autoregressive image models** (GPT-Image-2, Google's nano-banana): treat the image as a sequence of tokens and predict them one at a time, the same way a language model predicts the next word. Because the model has the full sequence so far when picking the next token, it can plan ahead — *"the next 40 tokens need to spell W-E-L-C-O-M-E"* — in a way diffusion structurally can't.
+
+That difference is why the text-rendering problem cracked at the same time the architecture changed. It wasn't a fix bolted onto diffusion; it's a different model class that happens to be good at the thing diffusion was bad at.
+
 ## The text-rendering problem was the bottleneck
 
 Older image models couldn't write. If you asked for a sign that said *Welcome*, you got a sign that said *WelconE* or *Wlecome*, with a half-formed letter floating next to it. This sounds like a small thing. It's not. It meant you couldn't generate any image that contained UI, logos, signage, screenshots, or anything text-shaped — which excluded most of the images a software company actually needs.
 
 GPT-Image-2 writes. Not perfectly, but reliably enough that I trust it for short strings: button labels, headlines, brand names, room signs. The first time I generated a mock landing page where the headline read exactly the headline I'd asked for, I sat there for a minute. That had never been possible before.
+
+The cost of that capability is latency. A 1024×1024 image takes me 18-25 seconds end-to-end on the API, versus 3-5 seconds for a comparable SDXL diffusion call. Predicting tokens one at a time is slower than denoising in parallel — that's the trade. For my workflows (mocks and assets, not real-time generation) it's the right side of the trade. For something like a live avatar generator, diffusion still wins.
 
 ## Three workflows are different now
 

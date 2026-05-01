@@ -1,0 +1,167 @@
+---
+title: "Building ShangXue: a payroll system, a PM, and an AI pair"
+slug: "shangxue"
+date: "2026-05-01"
+summary: "10 weeks shipping an internal payroll platform for a tutoring company — paired with a PM and Claude Code as my AI pair. The decisions worth defending and what changes about the work when AI sits at the keyboard with you."
+tags: ["Internship", "RBAC", "Production", "Claude Code"]
+category: "project"
+project: "ShangXue · Teacher Salary System"
+cover: "/images/Projects/shangxue.png"
+readingTime: "10 min"
+---
+
+The first time I saw how Shangxue paid its teachers, it was a payment screenshot emailed at the end of every month. The teacher would write hours by hand, calculate their own pay, and send a screenshot of the bank-transfer confirmation as proof. The admin would receive a stack of these on the same day, manually verify each, and pay them one by one. The exchange rate from AUD to CNY was whatever the rate happened to be when the admin got around to it. Mistakes happened. Re-issues happened. Nobody trusted the numbers.
+
+This is the pre-software state of most small businesses. It's also why "internal tools" is the most underrated category in software — the demo is undramatic, but the difference between *Excel + screenshots* and *a system that knows the rules* is enormous when you measure it in trust.
+
+This post is about the system that replaced that workflow. It's also about the team that built it: one PM, one engineer (me), and one AI pair (Claude Code) that lived in my editor for ten weeks straight.
+
+## What ShangXue is
+
+ShangXue is a tutoring company in Australia. They pay tutors hourly across multiple sites. Teachers submit salary claims with itemised work entries — hours, rate, students taught, billing details — and admins approve, reject, or request changes before paying out. A superadmin tier handles onboarding via invitation codes and role assignment.
+
+Live at [mx-career.vercel.app](https://mx-career.vercel.app). Code at [github.com/HAONANTAO/MXCareer](https://github.com/HAONANTAO/MXCareer). Frontend is React 19 + Vite 8; backend is Express 5 + Mongoose on Node 18; database is MongoDB Atlas; uploads through Cloudinary; email through Nodemailer. Vercel for the frontend, Render for the backend.
+
+The thing that makes this not a CRUD-app retread is the rules — the parts where the software has to know more than the user. Three tiers of permissions, exchange-rate locking, invitation-bound roles, claim-state machines. Most of what I'll talk about below is one of those rules and why it earned its complexity.
+
+## Architecture at a glance
+
+The backend is layered, not because layering is fashionable but because we knew from the start that PM-supplied specs would change. The shape:
+
+```
+HTTP request
+   │
+   ▼
+[ Route ]            – URL → middleware chain → controller
+   │
+   ▼
+[ Middleware ]       – auth (JWT), adminOnly, superAdminOnly, rate limit
+   │
+   ▼
+[ Controller ]       – parses req, calls service, returns JSON
+   │
+   ▼
+[ Service ]          – business rules, validation, side-effects
+   │
+   ▼
+[ Repository ]       – Mongoose queries
+   │
+   ▼
+[ Model ]            – schema definitions
+```
+
+The benefit is concrete: when the spec evolves, the change touches one or two layers, not all of them. If we'd written it as flat Express routes calling Mongoose directly — the way most internship code starts — every change would have rippled through six files.
+
+I won't pretend layering is free. The first weeks felt like over-engineering. By the time the spec changed for the third time, it was paying for itself.
+
+## Decisions that mattered
+
+### 1. Three tiers of permissions, not two
+
+The naive design is teachers and admins. Two roles, two pages, done. We almost shipped it that way.
+
+The thing that broke this was the question *"who creates the first admin account?"* If signup is open, anyone can self-promote. If signup is closed, someone has to bootstrap the system. The clean answer was a third tier — a superadmin who issues invitation codes, manages roles, and is the only one with the keys to the role hierarchy.
+
+```
+superadmin → can create/revoke invitation codes for teacher/admin signup
+            → can promote teacher → admin, demote admin → teacher
+            → can delete admin/superadmin (with last-superadmin guard)
+            → everything an admin can do
+admin       → can review claims, upload payment proof, see analytics
+teacher     → can submit/edit/resubmit own claims, manage own profile
+```
+
+The "last-superadmin guard" — refusing to delete the last remaining superadmin — was the kind of thing that doesn't appear in any spec until someone tries to do it accidentally. Three tiers cost more code than two, but it turned a class of *"oops we locked ourselves out"* bugs into invariants the data layer enforces.
+
+### 2. Invitation-bound roles
+
+Signup requires an invitation code. The code itself encodes which role the recipient gets. So when a superadmin generates an invitation for *teacher*, the resulting account *cannot* be an admin even if the user finds the code and submits a malicious payload at signup — because role isn't sourced from the request body, it's sourced from the server-side invitation record.
+
+This is one of those decisions where the security work is in the data model, not in the validator. If `role` is sourced from the request body, you have to trust the validator forever. If `role` is sourced from a server-side invitation, the validator becomes irrelevant to that field.
+
+### 3. Locking AUD → CNY exchange rate per claim
+
+Tutors are paid in CNY but billing is in AUD. The exchange rate moves daily. If we let the rate float between submission and payment, every claim becomes a small disagreement: *"the rate today is 4.7, but on Monday when I submitted it was 4.74, and I want the better one."*
+
+We pull the rate from the [Frankfurter API](https://www.frankfurter.app/) at the moment of submission and store it on the claim itself. Approval and payout use that frozen rate, regardless of when the admin gets to it.
+
+This is a one-API-call decision that turned a recurring complaint into a non-issue. Almost zero code, large UX win — the kind of thing you have to actively look for, because it doesn't show up in any feature spec.
+
+### 4. Bilingual UI from week zero
+
+Some of the teachers read mostly Chinese; the admins are bilingual; legal and billing strings have to be in English. We could have shipped EN-first and added Chinese later, but every team that says *"we'll i18n later"* finds out that "later" means *"we'll rewrite half the components."*
+
+`i18next` from day one means every visible string is a key, not a literal. The cost: two minutes per string instead of thirty seconds. The benefit: no rewrite, and the second language doesn't introduce regressions because there's no fallback path that diverges.
+
+If I were starting again I would still do this on day zero. The "i18n later" instinct is almost always wrong — the further you push it, the more components you have to revisit.
+
+### 5. Backend unit tests with mocked repositories
+
+The intern problem: I write a feature, it works, I move on. Nothing catches the regression I introduce three weeks later when I refactor a middleware. The only thing that catches that fast enough to matter is unit tests, and the only unit tests that run on every save are ones that don't need a database.
+
+Mocked repositories solve this. Three test suites covering auth, claims, and user management. They run in about a second. That speed is the whole point — tests that take a minute don't get run; tests that take a second get run on every save.
+
+### 6. Cloudinary, not S3
+
+Payment proofs (PDFs and images) needed somewhere to live. AWS S3 is the obvious answer — except S3 by itself doesn't optimise images, doesn't ship a CDN, and would mean writing presigned-URL flows by hand.
+
+Cloudinary handles all of it: optimised serving, thumbnails for previews, server-side type checking, a free tier that comfortably covers our usage. The trade-off is vendor lock-in to a smaller player. For an internal tool with predictable usage, that's the right trade.
+
+### 7. Security middleware, default-on
+
+Helmet for headers, a CORS allowlist, rate limiting on auth routes. None of this is novel; what's worth saying is that they're easy to add and easier to forget. We wired them at app boot, which means a future refactor that forgets one of them changes server startup behaviour visibly — not silently.
+
+## Working with the PM
+
+The PM was in-person — not remote. But the rhythm of the work was still mostly async: WeChat and Slack threads through the day, one full meeting a week. That weekly meeting was for the things that needed real conversation; everything else got resolved in writing.
+
+The artefacts that mattered:
+
+- **A PRD** they wrote at the start. Updated as we learned things. The version-controlled history of that doc is itself a record of how the requirements thought changed.
+- **OpenSpec change records** — the `openspec/` directory in the repo holds proposal docs for every nontrivial change ("add superadmin role", "user-role-management", and so on). PM reviews the proposal *before* I touch code.
+- **Async daily updates** — short notes on what shipped, what's stuck, what's coming.
+
+The thing I learned from this is that *spec docs aren't bureaucracy when you're not constantly in a room together* — they're how the PM and I stayed aligned on "what done looks like" between Monday meetings. Without them I would have built features they didn't ask for. With them, the discussion happened at the proposal stage instead of after the code was already written.
+
+If you're doing your first internship and the work is mostly chat-based: **the doc is the meeting.** Treat it that way.
+
+## Working with Claude Code as a pair
+
+Claude Code lived in my terminal for the entire project. I want to be specific about what it did and didn't do, because the pop discourse about *"AI replaces juniors"* doesn't match the reality of using one for ten weeks.
+
+**What Claude was good at:**
+
+- Boilerplate I'd written before. Express routes, repository methods, service-layer pass-throughs. Shape was always right; names matched my conventions; I'd accept and move on.
+- Test scaffolding. Given a controller, *"write tests for happy path + 4xx error cases"* produced most of what I wanted in seconds.
+- Refactors with a clear shape. *"Move all admin checks from controllers into a `requireRole` middleware."* The mechanical work, done correctly.
+- Reading unfamiliar code. Understanding a behaviour deeper in the Mongoose source was faster than guessing.
+
+**What Claude was less good at:**
+
+- Trade-off decisions. *"Should superadmin deletion cascade to claims?"* It would lay out both sides. The decision was mine.
+- The first version of anything. New abstractions came out generic-feeling and over-engineered. Claude is excellent at iterating once you have a shape; less good at finding the shape.
+- Anything load-bearing that touches money. The exchange-rate-locking logic I wrote and reviewed by hand. Some things you don't outsource.
+
+**The shape of the work changed.**
+
+Before, my unit of progress was a feature in a day. With AI, the implementation got faster, but I spent the saved time on review, on architecture, and on the PM. Total throughput went up. Quality went up because I had time to actually think about trade-offs instead of being deep in syntax.
+
+I am not a better engineer because of Claude. I am a faster operator on familiar surfaces, and a more thoughtful one because the boring parts no longer eat my attention. That's the honest take. It's also why I think AI-augmented juniors are *more* valuable than non-augmented seniors at the implementation level — and *less* valuable everywhere else, because review judgement is what scales, and judgement is still ours.
+
+## What I'd do differently
+
+If I were starting today:
+
+- **Spec docs from day zero.** We added `openspec/` partway through, not at the start. The earliest decisions are less reviewable as a result.
+- **Define the role model on a whiteboard first.** The auth code went through more than one revision because we kept discovering edge cases at the database level. A 30-minute design session would have caught most of them.
+- **Treat AI like a fast junior, not a senior.** The pattern of *"let Claude propose the architecture and pick the cleaner one"* produced code that worked but felt generic. The pattern that produced better code: *"I sketch the shape, Claude fills it in, I review, we iterate."* More work for me, much better outcome.
+
+## The point
+
+ShangXue isn't a flagship engineering achievement. It's an internal tool for a small business. What it *is* is a complete experience of every part of a software product: PM coordination, spec writing, architecture decisions, security trade-offs, testing strategy, deployment, real users.
+
+Internships often get framed as *"you'll learn in a real environment."* What it actually is, in this case, is *you'll discover the parts you didn't know existed*. The exchange-rate-locking question doesn't appear in tutorials. The last-superadmin guard doesn't appear in courses. The async-PM-spec-docs ritual doesn't appear in any senior's CV bullet. They all appeared the moment we tried to ship something to actual users.
+
+If I had to compress what I'd tell a junior starting their first internship: **build the boring parts first, write the spec before you write the code, and trust your AI pair on syntax but not on judgement.**
+
+The repo is at [github.com/HAONANTAO/MXCareer](https://github.com/HAONANTAO/MXCareer); the live system is at [mx-career.vercel.app](https://mx-career.vercel.app). Happy to talk about any decision above — the trade-offs are the interesting part, and most have a defensible argument the other way.

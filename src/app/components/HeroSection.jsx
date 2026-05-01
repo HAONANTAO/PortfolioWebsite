@@ -2,6 +2,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import Link from 'next/link'
 import AiCore from './AiCore'
 
 // AI concepts orbiting the globe — each tag carries a hue token that maps
@@ -24,7 +25,7 @@ const HUE_STYLES = {
   blue:    { dot: '#3b82f6', bg: 'rgba(59,130,246,0.12)',  border: 'rgba(59,130,246,0.32)',  text: '#2a63cc' },
 }
 
-const HeroSection = () => {
+const HeroSection = ({ latestWriting }) => {
   return (
     <section className="py-20 lg:py-28 relative">
 
@@ -66,28 +67,41 @@ const HeroSection = () => {
 
           {/* Lede */}
           <p className="text-base sm:text-lg leading-relaxed max-w-xl mb-3" style={{ color: 'var(--ink-2)' }}>
-            Full-stack engineer based in Melbourne. Solo-shipped a finance app to the App Store,
-            built a production RAG SaaS with streaming responses and vector search.
+            Two years ago I was writing CRUD endpoints. Now I ship RAG systems, agents,
+            and streaming chat to real users.
           </p>
           <p className="text-base sm:text-lg leading-relaxed max-w-xl mb-8" style={{ color: 'var(--ink-2)' }}>
-            Obsessed with closing the gap between LLM demos and real-world products.
+            Based in Melbourne. Solo-shipped to the App Store. Currently obsessed with closing
+            the gap between LLM demos and shipped products.
           </p>
 
-          {/* Currently building strip */}
-          <motion.div
-            initial={{ opacity: 0, x: -8 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.6 }}
-            className="flex items-center gap-3 mb-10 px-3.5 py-2 rounded-md
-              border border-zinc-900/10 bg-white/60
-              dark:border-zinc-100/10 dark:bg-zinc-100/[0.04]
-              w-fit max-w-full">
-            <span className="text-[10px] uppercase tracking-widest text-zinc-400 dark:text-zinc-500 shrink-0">Now</span>
-            <span className="h-3 w-px bg-zinc-900/15 dark:bg-zinc-100/15" />
-            <span className="text-sm text-zinc-700 dark:text-zinc-300">
-              ⚗️ Going deep on <span className="font-medium" style={{ color: 'var(--accent)' }}>LangChain + RAG</span>
-            </span>
-          </motion.div>
+          {/* Latest writing — auto-sourced, no duplication with CurrentlyCard */}
+          {latestWriting && (
+            <motion.div
+              initial={{ opacity: 0, x: -8 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.6 }}
+              className="mb-10 w-fit max-w-full">
+              <Link
+                href={`/writings/${latestWriting.slug}`}
+                className="group flex items-center gap-3 px-3.5 py-2 rounded-md
+                  border border-zinc-900/10 bg-white/60 hover:border-zinc-900/30
+                  dark:border-zinc-100/10 dark:bg-zinc-100/[0.04] dark:hover:border-zinc-100/30
+                  transition-colors">
+                <span className="text-[10px] uppercase tracking-widest text-zinc-400 dark:text-zinc-500 shrink-0">
+                  Latest
+                </span>
+                <span className="h-3 w-px bg-zinc-900/15 dark:bg-zinc-100/15" />
+                <span className="text-sm text-zinc-700 dark:text-zinc-300 truncate">
+                  {latestWriting.title}
+                </span>
+                <span className="text-zinc-400 dark:text-zinc-500 shrink-0
+                  group-hover:text-[color:var(--accent)] group-hover:translate-x-0.5 transition-all">
+                  →
+                </span>
+              </Link>
+            </motion.div>
+          )}
 
           {/* CTAs */}
           <div className="flex flex-wrap items-center gap-3 mb-10">

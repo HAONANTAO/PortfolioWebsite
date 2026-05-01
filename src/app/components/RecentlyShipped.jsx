@@ -9,10 +9,16 @@ import { ArrowUpRightIcon } from "@heroicons/react/24/outline";
 const ITEMS = [
   {
     date: "Now",
+    title: "ShangXue · Teacher Salary System",
+    note: "Internship at Shangxue Tutoring — production payroll, 3-tier RBAC, bilingual",
+    href: "https://mx-career.vercel.app",
+    accent: true,
+  },
+  {
+    date: "May 2026",
     title: "DocuMind",
     note: "Streaming RAG, source citations, multi-turn memory",
     href: "https://docu-mind-neon.vercel.app",
-    accent: true,
   },
   {
     date: "Apr 2026",

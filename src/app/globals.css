@@ -92,6 +92,18 @@ body {
   border-color: var(--ink) !important;
 }
 
+/* ─── Global keyboard focus ───
+   Mouse clicks suppress the ring (`:focus` without `:focus-visible`);
+   keyboard tabbing surfaces a clear accent ring on every interactive
+   element. `.input-focus` opts out — it has its own border treatment. */
+:focus { outline: none; }
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+.input-focus:focus-visible { outline: none; }
+
 /* ─── Float ─── */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
