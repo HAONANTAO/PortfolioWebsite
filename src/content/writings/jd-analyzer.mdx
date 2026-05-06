@@ -1,0 +1,29 @@
+---
+title: "Building JD Analyzer: a privacy-first Chrome extension for resume-JD matching"
+slug: "jd-analyzer"
+date: "2026-05-06"
+summary: "Why I shipped a Chrome extension that scores resumes against job descriptions client-side, on the user's own AI key — and what the architecture had to look like to make 'no backend' actually true."
+tags: ["Chrome Extension", "Manifest V3", "Claude", "OpenAI", "Privacy"]
+category: "project"
+project: "JD Analyzer — AI Resume & JD Match"
+cover: "/images/Projects/JDAnalyzer.png"
+readingTime: "3 min"
+---
+
+## Problem
+
+Every "AI resume tool" I tried during my own job search had one of three problems. It locked the useful features behind a $20-a-month paywall. It shipped my resume and the JD to a black-box backend I couldn't audit. Or the cover letter it generated read like a Mad Lib — generic enough to fit any job and useless for any specific one. I wanted something that respects my privacy, runs on my own AI provider account so the cost is honest and minimal, and earns trust in 60 seconds.
+
+## Approach
+
+The whole extension runs client-side. Resumes are parsed in the browser via PDF.js and mammoth.js. The user's API key never leaves `chrome.storage.local` — partway through I refactored the architecture so the popup never sends the key over runtime messages either; only the service worker reads it. Multi-provider support (Claude + OpenAI) uses an adapter pattern, so swapping providers is a single switch in settings. The cover letter streams via SSE for the typewriter effect users now expect from AI products. JD auto-extraction injects a small extractor into the active tab via `chrome.scripting.executeScript`, with site-specific selectors for LinkedIn, Seek, Indeed, Lever, Greenhouse, Ashby, Workable, and Glassdoor — plus a selection-based fallback for any site not on the list. Every call reports its exact USD cost from the provider's token usage.
+
+## Outcome
+
+Shipped on the Chrome Web Store in May 2026, MIT-licensed, costing $0.01–$0.03 per analysis on the user's own API account. v1.1 added the auto-fill flow in response to early-user feedback that copy-paste was the biggest friction point. The codebase has 37 unit tests and a GitHub Actions CI pipeline. Open source — every claim above is auditable.
+
+## What I'd do differently
+
+The extension is still vanilla JS at this scale, which is fine. If I rebuilt it tomorrow I'd add TypeScript and Vitest from day one — not because the project demands it, but because the test-friendly file shapes would have come naturally instead of needing extraction. `lib/json.js` was inlined inside `background.js` until I added tests for it.
+
+The extension is on the [Chrome Web Store](https://chromewebstore.google.com/detail/ohoogdbggeapnlmhlimpffomihldkcba) and the source is at [github.com/aarontao/jd-analyzer](https://github.com/aarontao/jd-analyzer). Happy to talk about any of the trade-offs above — most of them have a defensible argument the other way.

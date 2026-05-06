@@ -22,6 +22,17 @@ const ProjectsData = [
     Tech: ["React 19", "Vite", "Express", "MongoDB", "Tailwind", "i18next", "Cloudinary"],
   },
   {
+    id: 7,
+    title: "JD Analyzer — AI Resume & JD Match",
+    description: `Privacy-first Chrome extension that scores your resume against any job description in seconds. Open a posting on LinkedIn, Seek, or Indeed, click Auto-fill, and get a 4-dimension match score, skill-gap analysis, streaming cover letter, line-by-line resume rewrites, and 10 predicted interview questions. Powered by your own Claude or OpenAI API key — every byte stays in your browser.`,
+    metric: "Live on Chrome Web Store (May 2026) · 8 job sites · ~$0.01–0.03 per analysis · 37 unit tests · Zero backend, zero tracking",
+    tag: ["All", "AI"],
+    imgUrl: "/images/Projects/JDAnalyzer.png",
+    gitUrl: "https://github.com/aarontao/jd-analyzer",
+    preview: "https://chromewebstore.google.com/detail/ohoogdbggeapnlmhlimpffomihldkcba",
+    Tech: ["Chrome Extension", "Manifest V3", "Service Worker", "Claude API", "OpenAI API", "SSE Streaming", "PDF.js", "Vitest"],
+  },
+  {
     id: 0,
     title: "All Storage",
     description: `Full-featured cloud storage and file-sharing platform. Passwordless email OTP auth, real-time data sync, and modular architecture built for scale. Next.js 15 App Router with TypeScript and AppWrite backend.`,
