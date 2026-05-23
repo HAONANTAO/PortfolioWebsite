@@ -8,11 +8,10 @@ import { ArrowUpRightIcon } from "@heroicons/react/24/outline";
 // and GitHub repo created_at (everything else).
 const ITEMS = [
   {
-    date: "Now",
+    date: "Jun 2026",
     title: "ShangXue · Teacher Salary System",
-    note: "Internship at Shangxue Tutoring — production payroll, 3-tier RBAC, bilingual",
+    note: "Internship at Shangxue Tutoring (Mar–Jun 2026) — production payroll, 3-tier RBAC, bilingual",
     href: "https://mx-career.vercel.app",
-    accent: true,
   },
   {
     date: "May 2026",

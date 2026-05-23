@@ -15,19 +15,21 @@ import LatestWritingsSection from "./LatestWritingsSection";
 import ScrollCompanion from "./ScrollCompanion";
 
 export default function HomeContent({ writings = [] }) {
-  // Returning visitors in this session (loader already shown) start visible
-  // immediately — no fade penalty when navigating /writings → /. First-time
-  // visitors stay hidden until LoadingScreen fires onComplete.
-  const [loaded, setLoaded] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return !!sessionStorage.getItem(LOADER_SESSION_KEY);
-  });
+  // Always start at false to match SSR. Then in an effect, flip to true:
+  // immediately for returning visitors (sessionStorage key already set),
+  // or after a short safety timer that complements LoadingScreen.onComplete.
+  // Doing the sessionStorage check inside useState would mismatch SSR and
+  // leave the DOM stuck at opacity:0 with no re-render to recover.
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    if (loaded) return;
+    if (sessionStorage.getItem(LOADER_SESSION_KEY)) {
+      setLoaded(true);
+      return;
+    }
     const t = setTimeout(() => setLoaded(true), 1100);
     return () => clearTimeout(t);
-  }, [loaded]);
+  }, []);
 
   return (
     <>
@@ -39,6 +41,7 @@ export default function HomeContent({ writings = [] }) {
         transition={{ duration: 0.3 }}
         className="flex min-h-screen flex-col relative overflow-x-hidden"
         style={{ background: 'var(--bg)' }}
+        suppressHydrationWarning
       >
         <ScrollProgress />
         <NavBar />

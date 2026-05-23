@@ -6,8 +6,8 @@ const SECTIONS = [
     roman: 'i.',
     label: 'Now',
     icon: '⚗️',
-    title: 'Going deep on LangChain + RAG',
-    body: 'Studying retrieval pipelines end-to-end — chunking strategies, hybrid search, re-ranking. Less demo-magic, more "why does this actually work in production".',
+    title: 'Going wide on the AI stack',
+    body: 'Three threads in parallel — vibe-coding with Claude Code, RAG pipelines end-to-end (chunking, hybrid search, re-ranking), and AI agents (tool use, state, when to stop). Less demo-magic, more "why does this actually hold up in production".',
     active: true,
   },
   {
@@ -22,10 +22,10 @@ const SECTIONS = [
     roman: 'iii.',
     label: 'Building',
     icon: '🛠️',
-    title: 'ShangXue · Teacher Salary System',
-    body: 'Internship at Shangxue Tutoring. 10+ weeks shipping a production payroll platform with one PM and Claude Code as my AI pair — three-tier RBAC, bilingual EN/Chinese, 39 backend tests. Launching to real teachers May–June.',
-    href: 'https://mx-career.vercel.app',
-    cta: 'See it live',
+    title: 'Small AI Chrome extensions',
+    body: 'Vibe-coding tiny browser tools with Claude Code — each one a weekend from idea to install. EchoReply (Gmail intent decoder) and JD Analyzer (resume ↔ JD match) just shipped to the Chrome Web Store. Next one already on the bench.',
+    href: '#projects',
+    cta: 'See the lineup',
   },
 ]
 
