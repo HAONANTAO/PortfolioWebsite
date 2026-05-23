@@ -16,6 +16,12 @@ const ITEMS = [
   },
   {
     date: "May 2026",
+    title: "EchoReply",
+    note: "AI email coach for Gmail — Manifest V3, vanilla JS, zero backend",
+    href: "https://chromewebstore.google.com/detail/leibhmkahdofhfallekeoljmiajcjjlk",
+  },
+  {
+    date: "May 2026",
     title: "DocuMind",
     note: "Streaming RAG, source citations, multi-turn memory",
     href: "https://docu-mind-neon.vercel.app",

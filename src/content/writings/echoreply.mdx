@@ -1,0 +1,31 @@
+---
+title: "Building EchoReply: an AI email coach that lives in Gmail"
+slug: "echoreply"
+date: "2026-05-23"
+summary: "Why I shipped a privacy-first Chrome extension that reads sender intent, drafts replies in three voices, and audits your own tone before you hit send — and what 'no backend' actually means in practice."
+tags: ["Chrome Extension", "Manifest V3", "Claude", "OpenAI", "Gmail", "Privacy"]
+category: "project"
+project: "EchoReply — AI Email Coach for Gmail"
+cover: "/images/Projects/EchoReply.png"
+readingTime: "3 min"
+---
+
+## Problem
+
+Most email AI tools optimise for output: faster drafts, shinier templates. The thing that actually matters before drafting — reading the email correctly — is left to you. I wanted the opposite. An assistant that tells me what the sender actually wants, how warm or frustrated they sound, and whether a reply is worth my time. Then, only then, gives me three drafts to choose from. And does it without sending my inbox to anyone's server but my own AI provider.
+
+## Approach
+
+EchoReply is a Manifest V3 Chrome extension that injects a sidebar into Gmail. A `MutationObserver` watches the email pane; when a thread opens, the sidebar fetches a single structured analysis: **real intent**, **emotional temperature** (WARM / COOL / NEUTRAL / URGENT / FRUSTRATED), **reply strategy** (MUST_REPLY / SHOULD_REPLY / OPTIONAL / DONT_REPLY), and three reply drafts — 🎩 Professional, 🤝 Warm, ⚡ Confident. A separate **Tone Check** flow takes a draft you've already written and flags phrases that read worse than you think, with concrete rewrites.
+
+Everything runs in the browser. The user brings their own Claude or OpenAI key, stored in `chrome.storage.local` and read only by the service worker. Repeated opens of the same thread are served from a 24-hour local cache — second look is instant and free. There's no backend at all, no analytics, no observability service. The extension is pure vanilla JavaScript: no build step, no bundler, no framework, no dependencies.
+
+## Outcome
+
+Shipped to the Chrome Web Store, MIT-licensed, v1.0.1. The "no backend" claim is auditable end-to-end: the source is on [github.com/HAONANTAO/EchoReply](https://github.com/HAONANTAO/EchoReply), and the only network calls leave for `api.anthropic.com` or `api.openai.com` — whichever provider the user picked. Cost per analysis runs on the order of cents on the user's own account.
+
+## What I'd do differently
+
+The two AI providers share an interface but the adapters were inlined inside `background.js` for the first two days, which made the second one painful to add. Pulling them behind a tiny adapter contract was a fifteen-minute refactor I should have done before writing the first one. The other thing I'd change is treating prompts as code from day one — a `prompts/` directory, single source of truth, versioned. I refactored toward that around v0.9 and the change pulled forward more design clarity than the code change deserved.
+
+The repo is at [github.com/HAONANTAO/EchoReply](https://github.com/HAONANTAO/EchoReply). Happy to talk about any of the trade-offs — the privacy-first defaults have real ergonomic costs, and a few of them are worth arguing about.
