@@ -44,7 +44,7 @@ const EmailSection = () => {
             <Image src={GithubIcon} alt="GitHub" width={20} height={20} />
           </Link>
           <Link
-            href="https://www.linkedin.com/in/haonan-tao-4a9855270/"
+            href="https://www.linkedin.com/in/haonan-tao-aaron/"
             target="_blank"
             aria-label="LinkedIn"
             className="opacity-50 hover:opacity-100 transition-opacity dark:invert">

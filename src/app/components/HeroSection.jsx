@@ -128,7 +128,7 @@ const HeroSection = ({ latestWriting }) => {
           >
             {[
               { href: 'https://github.com/HAONANTAO', src: '/images/icons/github-icon.svg', label: 'GitHub' },
-              { href: 'https://www.linkedin.com/in/haonan-tao-4a9855270/', src: '/images/icons/linkedin-icon.svg', label: 'LinkedIn' },
+              { href: 'https://www.linkedin.com/in/haonan-tao-aaron/', src: '/images/icons/linkedin-icon.svg', label: 'LinkedIn' },
             ].map(({ href, src, label }) => (
               <a
                 key={label}

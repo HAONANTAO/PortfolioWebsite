@@ -16,13 +16,13 @@ const EDUCATION = [
     href: "/PDFs/UniMel.pdf",
     school: "University of Melbourne",
     degree: "MSc Information Technology",
-    year: "2023 – 2024",
+    year: "2021 – 2023",
   },
   {
     href: "/PDFs/Monash.pdf",
     school: "Monash University",
     degree: "BSc Computer Science · Data Science",
-    year: "2019 – 2022",
+    year: "2019 – 2021",
   },
 ];
 

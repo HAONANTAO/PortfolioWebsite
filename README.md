@@ -95,7 +95,7 @@ The post then appears in `/writings`, on the homepage feed, in `sitemap.xml`, an
 
 - [taoaaron5@gmail.com](mailto:taoaaron5@gmail.com)
 - [github.com/HAONANTAO](https://github.com/HAONANTAO)
-- [linkedin.com/in/haonan-tao-4a9855270](https://www.linkedin.com/in/haonan-tao-4a9855270/)
+- [linkedin.com/in/haonan-tao-aaron](https://www.linkedin.com/in/haonan-tao-aaron/)
 
 ## License
 

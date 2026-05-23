@@ -175,7 +175,7 @@ export default function CommandPalette({ writings = [], projects = [] }) {
                   <PaletteItem
                     icon={ArrowTopRightOnSquareIcon}
                     label="LinkedIn"
-                    onSelect={() => goExternal("https://www.linkedin.com/in/haonan-tao-4a9855270/")}
+                    onSelect={() => goExternal("https://www.linkedin.com/in/haonan-tao-aaron/")}
                   />
                 </Command.Group>
               </Command.List>
