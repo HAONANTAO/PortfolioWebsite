@@ -119,7 +119,7 @@ const NavBar = () => {
           <ThemeToggle />
 
           <a
-            href="/PDFs/resume0428.pdf"
+            href="/PDFs/AaronTaoResume0525.pdf"
             className="cta-resume px-3.5 py-1.5 text-sm text-white bg-zinc-900 dark:bg-zinc-100 dark:text-zinc-900 rounded-md transition-colors"
           >
             Résumé

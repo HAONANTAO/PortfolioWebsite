@@ -106,7 +106,7 @@ const HeroSection = ({ latestWriting }) => {
           {/* CTAs */}
           <div className="flex flex-wrap items-center gap-3 mb-10">
             <a
-              href="/PDFs/resume0428.pdf"
+              href="/PDFs/AaronTaoResume0525.pdf"
               className="cta-resume px-5 py-2.5 text-sm font-medium rounded-md transition-colors"
               style={{ background: 'var(--ink)', color: 'var(--bg)' }}>
               Download résumé

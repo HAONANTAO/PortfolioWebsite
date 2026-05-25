@@ -158,7 +158,7 @@ export default function CommandPalette({ writings = [], projects = [] }) {
                   <PaletteItem
                     icon={DocumentArrowDownIcon}
                     label="Download résumé"
-                    onSelect={() => { close(); window.location.href = "/PDFs/resume0428.pdf"; }}
+                    onSelect={() => { close(); window.location.href = "/PDFs/AaronTaoResume0525.pdf"; }}
                   />
                   <PaletteItem
                     icon={EnvelopeIcon}
