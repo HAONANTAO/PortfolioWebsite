@@ -9,6 +9,7 @@ import { CodeBracketIcon, EyeIcon, ArrowRightIcon } from "@heroicons/react/24/ou
 import Link from "next/link";
 
 const FILTERS = ["All", "AI", "NextJS", "TypeScript"];
+const PAGE_SIZE = 6;
 
 const findRelatedWriting = (project, writings) =>
   writings.find(
@@ -17,17 +18,29 @@ const findRelatedWriting = (project, writings) =>
 
 const ProjectsSection = ({ writings = [] }) => {
   const [tag, setTag] = useState("All");
+  const [page, setPage] = useState(1);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
+
+  const handleTagChange = (next) => {
+    setTag(next);
+    setPage(1);
+  };
 
   const featured = ProjectsData[0];
   const rest = ProjectsData.slice(1);
   const featuredWriting = findRelatedWriting(featured, writings);
 
-  const showFeatured = tag === "All";
-  const gridProjects = tag === "All"
+  const showFeatured = tag === "All" && page === 1;
+  const allGridProjects = tag === "All"
     ? rest
     : ProjectsData.filter((p) => p.tag.includes(tag));
+  const totalPages = Math.max(1, Math.ceil(allGridProjects.length / PAGE_SIZE));
+  const currentPage = Math.min(page, totalPages);
+  const gridProjects = allGridProjects.slice(
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE
+  );
 
   const cardVariants = {
     initial: { y: 24, opacity: 0 },
@@ -50,7 +63,7 @@ const ProjectsSection = ({ writings = [] }) => {
 
       <div className="flex flex-wrap gap-2 mb-10">
         {FILTERS.map((t) => (
-          <ProjectTag key={t} onClick={setTag} tag={t} isSelected={tag === t} />
+          <ProjectTag key={t} onClick={handleTagChange} tag={t} isSelected={tag === t} />
         ))}
       </div>
 
@@ -177,6 +190,47 @@ const ProjectsSection = ({ writings = [] }) => {
           </motion.li>
         ))}
       </ul>
+
+      {totalPages > 1 && (
+        <nav
+          aria-label="Project pagination"
+          className="flex items-center justify-center gap-2 mt-10"
+        >
+          <button
+            type="button"
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            disabled={currentPage === 1}
+            className="px-3 py-1.5 text-sm rounded-md text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 disabled:opacity-30 disabled:hover:text-zinc-600 dark:disabled:hover:text-zinc-400 transition-colors"
+            aria-label="Previous page"
+          >
+            ← Prev
+          </button>
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+            <button
+              key={p}
+              type="button"
+              onClick={() => setPage(p)}
+              aria-current={p === currentPage ? "page" : undefined}
+              className={`w-9 h-9 text-sm rounded-md transition-colors ${
+                p === currentPage
+                  ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
+                  : "text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
+              }`}
+            >
+              {p}
+            </button>
+          ))}
+          <button
+            type="button"
+            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+            disabled={currentPage === totalPages}
+            className="px-3 py-1.5 text-sm rounded-md text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 disabled:opacity-30 disabled:hover:text-zinc-600 dark:disabled:hover:text-zinc-400 transition-colors"
+            aria-label="Next page"
+          >
+            Next →
+          </button>
+        </nav>
+      )}
     </section>
   );
 };

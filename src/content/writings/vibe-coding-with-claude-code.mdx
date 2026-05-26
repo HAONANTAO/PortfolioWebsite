@@ -1,0 +1,123 @@
+---
+title: "Vibe coding with Claude Code: what it actually is"
+slug: "vibe-coding-with-claude-code"
+date: "2026-06-01"
+summary: "Vibe coding isn't 'AI writes my app while I nap.' It's a tighter loop — brief well, read the diff, verify the behaviour — and Claude Code is the closest thing to a competent junior I've worked with."
+tags: ["Claude Code", "AI Coding", "Workflow", "Vibe Coding"]
+category: "ideas"
+readingTime: "8 min"
+---
+
+Vibe coding is a phrase that's already been ruined.
+
+The way it gets used in tweets and YouTube thumbnails, it means *"I told the AI what I wanted and it built the app while I drank coffee."* That isn't how anyone who actually ships products works. The people I know who use Claude Code or Cursor every day spend most of their time reading, correcting, and re-briefing — not napping.
+
+But there is something real underneath the term. The way I write code today is different from how I wrote it a year ago, and the difference is bigger than "I have a better autocomplete." This is what I mean by vibe coding, what's actually going on when I'm doing it, and where it falls over.
+
+## The shift, in one sentence
+
+A year ago I wrote code. Today I direct code, then I review and correct it.
+
+That sounds glib. It isn't. It changes which skills matter. It changes how long things take. It changes which kinds of bugs I ship. It changes which projects are worth attempting at all.
+
+The skill that paid off most in the last six months wasn't syntax fluency. It was the ability to brief a competent stranger — to describe what I want, what I've tried, what's already true about the codebase, and where the trade-offs live — well enough that they could do the work and produce something I'd actually accept.
+
+Claude Code is the closest thing I have to a competent stranger that's always available.
+
+## What vibe coding is *not*
+
+Before what it is, let me cut what it isn't.
+
+It's not "AI writes my app while I nap." It's not "I review nothing." It's not "I don't have to understand the code." Every Claude Code session I've shipped from ended with me reading the diff line by line. The leverage comes from *not having to type it*, not from *not having to think about it*.
+
+It's also not Copilot. Copilot is a faster keyboard — it predicts the next few lines based on the cursor. Claude Code is more like a junior developer with full repo access. You describe a feature in a paragraph; it edits eight files, runs tests, and asks you a clarifying question when it hits ambiguity. The unit of work is a *task*, not a *line*.
+
+That difference is the whole game. Editing eight files at once is where the leverage is. It's also where the failure modes live.
+
+## The loop
+
+When I'm working in this mode, the loop looks the same almost every time:
+
+**1. State intent.** One or two paragraphs. What I want, why, what's already in the repo that's relevant. If I've tried something and it didn't work, I say so. If I'm uncertain about an approach, I name the uncertainty.
+
+**2. Get a plan.** For anything non-trivial I'm in Plan mode — Claude proposes the approach before touching files. I read it. Roughly half the time I push back ("don't add a feature flag, just change the route") or notice the plan is over-engineered. The other half I approve and it goes.
+
+**3. Watch the work.** Claude edits files, runs tests, fetches things. I'm not idle here — I'm reading the messages, watching for moments where it took a wrong turn. If I see it spinning, I interrupt.
+
+**4. Read the diff.** This is the non-negotiable step. I read every line of what changed. Not because I expect bugs in every line — because the cost of *not* reading is higher than the cost of reading.
+
+**5. Iterate or commit.** If something's off, I ask for the fix. If it's good, I commit (`/commit` is a slash command in my setup, so this is one keystroke).
+
+That's it. There's no secret sauce. The whole skill is in steps 1 and 4.
+
+## Where Claude Code earns its keep
+
+Five concrete patterns I lean on every week.
+
+### `CLAUDE.md` as the team handbook
+
+Every repo of mine has a `CLAUDE.md` at the root. It's the document I'd hand a new contractor on day one — what this project is, how the codebase is organised, what conventions matter, what *not* to do. Claude Code loads it automatically at the start of every session. The file pays for itself within two sessions.
+
+What goes in mine, usually:
+
+- One paragraph: what the project does and who uses it
+- The stack, version numbers, runtime
+- Conventions: how routes are named, where tests live, how I handle errors
+- Hard constraints: *"never commit without running `npm test`"*, *"this codebase uses CommonJS, not ESM"*
+- A short "history" section — *why* something is the way it is, when the reason isn't obvious from the code
+
+The trap: don't put architecture diagrams in there. They go stale. Put rules and constraints, not snapshots.
+
+### Slash commands for the things I do daily
+
+`/commit`, `/pr`, `/review`, `/security-review`, `/run`, `/verify`. These ship with Claude Code or come from plugins. The point isn't that they save typing — it's that they encode *how I want the task done*. My `/commit` always batches a `git status`, `git diff`, and `git log` read in parallel before writing the message. I don't have to remember to ask for that. The skill does.
+
+For project-specific stuff I write my own in `.claude/commands/`. Two examples from my own repos: `/migrate-page` (port a Pages Router file to App Router with my exact prefs), `/new-route` (Express route + Zod schema + test stub in the layout this codebase uses).
+
+### Subagents for the boring parts
+
+The `Agent` tool lets you fan out to a fresh context — useful when I want exploration that doesn't pollute my main session. *"Find all the places we call the old auth middleware"* or *"audit which routes are missing rate limiting"* go to a subagent. It comes back with a one-page report. My main context stays clean.
+
+The trick I learned slowly: trust the *direction* of a subagent's report, verify the *details*. If a subagent says "there are seven places this is called," I grep for one to confirm before acting on the seven.
+
+### The Plan / Execute split
+
+For any change that touches more than three files, I'm in Plan mode first. The pattern that works is *"don't write code yet, tell me how you'd do it."* I read the plan. We argue. Then I exit plan mode and Claude executes.
+
+This catches more bad ideas than code review does, because the bad ideas are cheap to discard at the plan stage. The model is happy to throw away a plan. It's much less happy to throw away an hour of code it already wrote.
+
+### Reading the diff is the contract
+
+The single highest-leverage habit in this workflow is: never commit without reading the diff. Not skim — read.
+
+The reason isn't that Claude writes bad code. It's that Claude doesn't know things you know. It will introduce abstractions that are reasonable in general and wrong for *this* project. It will add error handling for cases that can't happen. It will write a one-paragraph docstring you don't want. The diff is where you catch this.
+
+If the diff is too long to read carefully, the task was too big. Break it down. This is a discipline question, not a tooling question.
+
+## Where it fails
+
+The failures are predictable and worth naming.
+
+**Silent drift.** Without `CLAUDE.md` and the discipline to re-state conventions, Claude will write code in a style that's valid but doesn't match the rest of the codebase. You end up with two-and-a-half styles in one repo. The fix is on you — write down the conventions, and reference them when you brief.
+
+**Confident wrongness.** The model will assert that something exists when it doesn't. A function name, a flag, a config key. If you're about to act on a claim, verify it. Grep for the function. Read the file. Seconds to verify; hours to recover from acting on a hallucination.
+
+**Over-engineering.** Default Claude wants to add helpers, abstractions, types, comments. For a side project these usually buy nothing and cost the codebase clarity. You have to *say* "don't add a wrapper, just inline it" until it sticks for the session.
+
+**The "looks done" trap.** Claude will say *"I've finished implementing the feature"* when what it's done is write the code. Whether the feature *works* is your problem. I've started saying *"show me the feature working"* — open the browser, click the thing — before I believe anything. Tests passing isn't proof. The diff is the contract; behaviour is the truth.
+
+## What it changed for me
+
+Concretely: I shipped five projects this year I wouldn't have attempted otherwise. SkillPath, EchoReply, JD Analyzer, DocuMind, and the Shangxue payroll system. None of them individually is technically novel — they're well-trodden patterns (RAG, Chrome extensions, LangGraph agents, multi-tenant SaaS). What was new was the *budget*. With Claude Code in the loop, "evenings and weekends" was enough to ship the first three to actual users.
+
+That shifts the question. The interesting projects aren't the ones I have time for. They're the ones I have a clear enough idea of, and a strong enough vision for, to brief well.
+
+## The honest summary
+
+Vibe coding isn't about typing less. It's about briefing better and reading more.
+
+Claude Code is the best implementation of this I've found. The leverage is real. The failure modes are real too — drift, over-engineering, confident wrongness, the "looks done" trap. None of them are fatal. All of them are catchable by reading the diff and verifying the behaviour. The discipline is on you. The tool just removes the typing.
+
+If you're starting: write a `CLAUDE.md`, use Plan mode for anything non-trivial, never commit without reading the diff, and verify behaviour in the browser before you call it done.
+
+The rest is just practice.
